@@ -21,6 +21,14 @@
                                     <action selector="onClickPongButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yfi-bo-PjV"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P8V-Bt-keC">
+                                <rect key="frame" x="129" y="314" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="boing"/>
+                                <connections>
+                                    <action selector="onClickBoingButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Txw-7Q-Nud"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

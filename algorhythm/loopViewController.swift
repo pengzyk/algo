@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+//TODO need 'arraylist'?
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
@@ -30,7 +31,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         audioPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
         audioPlayer.delegate = self
         audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        //audioPlayer.play()
 
         
 //               let newPath = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
@@ -45,19 +46,24 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     }
     
-    @IBAction func onClickPongButton(sender: UIButton) {
+    @IBAction func onClickBoingButton(sender: AnyObject) {
+        //        var newPlayer : AVAudioPlayer!
         
-        //audioPlayer.play()
-        
-//        var newPlayer : AVAudioPlayer!
-
-        let newPath = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
+        let newPath = NSBundle.mainBundle().pathForResource("String", ofType: "wav")
         let newFileURL = NSURL.fileURLWithPath(newPath!)
         newPlayer = try! AVAudioPlayer(contentsOfURL: newFileURL)
         newPlayer.delegate = self
         newPlayer.prepareToPlay()
-       print("new player ")
+        print("boing ")
         newPlayer.play()
+
+        
+    }
+    @IBAction func onClickPongButton(sender: UIButton) {
+        print("pong ")
+
+        audioPlayer.play()
+        
 
         
         
