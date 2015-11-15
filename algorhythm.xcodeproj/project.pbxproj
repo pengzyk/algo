@@ -15,6 +15,7 @@
 		DC2F9F8D1BF8541500237A99 /* algorhythmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F8C1BF8541500237A99 /* algorhythmTests.swift */; };
 		DC2F9F981BF8541500237A99 /* algorhythmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F971BF8541500237A99 /* algorhythmUITests.swift */; };
 		DC2F9FAB1BF86E9600237A99 /* loopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */; };
+		DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9FAC1BF87C4500237A99 /* Pong.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		DC2F9F971BF8541500237A99 /* algorhythmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = algorhythmUITests.swift; sourceTree = "<group>"; };
 		DC2F9F991BF8541500237A99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loopViewController.swift; sourceTree = "<group>"; };
+		DC2F9FAC1BF87C4500237A99 /* Pong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pong.wav; path = algorhythm/Pong.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		DC2F9F6B1BF8541500237A99 = {
 			isa = PBXGroup;
 			children = (
+				DC2F9FB01BF87D9B00237A99 /* sound */,
 				DC2F9F761BF8541500237A99 /* algorhythm */,
 				DC2F9F8B1BF8541500237A99 /* algorhythmTests */,
 				DC2F9F961BF8541500237A99 /* algorhythmUITests */,
@@ -126,6 +129,14 @@
 				DC2F9F991BF8541500237A99 /* Info.plist */,
 			);
 			path = algorhythmUITests;
+			sourceTree = "<group>";
+		};
+		DC2F9FB01BF87D9B00237A99 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				DC2F9FAC1BF87C4500237A99 /* Pong.wav */,
+			);
+			name = sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,
 				DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */,
@@ -405,6 +417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = algorhythm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sans.serif.algorhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -416,6 +429,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = algorhythm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = sans.serif.algorhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
