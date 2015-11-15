@@ -14,6 +14,7 @@
 		DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9F801BF8541500237A99 /* LaunchScreen.storyboard */; };
 		DC2F9F8D1BF8541500237A99 /* algorhythmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F8C1BF8541500237A99 /* algorhythmTests.swift */; };
 		DC2F9F981BF8541500237A99 /* algorhythmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F971BF8541500237A99 /* algorhythmUITests.swift */; };
+		DC2F9FAB1BF86E9600237A99 /* loopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		DC2F9F931BF8541500237A99 /* algorhythmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = algorhythmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2F9F971BF8541500237A99 /* algorhythmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = algorhythmUITests.swift; sourceTree = "<group>"; };
 		DC2F9F991BF8541500237A99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loopViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				DC2F9F771BF8541500237A99 /* AppDelegate.swift */,
 				DC2F9F791BF8541500237A99 /* ViewController.swift */,
 				DC2F9F7B1BF8541500237A99 /* Main.storyboard */,
+				DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */,
 				DC2F9F7E1BF8541500237A99 /* Assets.xcassets */,
 				DC2F9F801BF8541500237A99 /* LaunchScreen.storyboard */,
 				DC2F9F831BF8541500237A99 /* Info.plist */,
@@ -261,6 +264,7 @@
 			files = (
 				DC2F9F7A1BF8541500237A99 /* ViewController.swift in Sources */,
 				DC2F9F781BF8541500237A99 /* AppDelegate.swift in Sources */,
+				DC2F9FAB1BF86E9600237A99 /* loopViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +489,7 @@
 				DC2F9F9E1BF8541500237A99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC2F9F9F1BF8541500237A99 /* Build configuration list for PBXNativeTarget "algorhythmTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +498,7 @@
 				DC2F9FA11BF8541500237A99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC2F9FA21BF8541500237A99 /* Build configuration list for PBXNativeTarget "algorhythmUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +507,7 @@
 				DC2F9FA41BF8541500237A99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
