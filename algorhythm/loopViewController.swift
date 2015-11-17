@@ -9,7 +9,9 @@
 import UIKit
 import AVFoundation
 
-//TODO need 'arraylist'?
+//array of players
+var bonkArray = [AVAudioPlayer]()
+
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
@@ -31,23 +33,25 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         audioPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
         audioPlayer.delegate = self
         audioPlayer.prepareToPlay()
-        //audioPlayer.play()
 
         
-//               let newPath = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
-//        let newFileURL = NSURL.fileURLWithPath(newPath!)
-//        newPlayer = try! AVAudioPlayer(contentsOfURL: newFileURL)
-//        newPlayer.delegate = self
-       // newPlayer.prepareToPlay()
-       
+        //add one player to the array 
         
+        bonkArray.append(audioPlayer)
         
 
     
     }
     
+//    func addNewBonk
+    
+    @IBAction func onClickBonk(sender: UIButton) {
+        bonkArray[0].play()
+        
+    }
+    
     @IBAction func onClickBoingButton(sender: AnyObject) {
-        //        var newPlayer : AVAudioPlayer!
+        //        var newPlayer : AVAudioPlayer! //this variable is created when the function starts and is killed when the function ends
         
         let newPath = NSBundle.mainBundle().pathForResource("String", ofType: "wav")
         let newFileURL = NSURL.fileURLWithPath(newPath!)
@@ -59,21 +63,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 
         
     }
+    
     @IBAction func onClickPongButton(sender: UIButton) {
         print("pong ")
 
         audioPlayer.play()
         
-
-        
-        
     }
-    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     
     /*

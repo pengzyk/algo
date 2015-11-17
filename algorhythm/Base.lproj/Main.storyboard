@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d9Y-UA-NBv">
-                                <rect key="frame" x="114" y="196" width="80" height="43"/>
+                                <rect key="frame" x="114" y="107" width="80" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Pong"/>
                                 <connections>
@@ -22,11 +22,19 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P8V-Bt-keC">
-                                <rect key="frame" x="129" y="314" width="39" height="30"/>
+                                <rect key="frame" x="135" y="214" width="39" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="boing"/>
                                 <connections>
                                     <action selector="onClickBoingButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Txw-7Q-Nud"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JF7-B5-jCU">
+                                <rect key="frame" x="137" y="325" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="bonk"/>
+                                <connections>
+                                    <action selector="onClickBonk:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HRF-6R-FLx"/>
                                 </connections>
                             </button>
                         </subviews>
