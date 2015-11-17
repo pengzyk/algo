@@ -43,10 +43,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     }
     
-//    func addNewBonk
+    func addNewBonk(){
+        let mp3Path = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
+        let fileURL = NSURL.fileURLWithPath(mp3Path!)
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        bonkArray.append(tempPlayer)
+
+        
+    }
     
     @IBAction func onClickBonk(sender: UIButton) {
-        bonkArray[0].play()
+        addNewBonk()
+        //todo add exception 
+        bonkArray.last!.play()
         
     }
     
