@@ -39,7 +39,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
         bonkArray.append(audioPlayer)
         
-
+        
     
     }
     
@@ -64,14 +64,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     @IBAction func onClickBoingButton(sender: AnyObject) {
         //        var newPlayer : AVAudioPlayer! //this variable is created when the function starts and is killed when the function ends
         
-        let newPath = NSBundle.mainBundle().pathForResource("String", ofType: "wav")
+        let newPath = NSBundle.mainBundle()
+            .pathForResource("String", ofType: "wav")
         let newFileURL = NSURL.fileURLWithPath(newPath!)
         newPlayer = try! AVAudioPlayer(contentsOfURL: newFileURL)
         newPlayer.delegate = self
         newPlayer.prepareToPlay()
         print("boing ")
         newPlayer.play()
-
+        
         
     }
     
@@ -82,23 +83,23 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
     }
 
+    @IBAction func onClickSquare(sender: AnyObject) {
+        
+        
+        let s = Square()
+//        let s = Square(self)
+        s.test()
+        
+    }
+    @IBAction func onClickXButton(sender: AnyObject) {
+        bonkArray.removeAll()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
+
+
