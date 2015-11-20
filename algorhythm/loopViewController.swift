@@ -65,21 +65,30 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         bonkArray.last!.play()
         
     }
-  
-    @IBAction func onClickSquare(sender: AnyObject) {
-
-        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
-        let fileURL = NSURL.fileURLWithPath(mp3Path!)
+    
+    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+        let fileURL = NSURL.fileURLWithPath(path!)
         let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
         tempPlayer.delegate = self
         tempPlayer.prepareToPlay()
-        bonkArray.append(tempPlayer)
+        return tempPlayer
+    }
+    
+  
+    @IBAction func onClickSquare(sender: AnyObject) {
+        //add drum beats at 4,8,12,16 positions
+        timeSlots[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+                timeSlots[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+                timeSlots[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+                timeSlots[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         
-        timeSlots[0] = tempPlayer
-        
-    print("timeSlots", timeSlots.count)
+        //print("timeSlots", timeSlots.count)
         
     }
+    
+ 
+    
     //75  per min
 
     @IBAction func onClickPlayButton(sender: AnyObject) {
@@ -92,9 +101,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 
     func tick(){
 
-        print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
+//        print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
         if ( self.timeSlots[self.ticCounter] != nil) {
-            print("playing ", self.ticCounter) ;
+            print("playing at slot ", self.ticCounter) ;
             self.timeSlots[self.ticCounter]?.play()
 //
         }
@@ -132,8 +141,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     @IBAction func onClickXButton(sender: AnyObject) {
         bonkArray.removeAll()
-      //  timeSlots = []
-        //print(timeSlots.count)
         
     }
     
