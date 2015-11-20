@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-class Square: NSObject {
+class Square: NSObject, AVAudioPlayerDelegate {
     
 //    var firstName: String
 //    var lastName: String

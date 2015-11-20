@@ -80,7 +80,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     func tick(){
 //        print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
         if ( self.ticSlots[self.ticCounter] != nil) {
-            print("playing at slot ", self.ticCounter) ;
+           // print("playing at slot ", self.ticCounter) ; //print takes a long time and mess up timing
             self.ticSlots[self.ticCounter]?.play()
         }
         
