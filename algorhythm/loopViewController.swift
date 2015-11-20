@@ -13,19 +13,23 @@ import AVFoundation
 var bonkArray = [AVAudioPlayer]()
 
 
+
+
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     
     var audioPlayer : AVAudioPlayer!
     var newPlayer : AVAudioPlayer! //has to be declared here..
-
+    var timeSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     
+    var ticCounter = 0
+    let INTERVAL = 75.0/60.0/16.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("view did load")
-
+        print("timeSlots", timeSlots.count)
+ print("in viewDidiLoad timeSlots", self.timeSlots)
         let mp3Path = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
 
         let fileURL = NSURL.fileURLWithPath(mp3Path!)
@@ -39,7 +43,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
         bonkArray.append(audioPlayer)
         
-        
+//        tick()
     
     }
     
@@ -50,14 +54,55 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         tempPlayer.delegate = self
         tempPlayer.prepareToPlay()
         bonkArray.append(tempPlayer)
-
         
     }
+    
+    
     
     @IBAction func onClickBonk(sender: UIButton) {
         addNewBonk()
         //todo add exception
         bonkArray.last!.play()
+        
+    }
+  
+    @IBAction func onClickSquare(sender: AnyObject) {
+
+        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
+        let fileURL = NSURL.fileURLWithPath(mp3Path!)
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        bonkArray.append(tempPlayer)
+        
+        timeSlots[0] = tempPlayer
+        
+    print("timeSlots", timeSlots.count)
+        
+    }
+    //75  per min
+
+    @IBAction func onClickPlayButton(sender: AnyObject) {
+        print("play")
+        //play in sequence
+        print("in play timeSlots", self.timeSlots.count)// 16
+        
+        NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: timeSlots as? AnyObject, repeats: true)
+    }
+
+    func tick(){
+
+        print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
+        if ( self.timeSlots[self.ticCounter] != nil) {
+            print("playing ", self.ticCounter) ;
+            self.timeSlots[self.ticCounter]?.play()
+//
+        }
+        self.ticCounter++
+        if(self.ticCounter >= self.timeSlots.count){
+            self.ticCounter = 0
+        }
+        
         
     }
     
@@ -78,21 +123,18 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     @IBAction func onClickPongButton(sender: UIButton) {
         print("pong ")
-
+        
         audioPlayer.play()
         
     }
 
-    @IBAction func onClickSquare(sender: AnyObject) {
-        
-        
-        let s = Square()
-//        let s = Square(self)
-        s.test()
-        
-    }
+    
+    
     @IBAction func onClickXButton(sender: AnyObject) {
         bonkArray.removeAll()
+      //  timeSlots = []
+        //print(timeSlots.count)
+        
     }
     
     override func didReceiveMemoryWarning() {

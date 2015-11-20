@@ -47,11 +47,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qbg-Iv-aVB">
-                                <rect key="frame" x="131" y="419" width="47" height="30"/>
+                                <rect key="frame" x="116" y="300" width="77" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="square"/>
+                                <state key="normal" title="add square"/>
                                 <connections>
                                     <action selector="onClickSquare:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kI5-t2-V6R"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
+                                <rect key="frame" x="72" y="421" width="164" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="PLAY"/>
+                                <connections>
+                                    <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
+                                    <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KbF-LS-XrE"/>
                                 </connections>
                             </button>
                         </subviews>

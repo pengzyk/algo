@@ -9,14 +9,15 @@
 import Foundation
 import AVFoundation
 
-class Square {
+class Square: NSObject {
     
 //    var firstName: String
 //    var lastName: String
     
+    //http://makeapppie.com/2014/08/04/the-swift-swift-tutorial-why-do-we-need-delegates
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
 
-    init() {
+    override init() {
 
 //        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
 //        let fileURL = NSURL.fileURLWithPath(mp3Path!)
