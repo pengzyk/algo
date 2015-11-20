@@ -20,6 +20,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var newPlayer : AVAudioPlayer! //has to be declared here..
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
+
+
+    
+    var squareInstance : Square!
     
     let INTERVAL = 75.0/60.0/16.0     //75  per min
     
@@ -61,9 +65,12 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     @IBAction func onClickSquare(sender: AnyObject) {
         //add drum beats at 4,8,12,16 positions (a square shape!)
         ticSlots[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        ticSlots[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+      ticSlots[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         ticSlots[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         ticSlots[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        
+        
+        
         
     }
     
@@ -73,6 +80,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 //        print("in play timeSlots", self.timeSlots.count)// 16
         
         //start a timer that loops through the array
+        
+        //TODO donnot allow this to be done twice
         NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
     }
 
@@ -92,6 +101,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
         
     }
+    @IBAction func onClickAddClassButton(sender: AnyObject) {
+        squareInstance = Square ()
+        squareInstance.test()
+        
+        
+    }
+    
     
     @IBAction func onClickBoingButton(sender: AnyObject) {
         //        var newPlayer : AVAudioPlayer! //this variable is created when the function starts and is killed when the function ends

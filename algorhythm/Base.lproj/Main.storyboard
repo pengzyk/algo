@@ -47,7 +47,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qbg-Iv-aVB">
-                                <rect key="frame" x="116" y="300" width="77" height="30"/>
+                                <rect key="frame" x="116" y="123" width="77" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="add square"/>
                                 <connections>
@@ -55,13 +55,36 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
-                                <rect key="frame" x="72" y="421" width="164" height="30"/>
+                                <rect key="frame" x="78" y="161" width="164" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="PLAY"/>
                                 <connections>
                                     <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
                                     <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KbF-LS-XrE"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="VGe-8o-pWS">
+                                <rect key="frame" x="15" y="202" width="285" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="Wpd-Ph-rNT">
+                                <rect key="frame" x="19" y="466" width="285" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="ARn-JK-Xgj">
+                                <rect key="frame" x="20" y="107" width="285" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U41-DL-zRF">
+                                <rect key="frame" x="122" y="235" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="add class"/>
+                                <connections>
+                                    <action selector="onClickAddClassButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d5t-TL-kry"/>
                                 </connections>
                             </button>
                         </subviews>
