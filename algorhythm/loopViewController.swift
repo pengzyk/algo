@@ -74,24 +74,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
     }
     
-
-    @IBAction func onClickPlayButton(sender: AnyObject) {
-//        print("play")
-//        print("in play timeSlots", self.timeSlots.count)// 16
-        
-        //start a timer that loops through the array
-        
-        //TODO donnot allow this to be done twice
-        NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
-    }
-
     //check each of the slot in ticSlots and play the audio, if occupied
     func tick(){
-//        print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
-        if ( self.ticSlots[self.ticCounter] != nil) {
-           // print("playing at slot ", self.ticCounter) ; //print takes a long time and mess up timing
-            self.ticSlots[self.ticCounter]?.play()
-        }
+//       print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
+//        if ( self.ticSlots[self.ticCounter] != nil) {
+//           // print("playing at slot ", self.ticCounter) ; //print takes a long time and mess up timing
+//            self.ticSlots[self.ticCounter]?.play()
+//        }
+//        
+        squareInstance.play( ticCounter )
         
         //ticCounter loops through 0-15
         self.ticCounter++
@@ -103,8 +94,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     }
     @IBAction func onClickAddClassButton(sender: AnyObject) {
         squareInstance = Square ()
-//        squareInstance.delegate = self 
-        squareInstance.test()
+        //squareInstance.test()
         
 
         
@@ -133,7 +123,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         audioPlayer.play()
         
     }
-
+    
+    @IBAction func onClickPlayButton(sender: AnyObject) {
+        
+        //start a timer that loops through the array
+        
+        //TODO donnot allow this to be done twice
+        NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
+    }
+    
     
     
     @IBAction func onClickXButton(sender: AnyObject) {

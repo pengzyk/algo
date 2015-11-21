@@ -23,27 +23,32 @@ class Square :   NSObject, AVAudioPlayerDelegate {
     override init() {
         
        super.init()
-        
-        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
-        let fileURL = NSURL.fileURLWithPath(mp3Path!)
-        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-        tempPlayer.delegate = self
-        tempPlayer.prepareToPlay()
-        print("in init", tempPlayer)
-        timeArray[0] = tempPlayer
-          timeArray[1] = tempPlayer
-
+//        
+//        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
+//        let fileURL = NSURL.fileURLWithPath(mp3Path!)
+//        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+//        tempPlayer.delegate = self
+//        tempPlayer.prepareToPlay()
+//        print("in init", tempPlayer)
+        timeArray[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
     }
     
-    func test(){
-//        print(self.timeArray.count)
-        print(" 0 \(self.timeArray[0]). 1 \(self.timeArray[1]) ")
-        self.timeArray[0]?.play()
 
-      
+    
+    func play(index: Int){
+            print("playing index ", index )
+        
+        if ( self.timeArray[index] != nil) {
+
+            self.timeArray[index]?.play()
+        }
+
+        
         
     }
-    
     //load the audio files given the file names
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
@@ -53,7 +58,13 @@ class Square :   NSObject, AVAudioPlayerDelegate {
         tempPlayer.prepareToPlay()
         return tempPlayer
     }
-
+    
+    func test(){
+        //        print(self.timeArray.count)
+        //        print(" 0 \(self.timeArray[0]). 1 \(self.timeArray[1]) ")
+        //        self.timeArray[8]?.play()
+        
+    }
     
     
 }
