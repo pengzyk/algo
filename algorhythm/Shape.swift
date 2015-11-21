@@ -1,32 +1,24 @@
 //
-//  Square.swift
+//  Shape.swift
 //  algorhythm
 //
-//  Created by Xu, Cheng on 11/19/15.
+//  Created by Xu, Cheng on 11/20/15.
 //  Copyright © 2015 sansserif. All rights reserved.
 //
 
 import Foundation
 import AVFoundation
 
-class Square :   NSObject, AVAudioPlayerDelegate {
+class Shape: NSObject, AVAudioPlayerDelegate{
+    //http://makeapppie.com/2014/08/04/the-swift-swift-tutorial-why-do-we-need-delegates
     
-    
-       var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
-    //    var delegate : PlayerDelegate?
-    
-    override init() {
+    var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
+
+    override init (){
         super.init()
-        
-        timeArray[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        
-        print("square initialized")
+   
     }
     
-   
     
     
     func play(index: Int){
@@ -49,12 +41,6 @@ class Square :   NSObject, AVAudioPlayerDelegate {
     }
     
     
-    func test(){
-        //        print(self.timeArray.count)
-        //        print(" 0 \(self.timeArray[0]). 1 \(self.timeArray[1]) ")
-        //        self.timeArray[8]?.play()
-        
-    }
     
     
 }
