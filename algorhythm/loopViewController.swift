@@ -20,7 +20,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var newPlayer : AVAudioPlayer! //has to be declared here..
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
-
+    
 
     
     var squareInstance : Square!
@@ -103,7 +103,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     }
     @IBAction func onClickAddClassButton(sender: AnyObject) {
         squareInstance = Square ()
+//        squareInstance.delegate = self 
         squareInstance.test()
+        
+
+        
         
         
     }
