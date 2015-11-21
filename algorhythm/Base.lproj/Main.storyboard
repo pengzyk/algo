@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -13,78 +13,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d9Y-UA-NBv">
-                                <rect key="frame" x="20" y="55" width="80" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Pong"/>
-                                <connections>
-                                    <action selector="onClickPongButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yfi-bo-PjV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P8V-Bt-keC">
-                                <rect key="frame" x="141" y="62" width="39" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="boing"/>
-                                <connections>
-                                    <action selector="onClickBoingButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Txw-7Q-Nud"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JF7-B5-jCU">
-                                <rect key="frame" x="244" y="62" width="35" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="bonk"/>
-                                <connections>
-                                    <action selector="onClickBonk:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HRF-6R-FLx"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VoG-fJ-0gs">
-                                <rect key="frame" x="72" y="481" width="164" height="30"/>
+                                <rect key="frame" x="72" y="506" width="164" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="x"/>
+                                <state key="normal" title="x">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zaA-fX-3C5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qbg-Iv-aVB">
-                                <rect key="frame" x="116" y="123" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="add square"/>
-                                <connections>
-                                    <action selector="onClickSquare:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kI5-t2-V6R"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
-                                <rect key="frame" x="78" y="161" width="164" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="PLAY"/>
-                                <connections>
-                                    <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
-                                    <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KbF-LS-XrE"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" id="VGe-8o-pWS">
-                                <rect key="frame" x="15" y="202" width="285" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" id="Wpd-Ph-rNT">
-                                <rect key="frame" x="19" y="466" width="285" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view contentMode="scaleToFill" id="ARn-JK-Xgj">
-                                <rect key="frame" x="20" y="107" width="285" height="1"/>
+                                <rect key="frame" x="19" y="456" width="285" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U41-DL-zRF">
-                                <rect key="frame" x="122" y="235" width="65" height="30"/>
+                                <rect key="frame" x="103" y="55" width="116" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="add class"/>
+                                <state key="normal" title="add square class"/>
                                 <connections>
                                     <action selector="onClickAddClassButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d5t-TL-kry"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
+                                <rect key="frame" x="72" y="465" width="164" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
+                                    <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KbF-LS-XrE"/>
                                 </connections>
                             </button>
                         </subviews>

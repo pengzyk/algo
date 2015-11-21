@@ -9,8 +9,7 @@
 import UIKit
 import AVFoundation
 
-//array of players
-var bonkArray = [AVAudioPlayer]()
+
 
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
@@ -21,7 +20,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
     
-
+    //var shapes
+    
+    
     
     var squareInstance : Square!
     
@@ -30,58 +31,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mp3Path = NSBundle.mainBundle().pathForResource("Pong", ofType: "wav")
-        let fileURL = NSURL.fileURLWithPath(mp3Path!)
-        audioPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-        audioPlayer.delegate = self
-        audioPlayer.prepareToPlay()
-
-        
-        //add one player to the array
-        bonkArray.append(audioPlayer)
-        
-    
-    }
-    
-    func addNewBonk(){
-        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
-        let fileURL = NSURL.fileURLWithPath(mp3Path!)
-        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-        tempPlayer.delegate = self
-        tempPlayer.prepareToPlay()
-        bonkArray.append(tempPlayer)
         
     }
     
-    
-    
-    @IBAction func onClickBonk(sender: UIButton) {
-        addNewBonk()
-        //todo add exception
-        bonkArray.last!.play()
-        
-    }
-    
-    @IBAction func onClickSquare(sender: AnyObject) {
-        //add drum beats at 4,8,12,16 positions (a square shape!)
-        ticSlots[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-      ticSlots[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        ticSlots[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        ticSlots[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        
-        
-        
-        
-    }
     
     //check each of the slot in ticSlots and play the audio, if occupied
     func tick(){
-//       print("[tick] timeSlots size \(self.timeSlots.count). tickCounter \(self.ticCounter)")
-//        if ( self.ticSlots[self.ticCounter] != nil) {
-//           // print("playing at slot ", self.ticCounter) ; //print takes a long time and mess up timing
-//            self.ticSlots[self.ticCounter]?.play()
-//        }
-//        
+        
         squareInstance.play( ticCounter )
         
         //ticCounter loops through 0-15
@@ -93,51 +49,27 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
     }
     @IBAction func onClickAddClassButton(sender: AnyObject) {
+        //todo make this a mutable array
         squareInstance = Square ()
-        //squareInstance.test()
-        
-
-        
-        
-        
     }
     
     
-    @IBAction func onClickBoingButton(sender: AnyObject) {
-        //        var newPlayer : AVAudioPlayer! //this variable is created when the function starts and is killed when the function ends
-        let newPath = NSBundle.mainBundle()
-            .pathForResource("String", ofType: "wav")
-        let newFileURL = NSURL.fileURLWithPath(newPath!)
-        newPlayer = try! AVAudioPlayer(contentsOfURL: newFileURL)
-        newPlayer.delegate = self
-        newPlayer.prepareToPlay()
-        print("boing ")
-        newPlayer.play()
-        
-        
-    }
     
-    @IBAction func onClickPongButton(sender: UIButton) {
-        print("pong ")
-        
-        audioPlayer.play()
-        
-    }
     
     @IBAction func onClickPlayButton(sender: AnyObject) {
         
         //start a timer that loops through the array
         
-        //TODO donnot allow this to be done twice
+        //TODO donnot allow this to be done twice!
+        //TODO ADD A STOP
         NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
     }
     
     
     
     @IBAction func onClickXButton(sender: AnyObject) {
-        bonkArray.removeAll()
         
-        //todo: return ticSlots to array of 16 nils
+        
         
     }
     

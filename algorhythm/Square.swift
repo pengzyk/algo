@@ -18,37 +18,29 @@ class Square :   NSObject, AVAudioPlayerDelegate {
     
     //http://makeapppie.com/2014/08/04/the-swift-swift-tutorial-why-do-we-need-delegates
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
-//    var delegate : PlayerDelegate?
+    //    var delegate : PlayerDelegate?
     
     override init() {
+        super.init()
         
-       super.init()
-//        
-//        let mp3Path = NSBundle.mainBundle().pathForResource("WoodBonk", ofType: "wav")
-//        let fileURL = NSURL.fileURLWithPath(mp3Path!)
-//        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-//        tempPlayer.delegate = self
-//        tempPlayer.prepareToPlay()
-//        print("in init", tempPlayer)
         timeArray[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
     }
     
-
+    
     
     func play(index: Int){
-            print("playing index ", index )
+        //            print("playing index ", index )
         
         if ( self.timeArray[index] != nil) {
-
             self.timeArray[index]?.play()
         }
-
-        
         
     }
+    
+    
     //load the audio files given the file names
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
@@ -58,6 +50,7 @@ class Square :   NSObject, AVAudioPlayerDelegate {
         tempPlayer.prepareToPlay()
         return tempPlayer
     }
+    
     
     func test(){
         //        print(self.timeArray.count)
