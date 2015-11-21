@@ -27,13 +27,14 @@ class Square :   NSObject, AVAudioPlayerDelegate {
         timeArray[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        
+        print("square initialized")
     }
     
     
     
     func play(index: Int){
-        //            print("playing index ", index )
-        
+
         if ( self.timeArray[index] != nil) {
             self.timeArray[index]?.play()
         }

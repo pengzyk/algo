@@ -19,27 +19,30 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var newPlayer : AVAudioPlayer! //has to be declared here..
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
+    var timer       = NSTimer()
     
+    @IBOutlet weak var playButton: UIButton!
     //var shapes
     
     
     
     var squareInstance : Square!
     
-    let INTERVAL = 75.0/60.0/16.0     //75  per min
+    let TIMER_INTERVAL = 75.0/60.0/16.0     //75  per min
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
     }
     
     
     //check each of the slot in ticSlots and play the audio, if occupied
     func tick(){
-        
-        squareInstance.play( ticCounter )
-        
+        print( self.ticCounter)
+        if(self.squareInstance != nil ){
+            self.squareInstance.play( self.ticCounter )
+            
+        }
         //ticCounter loops through 0-15
         self.ticCounter++
         if(self.ticCounter >= self.ticSlots.count){
@@ -53,16 +56,31 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         squareInstance = Square ()
     }
     
-    
-    
-    
+    //you cant stop the timer if it's already stopped because your app will crash.
     @IBAction func onClickPlayButton(sender: AnyObject) {
         
+        //if currently running
+        if ( timer.valid){
+                timer.invalidate()
+            playButton.setTitle("PLAY", forState: UIControlState.Normal)
+            print ("stop timer" )
+        } //if currently paused, clicking this button will start the timer
+        
+        else {
+              //create the timer & add the timer automatically to the NSRunLoop
+           timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
+            playButton.setTitle("PAUSE", forState: UIControlState.Normal)
+            
+        }
+        
+        
+        print("timer" , timer.valid)
         //start a timer that loops through the array
         
         //TODO donnot allow this to be done twice!
         //TODO ADD A STOP
-        NSTimer.scheduledTimerWithTimeInterval(INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
+      
+//        timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
     }
     
     
