@@ -22,12 +22,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var timer      = NSTimer()
     
     @IBOutlet weak var playButton: UIButton!
-    //var shapes
-    
+
+    var shapes = [Shape]()
     
     
     var squareInstance : Square!
     var triangleInstance : Triangle!
+    
     
     let TIMER_INTERVAL = 75.0/60.0/16.0     //75  per min
     
@@ -48,6 +49,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             self.triangleInstance.play( self.ticCounter )
             
         }
+        //more shapes
         
         //ticCounter loops through 0-15
         self.ticCounter++
@@ -60,6 +62,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     @IBAction func onAddTrianbleButton(sender: AnyObject) {
         triangleInstance = Triangle()
+        let tempTriangle = Triangle()
+        
+        shapes.append(tempTriangle)
+        print(shapes)
         
     }
     
@@ -97,15 +103,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
     }
     
-    //load the audio files given the file names
-    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
-        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
-        let fileURL = NSURL.fileURLWithPath(path!)
-        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-        tempPlayer.delegate = self
-        tempPlayer.prepareToPlay()
-        return tempPlayer
-    }
+//    //load the audio files given the file names
+//    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+//        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+//        let fileURL = NSURL.fileURLWithPath(path!)
+//        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+//        tempPlayer.delegate = self
+//        tempPlayer.prepareToPlay()
+//        return tempPlayer
+//    }
     
     
     override func didReceiveMemoryWarning() {
