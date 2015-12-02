@@ -14,13 +14,15 @@ import AVFoundation
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
-    
+    // basic structure
     var audioPlayer : AVAudioPlayer!
     var newPlayer : AVAudioPlayer! //has to be declared here..
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
     var timer      = NSTimer()
     
+    
+    // graphical UI
     @IBOutlet weak var playButton: UIButton!
 
     var shapes = [Shape]()
@@ -32,10 +34,43 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     let TIMER_INTERVAL = 75.0/60.0/16.0     //75  per min
     
+    //player loop
+    @IBOutlet weak var playerUIView : UIView!
+    @IBOutlet weak var playerImage: UIImageView!
+    //initialize path bounds
+    let circleStartAngle = CGFloat(270.01 * M_PI/180)
+    let circleEndAngle = CGFloat(270 * M_PI/180)
+    let circleBounds = CGRectMake(20, 50, 280, 280)
+    let circlePath = UIBezierPath()
+    //initialize animnation
+    let anim = CAKeyframeAnimation(keyPath: "position")
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //PLAYER LOOP 
+        //initialize view size and position
+        playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
+        playerUIView.alpha = 0
+        playerImage.alpha = 0.5
+        
+        //create path for player dot
+        circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
+            radius: CGRectGetWidth(circleBounds)/2,
+            startAngle: circleStartAngle,
+            endAngle: circleEndAngle,
+            clockwise: true)
+        
+
+        
+        
+        
     }
+    
+    
     
     
     
@@ -47,6 +82,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         }
         if(self.triangleInstance != nil ){
             self.triangleInstance.play( self.ticCounter )
+            
             
         }
         //more shapes
@@ -83,6 +119,12 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
                 timer.invalidate()
             playButton.setTitle("PLAY", forState: UIControlState.Normal)
             print ("stop timer" )
+            
+            //PLAYER LOOP 
+            playerUIView.layer.removeAllAnimations()
+            playerUIView.alpha = 0
+            
+            
         } //if currently paused, clicking this button will start the timer
         
         else {
@@ -90,6 +132,19 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
            timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
             playButton.setTitle("PAUSE", forState: UIControlState.Normal)
             print ("start timer" )
+            
+            
+            //PLAYER LOOP 
+            playerUIView.alpha = 1
+            //choose animation path
+            anim.path = circlePath.CGPath
+            
+            //set some more parameters for the animation
+            anim.repeatCount = Float.infinity
+            anim.duration = 60*4/75
+            
+            //add animation to square layer
+            playerUIView.layer.addAnimation(anim, forKey: "animate position along path")
         }
         
 //        print("timer" , timer.valid)

@@ -56,12 +56,25 @@
                                     <action selector="onAddTrianbleButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yyM-du-BJR"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="0k5-EA-HFc">
+                                <rect key="frame" x="143" y="188" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="circle" id="HT6-CA-hMt">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="playButton" destination="RiP-Ko-cVM" id="zF7-Km-FAr"/>
+                        <outlet property="playerImage" destination="HT6-CA-hMt" id="qbi-aF-pYu"/>
+                        <outlet property="playerUIView" destination="0k5-EA-HFc" id="K5f-V6-rVq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -69,4 +82,7 @@
             <point key="canvasLocation" x="162" y="345"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="circle" width="77" height="77"/>
+    </resources>
 </document>
