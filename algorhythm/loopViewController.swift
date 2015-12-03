@@ -28,9 +28,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 
     var shapes = [Shape]()
     
-    
-    var squareInstance : Square!
-    var triangleInstance : Triangle!
+//    
+//    var squareInstance : Square!
+//    var triangleInstance : Triangle!
     
     //BPM 75 : 60.0/75.0/4.0
     let TIMER_INTERVAL =  60.0/300.0 // loat(60) / Float(75)
@@ -78,19 +78,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
     func tick(){
        // print( self.ticCounter)
-        if(self.squareInstance != nil ){
 
-            if( self.squareInstance.play( self.ticCounter )){
-                animatePlayer()
+        //loop through shapes
+        var ifAnimate = false
+        
+        if(shapes.count > 0 ){
+            for shape in shapes {
+                //ifAnimate turns to true, if any one shape has a note in the tic
+                ifAnimate = ifAnimate || shape.play(self.ticCounter)
             }
             
         }
-        if(self.triangleInstance != nil ){
-            self.triangleInstance.play( self.ticCounter )
-            
-            
+        
+        if(ifAnimate){
+            animatePlayer()
         }
-        //more shapes
         
         //ticCounter loops through 0-15
         self.ticCounter++
@@ -102,17 +104,12 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     }
     
     @IBAction func onAddTrianbleButton(sender: AnyObject) {
-        triangleInstance = Triangle()
-        let tempTriangle = Triangle()
-        
-        shapes.append(tempTriangle)
-        print(shapes)
+        shapes.append(Triangle())
         
     }
     
     @IBAction func onClickAddSquareButton(sender: AnyObject) {
-        //todo make this a mutable array
-        squareInstance = Square ()
+        shapes.append(Square())
         
     }
     
