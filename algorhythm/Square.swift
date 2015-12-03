@@ -15,10 +15,10 @@ class Square : Shape{
     override init(){
         super.init()
         
-        timeArray[0] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[4] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[8] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[12] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[3] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[7] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[11] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[15] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         
         print("square initialized")
 
