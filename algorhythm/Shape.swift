@@ -23,12 +23,13 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     
     
     
-    func play(index: Int){
+    func play(index: Int) -> Bool {
         //check each of the slot in ticSlots and play the audio, if occupied, play the sound.
         if ( self.timeArray[index] != nil) {
             self.timeArray[index]?.play()
+            return true
         }
-        
+        return false
     }
     
     

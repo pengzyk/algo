@@ -31,8 +31,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var squareInstance : Square!
     var triangleInstance : Triangle!
     
-    
-    let TIMER_INTERVAL = 75.0/60.0/16.0     //75  per min
+    //BPM 75 : 60.0/75.0/4.0
+    let TIMER_INTERVAL =  60.0/300.0 // loat(60) / Float(75)
+//    var LOOP_PERIOD : Float!
+    let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
     @IBOutlet weak var playerUIView : UIView!
@@ -44,14 +46,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     let circlePath = UIBezierPath()
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         //PLAYER LOOP 
+//        LOOP_PERIOD = TIMER_INTERVAL * 16.0
         //initialize view size and position
         playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
         playerUIView.alpha = 0
@@ -77,7 +78,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     func tick(){
        // print( self.ticCounter)
         if(self.squareInstance != nil ){
-            self.squareInstance.play( self.ticCounter )
+
+            if( self.squareInstance.play( self.ticCounter )){
+                animatePlayer()
+            }
             
         }
         if(self.triangleInstance != nil ){
@@ -141,7 +145,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             
             //set some more parameters for the animation
             anim.repeatCount = Float.infinity
-            anim.duration = 60*4/75
+            anim.duration = LOOP_PERIOD
             
             //add animation to square layer
             playerUIView.layer.addAnimation(anim, forKey: "animate position along path")
@@ -158,16 +162,25 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         
     }
     
-//    //load the audio files given the file names
-//    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
-//        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
-//        let fileURL = NSURL.fileURLWithPath(path!)
-//        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-//        tempPlayer.delegate = self
-//        tempPlayer.prepareToPlay()
-//        return tempPlayer
-//    }
-    
+    func animatePlayer() {
+        
+        
+        //animate dot player when a beat is there - this should be in an if statement
+        UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
+            self.playerUIView.transform = CGAffineTransformMakeScale(2, 2)
+            self.playerImage.alpha = 0.7
+            }, completion: { (Bool) -> Void in
+        })
+        
+        UIView.animateWithDuration(0.1) { () -> Void in
+            self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
+            self.playerImage.alpha = 0.5
+            
+        }
+
+        
+        
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
