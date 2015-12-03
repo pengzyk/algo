@@ -14,7 +14,6 @@ import AVFoundation
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate {
     
-    //Janak's version
     
     // basic structure
     var audioPlayer : AVAudioPlayer!
