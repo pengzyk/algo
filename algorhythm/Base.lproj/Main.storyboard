@@ -79,23 +79,56 @@
                                     <action selector="onAddTrianbleButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yyM-du-BJR"/>
                                 </connections>
                             </button>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.25" contentMode="scaleToFill" image="circle" id="kLE-ad-66Y">
+                                <rect key="frame" x="6" y="39" width="300" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square" id="RS5-mt-xoS">
+                                <rect key="frame" x="38" y="572" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <gestureRecognizers/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="circle" id="u56-YZ-wbO">
+                                <rect key="frame" x="161" y="572" width="77" height="77"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6c1-XG-un1" appends="YES" id="Dvi-4t-Vmw"/>
+                                    <outletCollection property="gestureRecognizers" destination="pjb-i2-NzS" appends="YES" id="awU-PI-eCb"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="loopView" destination="kLE-ad-66Y" id="mpk-Qi-gt8"/>
                         <outlet property="playButton" destination="RiP-Ko-cVM" id="zF7-Km-FAr"/>
                         <outlet property="playerImage" destination="HT6-CA-hMt" id="qbi-aF-pYu"/>
                         <outlet property="playerUIView" destination="0k5-EA-HFc" id="K5f-V6-rVq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="6c1-XG-un1">
+                    <connections>
+                        <action selector="didPanShape:" destination="BYZ-38-t0r" id="U1M-xn-lhb"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="pjb-i2-NzS">
+                    <connections>
+                        <action selector="didPanShape:" destination="BYZ-38-t0r" id="N3a-i8-7Jg"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="161.5" y="344.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="circle" width="77" height="77"/>
+        <image name="square" width="1721" height="1708"/>
     </resources>
 </document>

@@ -28,6 +28,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 
     var shapes = [Shape]()
     
+    //drag and drop
+    var newlyCreatedShape: UIImageView!
+    var shapeInitialCenter: CGPoint!
+    var newlyCreatedShapeOriginalCenter: CGPoint!
+
 //    
 //    var squareInstance : Square!
 //    var triangleInstance : Triangle!
@@ -38,19 +43,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
+    @IBOutlet weak var loopView: UIImageView!
     @IBOutlet weak var playerUIView : UIView!
     @IBOutlet weak var playerImage: UIImageView!
+    
     //initialize path bounds
     let circleStartAngle = CGFloat(270.01 * M_PI/180)
     let circleEndAngle = CGFloat(270 * M_PI/180)
     let circleBounds = CGRectMake(20, 50, 280, 280)
     let circlePath = UIBezierPath()
+    
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //PLAYER LOOP 
 //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
@@ -152,6 +159,78 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
 //        print("timer" , timer.valid)
     }
     
+    
+ 
+    //drag and drop
+    
+    @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
+        print("didpan")
+        
+        let translation = sender.translationInView(view)
+        
+        //if user starts dragging shape
+        if sender.state == UIGestureRecognizerState.Began {
+            print("began")
+            
+            let newShape = sender.view as! UIImageView
+            
+            newlyCreatedShape = UIImageView(image: newShape.image)
+            
+            view.addSubview(newlyCreatedShape)
+            
+            newlyCreatedShape.center = newShape.center
+            
+            newShape.userInteractionEnabled = true
+            
+            newlyCreatedShape.userInteractionEnabled = true
+            
+            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
+            
+            UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
+            })
+            
+        }
+        
+        else if sender.state == UIGestureRecognizerState.Changed {
+            print("changed")
+
+            //translate shape as newly created shape is dragged
+            newlyCreatedShape.center = CGPoint(x: newlyCreatedShapeOriginalCenter.x + translation.x, y: newlyCreatedShapeOriginalCenter.y + translation.y)
+            
+        }
+            
+        else if sender.state == UIGestureRecognizerState.Ended {
+            print("ended")
+            //if center of newly created shape is not dropped inside of loop view, animate it to original position
+            if newlyCreatedShape.center.y >= view.center.y {
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+
+                    }, completion: { (Bool) -> Void in
+                        self.newlyCreatedShape.removeFromSuperview()
+                })
+                
+            }
+                
+            //otherwise, newly created shape is in loop and should be scaled to fit
+            else {
+                UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
+                    
+                    //translate to center of loopView
+                    self.newlyCreatedShape.center = self.loopView.center
+                })
+                
+                
+            }
+            
+        }
+        
+        
+    }
     
     
     @IBAction func onClickXButton(sender: AnyObject) {
