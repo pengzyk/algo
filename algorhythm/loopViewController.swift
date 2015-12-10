@@ -178,6 +178,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             
             view.addSubview(newlyCreatedShape)
             
+            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
+            
             newlyCreatedShape.center = newShape.center
             
             newShape.userInteractionEnabled = true
@@ -187,7 +189,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
             })
             
         }
@@ -202,12 +204,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             
         else if sender.state == UIGestureRecognizerState.Ended {
             print("ended")
-            //if center of newly created shape is not dropped inside of loop view, animate it to original position
+            
+            //move shape back to selection menu
+            
             if newlyCreatedShape.center.y >= view.center.y {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
 
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
@@ -215,10 +219,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
                 
             }
                 
-            //otherwise, newly created shape is in loop and should be scaled to fit
+            //move shape into loop
+            
             else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     
                     //translate to center of loopView
                     self.newlyCreatedShape.center = self.loopView.center
