@@ -178,6 +178,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             let newShape = sender.view as! UIImageView
             
+            print(sender.description)
+            
             newlyCreatedShape = UIImageView(image: newShape.image)
             
             view.addSubview(newlyCreatedShape)
@@ -300,7 +302,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
     }
     
-    
+    func moveShape() {
+        
+    }
     
     func animatePlayer() {
     
