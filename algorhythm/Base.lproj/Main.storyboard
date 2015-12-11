@@ -13,23 +13,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.25" contentMode="scaleToFill" image="circle" id="Izb-zK-1kZ" userLabel="loop">
-                                <rect key="frame" x="9" y="39" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VoG-fJ-0gs">
-                                <rect key="frame" x="74" y="506" width="164" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="x">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="onClickXButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zaA-fX-3C5"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" id="Wpd-Ph-rNT">
                                 <rect key="frame" x="19" y="431" width="285" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,11 +62,6 @@
                                     <action selector="onAddTrianbleButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yyM-du-BJR"/>
                                 </connections>
                             </button>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.25" contentMode="scaleToFill" image="circle" id="kLE-ad-66Y">
-                                <rect key="frame" x="6" y="39" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
-                            </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="square_2-2" id="NnJ-fb-7Cq">
                                 <rect key="frame" x="37" y="573" width="76" height="76"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -92,6 +70,11 @@
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="nfN-aQ-jEj" appends="YES" id="5hq-2l-VEd"/>
                                 </connections>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.25" contentMode="scaleToFill" image="circle" id="kLE-ad-66Y">
+                                <rect key="frame" x="16" y="52" width="290" height="290"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
                             </imageView>
                         </subviews>
                         <animations/>

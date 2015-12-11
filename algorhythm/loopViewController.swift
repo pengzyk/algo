@@ -12,7 +12,7 @@ import AVFoundation
 
 
 
-class loopViewController: UIViewController , AVAudioPlayerDelegate {
+class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRecognizerDelegate {
     
     
     // basic structure
@@ -32,8 +32,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     var newlyCreatedShape: UIImageView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
+    var newlyCreatedShapeMenuCenter: CGPoint!
+    // This function is necessary to have mutliple gesture recognizers work simultaneously.
+    func gestureRecognizer(_: UIGestureRecognizer,shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
+        return true
+    }
 
-//    
+//
 //    var squareInstance : Square!
 //    var triangleInstance : Triangle!
     
@@ -164,7 +169,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     //drag and drop
     
     @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
-        print("didpan")
         
         let translation = sender.translationInView(view)
         
@@ -187,15 +191,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             newlyCreatedShape.userInteractionEnabled = true
             
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
+            newlyCreatedShapeMenuCenter = newlyCreatedShapeOriginalCenter
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                 self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                
+                let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
+                self.newlyCreatedShape.addGestureRecognizer(panGestureRecognizerCanvas)
+                panGestureRecognizerCanvas.delegate = self
+                
             })
             
         }
         
         else if sender.state == UIGestureRecognizerState.Changed {
-            print("changed")
 
             //translate shape as newly created shape is dragged
             newlyCreatedShape.center = CGPoint(x: newlyCreatedShapeOriginalCenter.x + translation.x, y: newlyCreatedShapeOriginalCenter.y + translation.y)
@@ -203,10 +212,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
         }
             
         else if sender.state == UIGestureRecognizerState.Ended {
-            print("ended")
             
             //move shape back to selection menu
-            
             if newlyCreatedShape.center.y >= view.center.y {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
@@ -220,7 +227,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
             }
                 
             //move shape into loop
-            
             else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
@@ -238,15 +244,66 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate {
     }
     
     
-    @IBAction func onClickXButton(sender: AnyObject) {
+    //pan shape that is already on loop
+    
+    func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer)
         
+    {
+        // Get the translation from the pan gesture recognizer
+        let translation = panGestureRecognizerCanvas.translationInView(view)
         
-        
+        // The moment the gesture starts...
+        if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
+            
+            // reference the ImageView that recieved the gesture (the face you panned) and store it in newlyCreatedShape
+            newlyCreatedShape = panGestureRecognizerCanvas.view as! UIImageView
+            
+            // set the initial center point
+            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
+            
+            // bring the newlyCreatedShape imageview to the front
+            newlyCreatedShape.superview?.bringSubviewToFront(view)
+            
+            // while the user is in the process of panning. (called continuously as user pans)
+        } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
+            UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                })
+            
+            // move the face with the pan
+            newlyCreatedShape.center = CGPoint(x: newlyCreatedShapeOriginalCenter.x + translation.x, y: newlyCreatedShapeOriginalCenter.y + translation.y)
+            
+            // When the user has stopped panning
+        } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
+            if newlyCreatedShape.center.y >= view.center.y {
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.newlyCreatedShape.center = self.newlyCreatedShapeMenuCenter
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
+                    
+                    }, completion: { (Bool) -> Void in
+                        self.newlyCreatedShape.removeFromSuperview()
+                })
+                
+            }
+                
+                //move shape into loop
+                
+            else {
+                UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+                    
+                    //translate to center of loopView
+                    self.newlyCreatedShape.center = self.loopView.center
+                })
+            }
+        }
     }
     
+    
+    
     func animatePlayer() {
-        
-        
+    
         //animate dot player when a beat is there - this should be in an if statement
         UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(2, 2)
