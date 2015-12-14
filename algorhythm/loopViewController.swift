@@ -33,14 +33,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
     var newlyCreatedShapeMenuCenter: CGPoint!
-    // This function is necessary to have mutliple gesture recognizers work simultaneously.
-    func gestureRecognizer(_: UIGestureRecognizer,shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
-        return true
-    }
 
-//
-//    var squareInstance : Square!
-//    var triangleInstance : Triangle!
     
     //BPM 75 : 60.0/75.0/4.0
     let TIMER_INTERVAL =  60.0/300.0 // loat(60) / Float(75)
@@ -53,7 +46,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     @IBOutlet weak var playerImage: UIImageView!
     
 
-    //shape 
+    //icons : these are the sound icons on the bottom and do not change.
     @IBOutlet var imageView: UIView!
     let panRec = UIPanGestureRecognizer()
     
@@ -66,7 +59,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
     
-    
+    //icons array on the bottom
+    var icons = [Shape]()
     
     
     override func viewDidLoad() {
@@ -87,19 +81,45 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             clockwise: true)
         
         
-        //icon for shapes
-        let imageName = "square.png"
-        let image = UIImage(named: imageName)
-        imageView = UIImageView(image: image!)
+       // initialize array with shapes 
+        // each shape has a init fun that loads imageView
+        icons = [Square(), Triangle()]
+         //loop through the array and
+        for var i = 0; i < icons.count; ++i {
+            icons[i].imageView.tag = i
+//            print(icons[i].imageView.tag)
+            //1. set location
+            icons[i].imageView.frame = CGRect(x: 50*i, y: 573, width: 75, height: 75)
+            //2. add to view
+            view.addSubview(icons[i].imageView)
+            //3. associate  target action
+            let  panGRec = UIPanGestureRecognizer()
+            icons[i].imageView.addGestureRecognizer(panGRec)
+            panGRec.addTarget(self, action: "didPanShape:")
+            //4. enable use interaction.
+            icons[i].imageView.userInteractionEnabled = true
+
+            
+        }
         
-        imageView.frame = CGRect(x: 100, y: 573, width: 75, height: 75)
-        view.addSubview(imageView)
+       
+       
 
+        
+        //icon for shapes
+//        let imageName = "square.png"
+//        let image = UIImage(named: imageName)
+//        imageView = UIImageView(image: image!)
+//        imageView.tag = 2
+//        imageView.frame = CGRect(x: 100, y: 573, width: 75, height: 75)
+//        view.addSubview(imageView)
+        
+        
 
-        imageView.addGestureRecognizer(panRec)
+       
 //        panRec.addTarget(self, action: "draggedView:")
-        panRec.addTarget(self, action: "didPanShape:")
-        imageView.userInteractionEnabled = true
+//        panRec.addTarget(self, action: "didPanShape:")
+//        imageView.userInteractionEnabled = true
         
     }
     
@@ -107,9 +127,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     func draggedView(sender:UIPanGestureRecognizer){
         print("sent from imageView ")
+        
+        if let tag = sender.view?.tag {
+            print(tag)
+        }
+        
+        
     }
     
-    
+ 
     
     func tick(){
        // print( self.ticCounter)
@@ -195,6 +221,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let translation = sender.translationInView(view)
         
+//        
+//        if let tag = sender.view?.tag {
+//            print(tag)
+//        }
+
+        
+        
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
             print("began")
@@ -244,7 +277,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
+                    
 
+                    
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
                 })
@@ -255,9 +290,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-                    
                     //translate to center of loopView
                     self.newlyCreatedShape.center = self.loopView.center
+                    
+                    //add in the shape
+                    self.shapes.append(Triangle())
+                    print ("added triangle")
+                    
                 })
                 
                 
@@ -347,6 +386,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
     }
+    
+    // This function is necessary to have mutliple gesture recognizers work simultaneously.
+    func gestureRecognizer(_: UIGestureRecognizer,shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

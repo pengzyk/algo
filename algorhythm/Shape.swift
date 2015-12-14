@@ -5,7 +5,7 @@
 //  Created by Xu, Cheng on 11/20/15.
 //  Copyright © 2015 sansserif. All rights reserved.
 //
-
+import UIKit
 import Foundation
 import AVFoundation
 
@@ -14,10 +14,17 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     
-//    var littlIcon : UIimage
-//    
+    
+    var imageView: UIView!
+//    var viewTag: Int!
+//   
+    
+    
+//
     override init (){
         super.init()
+
+        
    
     }
     

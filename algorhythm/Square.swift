@@ -5,7 +5,7 @@
 //  Created by Xu, Cheng on 11/19/15.
 //  Copyright © 2015 sansserif. All rights reserved.
 //
-
+import UIKit
 import Foundation
 import AVFoundation
 
@@ -19,6 +19,13 @@ class Square : Shape{
         timeArray[7] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[11] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
         timeArray[15] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        
+        //icon for shapes
+        let imageName = "square.png"
+        let image = UIImage(named: imageName)
+        imageView = UIImageView(image: image!)
+        imageView.tag = -1
+        
         
         print("square initialized")
 
