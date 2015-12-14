@@ -21,6 +21,8 @@
 		DC2F9FB61BF8869600237A99 /* String.wav in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9FB51BF8869600237A99 /* String.wav */; };
 		DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */; };
 		DC51CDFD1BFEE3FA00BD3EA5 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */; };
+		DCF10A7A1C1F469800A30DE5 /* Pentagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF10A791C1F469800A30DE5 /* Pentagon.swift */; };
+		DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		DC2F9FB51BF8869600237A99 /* String.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = String.wav; path = algorhythm/String.wav; sourceTree = "<group>"; };
 		DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = WoodBonk.wav; path = algorhythm/WoodBonk.wav; sourceTree = "<group>"; };
 		DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
+		DCF10A791C1F469800A30DE5 /* Pentagon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pentagon.swift; sourceTree = "<group>"; };
+		DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze &ound10.WAV"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 				DC101F2B1C003ACD00A47C1A /* Shape.swift */,
 				DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */,
 				DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */,
+				DCF10A791C1F469800A30DE5 /* Pentagon.swift */,
 				DC101F2D1C003B5F00A47C1A /* Triangle.swift */,
 				DC2F9F7E1BF8541500237A99 /* Assets.xcassets */,
 				DC2F9F801BF8541500237A99 /* LaunchScreen.storyboard */,
@@ -147,6 +152,7 @@
 		DC2F9FB01BF87D9B00237A99 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */,
 				DC2F9FB51BF8869600237A99 /* String.wav */,
 				DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */,
 				DC2F9FAC1BF87C4500237A99 /* Pong.wav */,
@@ -261,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
@@ -295,6 +302,7 @@
 				DC51CDFD1BFEE3FA00BD3EA5 /* Square.swift in Sources */,
 				DC2F9F7A1BF8541500237A99 /* ViewController.swift in Sources */,
 				DC101F2E1C003B5F00A47C1A /* Triangle.swift in Sources */,
+				DCF10A7A1C1F469800A30DE5 /* Pentagon.swift in Sources */,
 				DC2F9F781BF8541500237A99 /* AppDelegate.swift in Sources */,
 				DC2F9FAB1BF86E9600237A99 /* loopViewController.swift in Sources */,
 			);

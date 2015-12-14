@@ -41,7 +41,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
-    @IBOutlet weak var loopView: UIImageView!
+    
+    var loopView : UIImageView!
     @IBOutlet weak var playerUIView : UIView!
     @IBOutlet weak var playerImage: UIImageView!
     
@@ -53,8 +54,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //initialize path bounds
     let circleStartAngle = CGFloat(270.01 * M_PI/180)
     let circleEndAngle = CGFloat(270 * M_PI/180)
-    let circleBounds = CGRectMake(20, 50, 280, 280)
+    let circleBounds = CGRectMake(45, 55, 285, 285)
     let circlePath = UIBezierPath()
+    
+    
     
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
@@ -67,6 +70,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         super.viewDidLoad()
         
         //PLAYER LOOP 
+         let loopImageName = "loop.png"
+        let loopImage = UIImage(named: loopImageName)
+         loopView = UIImageView(image: loopImage!)
+        
+        loopView.frame = circleBounds
+        //2. add to view
+        view.addSubview(loopView)
+
+        
+        
 //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
         //initialize view size and position
         playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
@@ -83,13 +96,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
        // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
-        icons = [Square(), Triangle(),Square(),Triangle()]
+        icons = [Square(), Triangle(),Pentagon(),Triangle()]
          //loop through the array and
         for var i = 0; i < icons.count; ++i {
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 10 + 80*i, y: 573, width: 75, height: 75)
+            icons[i].imageView.frame = CGRect(x: 10 + 75*i, y: 573, width: 70, height: 70)
             //2. add to view
             view.addSubview(icons[i].imageView)
             //3. associate  target action
@@ -259,7 +272,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     }
 
                     
-                    
                 })
                 
                 
@@ -339,13 +351,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //animate dot player when a beat is there - this should be in an if statement
         UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(2, 2)
-            self.playerImage.alpha = 0.7
             }, completion: { (Bool) -> Void in
         })
         
         UIView.animateWithDuration(0.1) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
-            self.playerImage.alpha = 0.5
             
         }
 
