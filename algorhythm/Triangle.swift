@@ -13,9 +13,9 @@ class Triangle : Shape {
      override init(){
         super.init()
 
-        super.timeArray[2] =  super . prepareAVAudioPlayer("WoodBonk", fileType: "wav")
-        super.timeArray[6] =  super . prepareAVAudioPlayer("WoodBonk", fileType: "wav")
-        super.timeArray[10] =  super . prepareAVAudioPlayer("WoodBonk", fileType: "wav")
+        super.timeArray[0] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
+        super.timeArray[5] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
+        super.timeArray[11] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
 
 //        print ("triangle init: super.timeArray[1]\(super.timeArray[1])")
         

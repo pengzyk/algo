@@ -20,8 +20,8 @@ class Pentagon : Shape{
         timeArray[0] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
         timeArray[3] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
         timeArray[6] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[9] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[12] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+        timeArray[10] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+        timeArray[13] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
 
         
         //icon for shapes

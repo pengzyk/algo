@@ -96,13 +96,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
        // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
-        icons = [Square(), Triangle(),Pentagon(),Triangle()]
+        icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
          //loop through the array and
         for var i = 0; i < icons.count; ++i {
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 10 + 75*i, y: 573, width: 70, height: 70)
+            icons[i].imageView.frame = CGRect(x: 10 + 70*i, y: 570, width: 65, height: 65)
             //2. add to view
             view.addSubview(icons[i].imageView)
             //3. associate  target action
@@ -267,7 +267,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //if one turns
                         //the other would also turn. BUG.
                         self.shapes.append(self.icons[tag])
-                 
                         
                     }
 

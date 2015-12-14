@@ -23,6 +23,12 @@
 		DC51CDFD1BFEE3FA00BD3EA5 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */; };
 		DCF10A7A1C1F469800A30DE5 /* Pentagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF10A791C1F469800A30DE5 /* Pentagon.swift */; };
 		DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */; };
+		DCF10A7E1C1F53A200A30DE5 /* Hexagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF10A7D1C1F53A100A30DE5 /* Hexagon.swift */; };
+		DCF10A801C1F540800A30DE5 /* just blaze bksnare2.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */; };
+		DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */; };
+		DCF10A841C1F575D00A30DE5 /* just blaze fullkick.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */; };
+		DCF10A861C1F581900A30DE5 /* Octagon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF10A851C1F581900A30DE5 /* Octagon.swift */; };
+		DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +71,12 @@
 		DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		DCF10A791C1F469800A30DE5 /* Pentagon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pentagon.swift; sourceTree = "<group>"; };
 		DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze &ound10.WAV"; sourceTree = "<group>"; };
+		DCF10A7D1C1F53A100A30DE5 /* Hexagon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hexagon.swift; sourceTree = "<group>"; };
+		DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze bksnare2.WAV"; sourceTree = "<group>"; };
+		DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze exmple 38.WAV"; sourceTree = "<group>"; };
+		DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze fullkick.WAV"; sourceTree = "<group>"; };
+		DCF10A851C1F581900A30DE5 /* Octagon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octagon.swift; sourceTree = "<group>"; };
+		DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze hisnare.WAV"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +134,9 @@
 				DC101F2B1C003ACD00A47C1A /* Shape.swift */,
 				DC2F9FAA1BF86E9600237A99 /* loopViewController.swift */,
 				DC51CDFC1BFEE3FA00BD3EA5 /* Square.swift */,
+				DCF10A851C1F581900A30DE5 /* Octagon.swift */,
 				DCF10A791C1F469800A30DE5 /* Pentagon.swift */,
+				DCF10A7D1C1F53A100A30DE5 /* Hexagon.swift */,
 				DC101F2D1C003B5F00A47C1A /* Triangle.swift */,
 				DC2F9F7E1BF8541500237A99 /* Assets.xcassets */,
 				DC2F9F801BF8541500237A99 /* LaunchScreen.storyboard */,
@@ -155,6 +169,10 @@
 				DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */,
 				DC2F9FB51BF8869600237A99 /* String.wav */,
 				DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */,
+				DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */,
+				DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */,
+				DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */,
+				DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */,
 				DC2F9FAC1BF87C4500237A99 /* Pong.wav */,
 			);
 			name = sound;
@@ -268,12 +286,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */,
+				DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */,
+				DCF10A841C1F575D00A30DE5 /* just blaze fullkick.WAV in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
+				DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,
 				DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */,
+				DCF10A801C1F540800A30DE5 /* just blaze bksnare2.WAV in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,10 +322,12 @@
 			files = (
 				DC101F2C1C003ACD00A47C1A /* Shape.swift in Sources */,
 				DC51CDFD1BFEE3FA00BD3EA5 /* Square.swift in Sources */,
+				DCF10A7E1C1F53A200A30DE5 /* Hexagon.swift in Sources */,
 				DC2F9F7A1BF8541500237A99 /* ViewController.swift in Sources */,
 				DC101F2E1C003B5F00A47C1A /* Triangle.swift in Sources */,
 				DCF10A7A1C1F469800A30DE5 /* Pentagon.swift in Sources */,
 				DC2F9F781BF8541500237A99 /* AppDelegate.swift in Sources */,
+				DCF10A861C1F581900A30DE5 /* Octagon.swift in Sources */,
 				DC2F9FAB1BF86E9600237A99 /* loopViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

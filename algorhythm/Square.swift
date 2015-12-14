@@ -15,10 +15,10 @@ class Square : Shape{
     override init(){
         super.init()
         
-        timeArray[3] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[7] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[11] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
-        timeArray[15] = prepareAVAudioPlayer( "WoodBonk", fileType: "wav")
+        timeArray[0] = prepareAVAudioPlayer( "just blaze fullkick", fileType: "WAV")
+        timeArray[4] = prepareAVAudioPlayer( "just blaze fullkick", fileType: "WAV")
+        timeArray[8] = prepareAVAudioPlayer( "just blaze fullkick", fileType: "WAV")
+        timeArray[12] = prepareAVAudioPlayer( "just blaze fullkick", fileType: "WAV")
         
         //icon for shapes
         let imageName = "square.png"
