@@ -102,6 +102,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         }
         
+
+        
        
        
 
@@ -120,20 +122,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        panRec.addTarget(self, action: "draggedView:")
 //        panRec.addTarget(self, action: "didPanShape:")
 //        imageView.userInteractionEnabled = true
+          print("exit viewDidLoad")
         
     }
     
     
-    
-    func draggedView(sender:UIPanGestureRecognizer){
-        print("sent from imageView ")
-        
-        if let tag = sender.view?.tag {
-            print(tag)
-        }
-        
-        
-    }
+//    
+//    func draggedView(sender:UIPanGestureRecognizer){
+//        print("sent from imageView ")
+//        
+//        if let tag = sender.view?.tag {
+//            print(tag)
+//        }
+//        
+//        
+//    }
     
  
     
@@ -221,16 +224,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let translation = sender.translationInView(view)
         
-//        
-//        if let tag = sender.view?.tag {
-//            print(tag)
-//        }
-
-        
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
-            print("began")
+//            print("began")
             
             let newShape = sender.view as! UIImageView
             
@@ -293,9 +290,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //translate to center of loopView
                     self.newlyCreatedShape.center = self.loopView.center
                     
-                    //add in the shape
-                    self.shapes.append(Triangle())
-                    print ("added triangle")
+                    //add to the shape queue
+                    if let tag = sender.view?.tag {
+                        
+                        self.shapes.append(self.icons[tag])
+                 
+                        
+                    }
+
+                    
                     
                 })
                 
@@ -347,6 +350,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
+                        
+                        self.shapes.removeLast()
                 })
                 
             }

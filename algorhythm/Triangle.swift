@@ -23,7 +23,7 @@ class Triangle : Shape {
         let imageName = "triangle.png"
         let image = UIImage(named: imageName)
         imageView = UIImageView(image: image!)
-        imageView.tag = -1 
+        imageView.tag = -1
         
         
          print ("triangle init")
