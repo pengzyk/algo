@@ -81,15 +81,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             clockwise: true)
         
         
-       // initialize array with shapes 
+       // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
-        icons = [Square(), Triangle()]
+        icons = [Square(), Triangle(),Square(),Triangle()]
          //loop through the array and
         for var i = 0; i < icons.count; ++i {
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 50*i, y: 573, width: 75, height: 75)
+            icons[i].imageView.frame = CGRect(x: 10 + 80*i, y: 573, width: 75, height: 75)
             //2. add to view
             view.addSubview(icons[i].imageView)
             //3. associate  target action
@@ -103,42 +103,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
         
 
-        
-       
-       
-
-        
-        //icon for shapes
-//        let imageName = "square.png"
-//        let image = UIImage(named: imageName)
-//        imageView = UIImageView(image: image!)
-//        imageView.tag = 2
-//        imageView.frame = CGRect(x: 100, y: 573, width: 75, height: 75)
-//        view.addSubview(imageView)
-        
-        
-
-       
-//        panRec.addTarget(self, action: "draggedView:")
-//        panRec.addTarget(self, action: "didPanShape:")
-//        imageView.userInteractionEnabled = true
           print("exit viewDidLoad")
         
     }
     
-    
-//    
-//    func draggedView(sender:UIPanGestureRecognizer){
-//        print("sent from imageView ")
-//        
-//        if let tag = sender.view?.tag {
-//            print(tag)
-//        }
-//        
-//        
-//    }
-    
- 
     
     func tick(){
        // print( self.ticCounter)
@@ -164,16 +132,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             self.ticCounter = 0
         }
         
-        
-    }
-    
-    @IBAction func onAddTrianbleButton(sender: AnyObject) {
-        shapes.append(Triangle())
-        
-    }
-    
-    @IBAction func onClickAddSquareButton(sender: AnyObject) {
-        shapes.append(Square())
         
     }
     
@@ -292,7 +250,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     //add to the shape queue
                     if let tag = sender.view?.tag {
-                        
+                        //this would result in the same shape instance 
+                        //if one turns
+                        //the other would also turn. BUG.
                         self.shapes.append(self.icons[tag])
                  
                         
@@ -350,7 +310,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
-                        
+                        //delete the last one in shapes list 
+                        //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
                 })
                 
