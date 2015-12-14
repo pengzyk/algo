@@ -52,6 +52,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     @IBOutlet weak var playerUIView : UIView!
     @IBOutlet weak var playerImage: UIImageView!
     
+
+    //shape 
+    @IBOutlet var imageView: UIView!
+    let panRec = UIPanGestureRecognizer()
+    
     //initialize path bounds
     let circleStartAngle = CGFloat(270.01 * M_PI/180)
     let circleEndAngle = CGFloat(270 * M_PI/180)
@@ -60,6 +65,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,13 +86,28 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             endAngle: circleEndAngle,
             clockwise: true)
         
+        
+        //icon for shapes
+        let imageName = "square.png"
+        let image = UIImage(named: imageName)
+        imageView = UIImageView(image: image!)
+        
+        imageView.frame = CGRect(x: 100, y: 573, width: 75, height: 75)
+        view.addSubview(imageView)
 
-        
-        
+
+        imageView.addGestureRecognizer(panRec)
+//        panRec.addTarget(self, action: "draggedView:")
+        panRec.addTarget(self, action: "didPanShape:")
+        imageView.userInteractionEnabled = true
         
     }
     
     
+    
+    func draggedView(sender:UIPanGestureRecognizer){
+        print("sent from imageView ")
+    }
     
     
     
@@ -178,7 +201,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             let newShape = sender.view as! UIImageView
             
-            print(sender.description)
+         //   print(sender.description)
             
             newlyCreatedShape = UIImageView(image: newShape.image)
             
