@@ -35,14 +35,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var newlyCreatedShapeMenuCenter: CGPoint!
 
     
-//slow for debugging
-//    let TIMER_INTERVAL =  60.0/4.0/10.0
-//        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
-
-        //BPM 75 : 60.0/75.0/4.0
-    //    var LOOP_PERIOD : Float!
-    let TIMER_INTERVAL =  60.0/300.0 // Float(60) / Float(75)
-
+    //BPM 75 : 60.0/75.0/4.0
+    let TIMER_INTERVAL =  60.0/300.0 // loat(60) / Float(75)
+//    var LOOP_PERIOD : Float!
     let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
@@ -57,11 +52,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     let panRec = UIPanGestureRecognizer()
     
     //initialize path bounds
-//    let circleStartAngle = CGFloat(270.001 * M_PI/180)
-//    let circleEndAngle = CGFloat(270 * M_PI/180)
-//    let circleBounds = CGRectMake(45, 55, 285, 285)
-    var  circlePath = UIBezierPath()
-    var  playerPath = UIBezierPath()
+    let circleStartAngle = CGFloat(270.01 * M_PI/180)
+    let circleEndAngle = CGFloat(270 * M_PI/180)
+    let circleBounds = CGRectMake(45, 55, 285, 285)
+    let circlePath = UIBezierPath()
     
     
     
@@ -71,33 +65,26 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //icons array on the bottom
     var icons = [Shape]()
     
-    @IBOutlet weak var debugLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //PLAYER LOOP 
-        let loopImageName = "loopTest.png"
+         let loopImageName = "loop.png"
         let loopImage = UIImage(named: loopImageName)
-        loopView = UIImageView(image: loopImage!)
-        
-        
-            let circleStartAngle = CGFloat(270.001 * M_PI/180)
-            let circleEndAngle = CGFloat(270 * M_PI/180)
-        
-        let screenWidth = self.view.frame.size.width
-        let circleCenterX = CGFloat(165.0)
-        let circleCenterY = screenWidth/2.0
-        let circleRadius = CGFloat(150.0);
-        
-        let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
-//            let circleBounds = CGRectMake(45, 55, 285, 285)
+         loopView = UIImageView(image: loopImage!)
         
         loopView.frame = circleBounds
         //2. add to view
         view.addSubview(loopView)
-        
 
+        
+        
+//        LOOP_PERIOD = TIMER_INTERVAL * 16.0
+        //initialize view size and position
+        playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
+        playerUIView.alpha = 0
+        playerImage.alpha = 0.5
         
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
@@ -106,34 +93,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             endAngle: circleEndAngle,
             clockwise: true)
         
-        //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
-        //initialize view size and position
-        let  playerRadius = CGFloat (15.0)
-        let playerDiameter = playerRadius * 2.0
-        playerUIView.frame = CGRect(x: circleCenterX-playerRadius, y: circleCenterY-playerRadius, width: playerDiameter, height: playerDiameter)
-        playerUIView.alpha = 1
-        let playerBounds = CGRectMake (circleCenterX - playerRadius ,circleCenterY - playerRadius ,
-            CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
-        playerPath.addArcWithCenter(CGPointMake(CGRectGetMidX(playerBounds), CGRectGetMidY(playerBounds)),
-            radius: CGRectGetWidth(playerBounds)/2,
-            startAngle: circleStartAngle,
-            endAngle: circleEndAngle,
-            clockwise: true)
-        
-        
-        
         
        // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
         icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
-
-//         icons = [ Triangle(), Square(), Pentagon(), Hexagon()]
-        //loop through the array and
+         //loop through the array and
         for var i = 0; i < icons.count; ++i {
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65)
+            icons[i].imageView.frame = CGRect(x: 10 + 70*i, y: 570, width: 65, height: 65)
             //2. add to view
             view.addSubview(icons[i].imageView)
             //3. associate  target action
@@ -146,33 +115,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         }
         
-        ///TODO move play button to top
-//        let test = UIView()
-//        
-//        view.bringSubviewToFront(playButton)
 
-//          print("exit viewDidLoad")
+          print("exit viewDidLoad")
         
     }
-
-    @IBAction func addOne(sender: AnyObject) {
-        
-        if ( self.shapes.count > 0){
-         //   print( self.shapes.last!.filledSlots)
-            self.shapes.last!.turn(1)
-           // print( self.shapes.last!.filledSlots)
-           // print(" ")
-        }
-        
-
-    }
+    
     
     func tick(){
        // print( self.ticCounter)
-        //for debugging
-        
-        debugLabel.text = String(self.ticCounter)
-        
+
         //loop through shapes
         var ifAnimate = false
         
@@ -205,30 +156,32 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 timer.invalidate()
             playButton.setTitle("PLAY", forState: UIControlState.Normal)
             print ("stop timer" )
-          
-            
+            let playImage = UIImage(named: "play.png")
+            playButton.setImage(playImage, forState: UIControlState.Normal)
+            view.bringSubviewToFront(playButton)
+                
             //PLAYER LOOP 
             playerUIView.layer.removeAllAnimations()
-         //   playerUIView.alpha = 0
+            playerUIView.alpha = 0
             
             
         } //if currently paused, clicking this button will start the timer
         
         else {
-            
-            self.ticCounter = 0 ;  //reset to the start
-            self.tick(); // the timer would schedule one to happen in some time,but we want one right now! 
-            
               //create the timer & add the timer automatically to the NSRunLoop
            timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
             playButton.setTitle("PAUSE", forState: UIControlState.Normal)
             print ("start timer" )
             
+            let pauseImage = UIImage(named: "pause.png")
+            playButton.setImage(pauseImage, forState: UIControlState.Normal)
+            view.bringSubviewToFront(playButton)
             
-            //PLAYER LOOP ----------------------------------------------------------------------------------------------------
-       //     playerUIView.alpha = 1
+            //PLAYER LOOP 
+            playerUIView.alpha = 1
             //choose animation path
             anim.path = circlePath.CGPath
+            
             //set some more parameters for the animation
             anim.repeatCount = Float.infinity
             anim.duration = LOOP_PERIOD
@@ -248,14 +201,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let translation = sender.translationInView(view)
         
-        
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
 //            print("began")
             
             let newShape = sender.view as! UIImageView
             
-          //  print(sender.description)
+         //   print(sender.description)
             
             newlyCreatedShape = UIImageView(image: newShape.image)
             
@@ -318,23 +270,60 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //translate to center of loopView
                     self.newlyCreatedShape.center = self.loopView.center
                     
-                    let tag = sender.view!.tag
-                    
-                    let klass = self.icons[tag].dynamicType.self
-                    
-                    self.shapes.append(klass.init())
+                    //add to the shape queue
+                    if let tag = sender.view?.tag {
+                        
+                    }
+
                 })
                 
-                
             }
+            
+        }
+        
+    }
+    
+    //ROTATE SHAPE ALREADY IN LOOP
+    
+    func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
+    
+    {
+        let rotationRadians = rotationGestureRecognizerCanvas.rotation
+        var alpha = CGFloat!()
+        
+        if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
+            
+            newlyCreatedShape = rotationGestureRecognizerCanvas.view as! UIImageView
+            
+            // set the initial center point
+            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
+            
+            // bring the newlyCreatedShape imageview to the front
+            newlyCreatedShape.superview?.bringSubviewToFront(view)
+            
+        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
+
+            let previousTransform = newlyCreatedShape.transform
+            
+            newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
+            
+        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
+            
+            
+            
+            print("\(rotationRadians)")
+            
+            alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
+            alpha = round(alpha)
+            print("\(alpha)")
+            newlyCreatedShape.transform = CGAffineTransformMakeRotation(alpha * CGFloat(M_PI) / 8)
             
         }
         
         
     }
     
-    
-    //pan shape that is already on loop
+//MOVE SHAPE ALREADY IN LOOP
     
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer)
         
@@ -375,7 +364,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         self.newlyCreatedShape.removeFromSuperview()
                         //delete the last one in shapes list 
                         //this is a hack. since we dont know the index of the shape being activated : /
-                        self.shapes.removeLast()
+                       // self.shapes.removeLast()
                 })
                 
             }
@@ -392,60 +381,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             }
         }
     }
-    
-    
-    
-    //ROTATE SHAPE ALREADY IN LOOP
-    
-    func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
-        
-    {
-        let rotationRadians = rotationGestureRecognizerCanvas.rotation
-        var alpha = CGFloat!()
-        
-        if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
-            
-            newlyCreatedShape = rotationGestureRecognizerCanvas.view as! UIImageView
-            
-            // set the initial center point
-            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
-            
-            // bring the newlyCreatedShape imageview to the front
-            newlyCreatedShape.superview?.bringSubviewToFront(view)
-            
-        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
-            
-            let previousTransform = newlyCreatedShape.transform
-            
-            newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
-            
-        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
-            
-            
-            
-//            print("\(rotationRadians)")
-            
-            alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
-            alpha = round(alpha)
-            print("turn \(Int(alpha))")
-            
-            if ( self.shapes.count > 0){
-                   print( self.shapes.last!.filledSlots)
-                self.shapes.last!.turn(Int(alpha))
-                 print( self.shapes.last!.filledSlots)
-                // print(" ")
-            }
-            
-            
-            newlyCreatedShape.transform = CGAffineTransformMakeRotation(alpha * CGFloat(M_PI) / 8)
-            
-            
-        }
-        
-        
-    }
-    
-    //MOVE SHAPE ALREADY IN LOOP
     
     func moveShape() {
         

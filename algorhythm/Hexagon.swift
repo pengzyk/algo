@@ -18,21 +18,10 @@ class Hexagon : Shape{
         super.init()
         fileName = "just blaze &ound10"
         fileExtention = "WAV"
-        
         filledSlots = [1,4,7,9,12,15]
         
         fillSlots()
 
-        
-//        for var i=0 ; i < timeArray.count ; ++i {
-//            if filledSlots.contains( i) {
-//                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//            }
-//            
-//        }
-        
-        
-        
         
         //icon for shapes
         let imageName = "hexagon.png"

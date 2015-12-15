@@ -30,7 +30,7 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     func turn(step: Int)  {
         //shift the index by the number of steps
         for var index = 0 ; index < filledSlots.count ; ++index {
-            filledSlots[index] = (filledSlots[index]+1) % timeArray.count
+            filledSlots[index] = (filledSlots[index]+step) % timeArray.count
         }
         
         //refresh the timeArray
