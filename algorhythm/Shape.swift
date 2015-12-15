@@ -16,18 +16,39 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     
     
     var imageView: UIView!
-//    var viewTag: Int!
-//   
+    var turnStep: Int!
+    var fileName: String!
+    var fileExtention: String!
+    var filledSlots  = [Int]()
+
     
-    
-//
-    override init (){
+    override required init (){
         super.init()
 
-        
-   
     }
     
+    func turn(step: Int)  {
+        //shift the index by the number of steps
+        for var index = 0 ; index < filledSlots.count ; ++index {
+            filledSlots[index] = (filledSlots[index]+1) % timeArray.count
+        }
+        
+        
+       fillSlots ()
+    }
+    
+    func fillSlots () {
+        for var i=0 ; i < timeArray.count ; ++i {
+            if filledSlots.contains( i ) {
+                timeArray[i] = prepareAVAudioPlayer( fileName, fileType: fileExtention )
+            }
+            else {
+                timeArray[i] = nil
+            }
+            
+        }
+        
+    }
     
     
     func play(index: Int) -> Bool {

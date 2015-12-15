@@ -12,12 +12,20 @@ import AVFoundation
 
 class Octagon : Shape{
     
-    override init(){
+    required init(){
         super.init()
+    
+        filledSlots = [1,3,5,7,9,11,13,15]
+        
+        
+        
         for var i=0 ; i < timeArray.count ; ++i {
-            if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13 || i == 15 ){
+
+            
+            if filledSlots.contains( i) {
                 timeArray[i] = prepareAVAudioPlayer( "just blaze hisnare", fileType: "WAV")
             }
+            
         }
         
         //icon for shapes

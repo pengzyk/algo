@@ -14,15 +14,26 @@ import AVFoundation
 
 class Hexagon : Shape{
     
-    override init(){
+    required init(){
         super.init()
         
-        timeArray[1] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[4] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[7] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[9] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[12] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[15] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[1] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[4] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[7] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[9] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[12] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//        timeArray[15] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+        
+        filledSlots = [1,4,7,9,12,15]
+        
+        for var i=0 ; i < timeArray.count ; ++i {
+            if filledSlots.contains( i) {
+                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+            }
+            
+        }
+        
+        
         
         
         //icon for shapes

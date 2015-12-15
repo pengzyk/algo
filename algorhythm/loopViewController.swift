@@ -35,10 +35,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var newlyCreatedShapeMenuCenter: CGPoint!
 
     
-    //BPM 75 : 60.0/75.0/4.0
-    let TIMER_INTERVAL =  60.0/4.0/10.0      // 60.0/300.0 // Float(60) / Float(75)
+//slow for debugging
+    let TIMER_INTERVAL =  60.0/4.0/10.0
+        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
+
+        //BPM 75 : 60.0/75.0/4.0
+//    let TIMER_INTERVAL =  60.0/300.0 // Float(60) / Float(75)
 //    var LOOP_PERIOD : Float!
-    let LOOP_PERIOD = 60.0/4.0/10.0 * 16         //60.0/300.0 * 16
+//    let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
     
@@ -52,10 +56,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     let panRec = UIPanGestureRecognizer()
     
     //initialize path bounds
-    let circleStartAngle = CGFloat(270.01 * M_PI/180)
-    let circleEndAngle = CGFloat(270 * M_PI/180)
-    let circleBounds = CGRectMake(45, 55, 285, 285)
-    let circlePath = UIBezierPath()
+//    let circleStartAngle = CGFloat(270.001 * M_PI/180)
+//    let circleEndAngle = CGFloat(270 * M_PI/180)
+//    let circleBounds = CGRectMake(45, 55, 285, 285)
+    var  circlePath = UIBezierPath()
+    var  playerPath = UIBezierPath()
     
     
     
@@ -71,20 +76,27 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         super.viewDidLoad()
         
         //PLAYER LOOP 
-         let loopImageName = "loopTest.png"
+        let loopImageName = "loopTest.png"
         let loopImage = UIImage(named: loopImageName)
-         loopView = UIImageView(image: loopImage!)
+        loopView = UIImageView(image: loopImage!)
+        
+        
+            let circleStartAngle = CGFloat(270.001 * M_PI/180)
+            let circleEndAngle = CGFloat(270 * M_PI/180)
+        
+        let screenWidth = self.view.frame.size.width
+        let circleCenterX = CGFloat(165.0)
+        let circleCenterY = screenWidth/2.0
+        let circleRadius = CGFloat(150.0);
+        
+        let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
+//            let circleBounds = CGRectMake(45, 55, 285, 285)
         
         loopView.frame = circleBounds
         //2. add to view
         view.addSubview(loopView)
+        
 
-        
-        
-//        LOOP_PERIOD = TIMER_INTERVAL * 16.0
-        //initialize view size and position
-        playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
-        playerUIView.alpha = 1
         
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
@@ -92,6 +104,22 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             startAngle: circleStartAngle,
             endAngle: circleEndAngle,
             clockwise: true)
+        
+        //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
+        //initialize view size and position
+        let  playerRadius = CGFloat (15.0)
+        let playerDiameter = playerRadius * 2.0
+        playerUIView.frame = CGRect(x: circleCenterX-playerRadius, y: circleCenterY-playerRadius, width: playerDiameter, height: playerDiameter)
+        playerUIView.alpha = 1
+        let playerBounds = CGRectMake (circleCenterX - playerRadius ,circleCenterY - playerRadius ,
+            CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
+        playerPath.addArcWithCenter(CGPointMake(CGRectGetMidX(playerBounds), CGRectGetMidY(playerBounds)),
+            radius: CGRectGetWidth(playerBounds)/2,
+            startAngle: circleStartAngle,
+            endAngle: circleEndAngle,
+            clockwise: true)
+        
+        
         
         
        // initialize the bottom icon array with shapes
@@ -102,7 +130,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 10 + 70*i, y: 570, width: 65, height: 65)
+            icons[i].imageView.frame = CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65)
             //2. add to view
             view.addSubview(icons[i].imageView)
             //3. associate  target action
@@ -115,11 +143,33 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         }
         
+        ///TODO move play button to
+//        let test = UIView()
+//        
+//        view.bringSubviewToFront(playButton)
 
 //          print("exit viewDidLoad")
         
     }
+
+    @IBAction func bang(sender: AnyObject) {
+        tick()
+    }
     
+    @IBAction func addOne(sender: AnyObject) {
+        
+        if ( self.shapes.count > 0){
+         //   print( self.shapes.last!.filledSlots)
+            self.shapes.last!.turn(1)
+           // print( self.shapes.last!.filledSlots)
+           // print(" ")
+        }
+        
+//        for shape in shapes {
+//            print(shape.filledSlots )
+//        }
+
+    }
     
     func tick(){
        // print( self.ticCounter)
@@ -179,11 +229,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             print ("start timer" )
             
             
-            //PLAYER LOOP 
+            //PLAYER LOOP ----------------------------------------------------------------------------------------------------
        //     playerUIView.alpha = 1
             //choose animation path
             anim.path = circlePath.CGPath
-            
             //set some more parameters for the animation
             anim.repeatCount = Float.infinity
             anim.duration = LOOP_PERIOD
@@ -269,16 +318,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //translate to center of loopView
                     self.newlyCreatedShape.center = self.loopView.center
                     
-                    //add to the shape queue
-                    if let tag = sender.view?.tag {
-                        //this would result in the same shape instance 
-                        //if one turns
-                        //the other would also turn. BUG.
-                        self.shapes.append(self.icons[tag])
-                        
-                    }
-
+                    let tag = sender.view!.tag
                     
+                    let klass = self.icons[tag].dynamicType.self
+                    
+                    self.shapes.append(klass.init())
                 })
                 
                 
