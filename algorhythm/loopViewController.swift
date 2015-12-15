@@ -36,9 +36,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
     
     //BPM 75 : 60.0/75.0/4.0
-    let TIMER_INTERVAL =  60.0/300.0 // loat(60) / Float(75)
+    let TIMER_INTERVAL =  60.0/4.0/10.0      // 60.0/300.0 // Float(60) / Float(75)
 //    var LOOP_PERIOD : Float!
-    let LOOP_PERIOD = 60.0/300.0 * 16
+    let LOOP_PERIOD = 60.0/4.0/10.0 * 16         //60.0/300.0 * 16
     
     //player loop
     
@@ -65,12 +65,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //icons array on the bottom
     var icons = [Shape]()
     
+    @IBOutlet weak var debugLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //PLAYER LOOP 
-         let loopImageName = "loop.png"
+         let loopImageName = "loopTest.png"
         let loopImage = UIImage(named: loopImageName)
          loopView = UIImageView(image: loopImage!)
         
@@ -83,8 +84,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
         //initialize view size and position
         playerUIView.frame = CGRect(x: 160, y: 300, width: 30, height: 30)
-        playerUIView.alpha = 0
-        playerImage.alpha = 0.5
+        playerUIView.alpha = 1
         
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
@@ -116,14 +116,17 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
         
 
-          print("exit viewDidLoad")
+//          print("exit viewDidLoad")
         
     }
     
     
     func tick(){
        // print( self.ticCounter)
-
+        //for debugging
+        
+        debugLabel.text = String(self.ticCounter)
+        
         //loop through shapes
         var ifAnimate = false
         
@@ -156,15 +159,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 timer.invalidate()
             playButton.setTitle("PLAY", forState: UIControlState.Normal)
             print ("stop timer" )
+          
             
             //PLAYER LOOP 
             playerUIView.layer.removeAllAnimations()
-            playerUIView.alpha = 0
+         //   playerUIView.alpha = 0
             
             
         } //if currently paused, clicking this button will start the timer
         
         else {
+            
+            self.ticCounter = 0 ;  //reset to the start
+            self.tick(); // the timer would schedule one to happen in some time,but we want one right now! 
+            
               //create the timer & add the timer automatically to the NSRunLoop
            timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
             playButton.setTitle("PAUSE", forState: UIControlState.Normal)
@@ -172,7 +180,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             
             //PLAYER LOOP 
-            playerUIView.alpha = 1
+       //     playerUIView.alpha = 1
             //choose animation path
             anim.path = circlePath.CGPath
             
@@ -202,7 +210,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             let newShape = sender.view as! UIImageView
             
-         //   print(sender.description)
+          //  print(sender.description)
             
             newlyCreatedShape = UIImageView(image: newShape.image)
             

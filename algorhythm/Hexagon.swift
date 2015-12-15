@@ -31,9 +31,5 @@ class Hexagon : Shape{
         imageView = UIImageView(image: image!)
         imageView.tag = -1
         
-        
-        print("square initialized")
-        
-        
-    }
+         }
 }

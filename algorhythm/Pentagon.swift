@@ -17,12 +17,11 @@ class Pentagon : Shape{
     override init(){
         super.init()
         
-        timeArray[0] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[3] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[6] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[10] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-        timeArray[13] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-
+        for var i=0 ; i < timeArray.count ; ++i {
+            if (i == 0 || i == 3 || i == 6 || i == 10 || i == 13 ){
+                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+            }
+        }
         
         //icon for shapes
         let imageName = "pentagon.png"
@@ -31,7 +30,7 @@ class Pentagon : Shape{
         imageView.tag = -1
         
         
-        print("square initialized")
+
         
         
     }

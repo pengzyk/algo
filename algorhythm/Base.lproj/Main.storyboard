@@ -20,11 +20,11 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="0k5-EA-HFc">
-                                <rect key="frame" x="143" y="188" width="50" height="50"/>
+                                <rect key="frame" x="158" y="78" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="circle" id="HT6-CA-hMt">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                        <rect key="frame" x="10" y="10" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <animations/>
                                     </imageView>
@@ -44,12 +44,20 @@
                                     <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pdZ-Bi-sCI">
+                                <rect key="frame" x="163" y="175" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="debugLabel" destination="pdZ-Bi-sCI" id="yF2-lc-Ula"/>
                         <outlet property="playButton" destination="RiP-Ko-cVM" id="zF7-Km-FAr"/>
                         <outlet property="playerImage" destination="HT6-CA-hMt" id="qbi-aF-pYu"/>
                         <outlet property="playerUIView" destination="0k5-EA-HFc" id="K5f-V6-rVq"/>

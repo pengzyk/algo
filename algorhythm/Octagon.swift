@@ -26,10 +26,7 @@ class Octagon : Shape{
         imageView = UIImageView(image: image!)
         imageView.tag = -1
         
-        
-        print("square initialized")
-        
-        
+                
     }
 }
 

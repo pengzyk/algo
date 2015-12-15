@@ -27,8 +27,6 @@ class Square : Shape{
         imageView.tag = -1
         
         
-        print("square initialized")
-
         
     }
 }
