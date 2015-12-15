@@ -16,22 +16,20 @@ class Hexagon : Shape{
     
     required init(){
         super.init()
-        
-//        timeArray[1] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//        timeArray[4] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//        timeArray[7] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//        timeArray[9] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//        timeArray[12] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-//        timeArray[15] =  prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+        fileName = "just blaze &ound10"
+        fileExtention = "WAV"
         
         filledSlots = [1,4,7,9,12,15]
         
-        for var i=0 ; i < timeArray.count ; ++i {
-            if filledSlots.contains( i) {
-                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-            }
-            
-        }
+        fillSlots()
+
+        
+//        for var i=0 ; i < timeArray.count ; ++i {
+//            if filledSlots.contains( i) {
+//                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//            }
+//            
+//        }
         
         
         

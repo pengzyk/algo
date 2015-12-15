@@ -36,13 +36,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
     
 //slow for debugging
-    let TIMER_INTERVAL =  60.0/4.0/10.0
-        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
+//    let TIMER_INTERVAL =  60.0/4.0/10.0
+//        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
 
         //BPM 75 : 60.0/75.0/4.0
-//    let TIMER_INTERVAL =  60.0/300.0 // Float(60) / Float(75)
-//    var LOOP_PERIOD : Float!
-//    let LOOP_PERIOD = 60.0/300.0 * 16
+    //    var LOOP_PERIOD : Float!
+    let TIMER_INTERVAL =  60.0/300.0 // Float(60) / Float(75)
+
+    let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
     
@@ -125,7 +126,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
        // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
         icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
-         //loop through the array and
+
+//         icons = [ Triangle(), Square(), Pentagon(), Hexagon()]
+        //loop through the array and
         for var i = 0; i < icons.count; ++i {
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
@@ -165,9 +168,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
            // print(" ")
         }
         
-//        for shape in shapes {
-//            print(shape.filledSlots )
-//        }
 
     }
     

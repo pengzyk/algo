@@ -33,7 +33,7 @@ class Shape: NSObject, AVAudioPlayerDelegate{
             filledSlots[index] = (filledSlots[index]+1) % timeArray.count
         }
         
-        
+        //refresh the timeArray
        fillSlots ()
     }
     

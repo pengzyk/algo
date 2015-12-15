@@ -13,18 +13,18 @@ class Triangle : Shape {
      required init(){
         super.init()
 
-        super.timeArray[0] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
-        super.timeArray[5] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
-        super.timeArray[11] =  super . prepareAVAudioPlayer("just blaze exmple 38", fileType: "WAV")
-
-//        print ("triangle init: super.timeArray[1]\(super.timeArray[1])")
+        fileName = "just blaze exmple 38"
+        fileExtention = "WAV"
+        
         filledSlots = [0,5,11]
-        for var i=0 ; i < timeArray.count ; ++i {
-            if filledSlots.contains( i) {
-                timeArray[i] = prepareAVAudioPlayer( "just blaze exmple 38", fileType: "WAV")
-            }
-            
-        }
+        fillSlots()
+        
+//        for var i=0 ; i < timeArray.count ; ++i {
+//            if filledSlots.contains( i) {
+//                timeArray[i] = prepareAVAudioPlayer( "just blaze exmple 38", fileType: "WAV")
+//            }
+//            
+//        }
         
         
         //icon for shapes

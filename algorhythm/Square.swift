@@ -19,7 +19,7 @@ class Square : Shape{
         
        
         filledSlots = [0,4,8,12]
-        fillSlots();
+        fillSlots()
 //        
 //        
 //        for var i=0 ; i < timeArray.count ; ++i {

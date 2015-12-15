@@ -23,12 +23,20 @@ class Pentagon : Shape{
 //            }
 //        }
         filledSlots = [0,3,6,10,13]
-        for var i=0 ; i < timeArray.count ; ++i {
-            if filledSlots.contains( i) {
-                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
-            }
-            
-        }
+        
+        fileName = "just blaze &ound10"
+        fileExtention = "WAV"
+        
+        
+        fillSlots()
+//        
+//        
+//        for var i=0 ; i < timeArray.count ; ++i {
+//            if filledSlots.contains( i) {
+//                timeArray[i] = prepareAVAudioPlayer( "just blaze &ound10", fileType: "WAV")
+//            }
+//            
+//        }
         
         
         
