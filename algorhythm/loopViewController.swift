@@ -41,8 +41,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
         //BPM 75 : 60.0/75.0/4.0
     //    var LOOP_PERIOD : Float!
-    let TIMER_INTERVAL =  60.0/300.0 // Float(60) / Float(75)
-
+    let TIMER_INTERVAL =  60.0/300.0 
     let LOOP_PERIOD = 60.0/300.0 * 16
     
     //player loop
@@ -56,12 +55,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     @IBOutlet var imageView: UIView!
     let panRec = UIPanGestureRecognizer()
     
-    //initialize path bounds
-//    let circleStartAngle = CGFloat(270.001 * M_PI/180)
-//    let circleEndAngle = CGFloat(270 * M_PI/180)
-//    let circleBounds = CGRectMake(45, 55, 285, 285)
+
+    //the path for the dot and the loop
     var  circlePath = UIBezierPath()
-    var  playerPath = UIBezierPath()
+//    var  playerPath = UIBezierPath()
     
     
     
@@ -76,50 +73,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //PLAYER LOOP 
-        let loopImageName = "loopTest.png"
-        let loopImage = UIImage(named: loopImageName)
-        loopView = UIImageView(image: loopImage!)
-        
-        
-            let circleStartAngle = CGFloat(270.001 * M_PI/180)
-            let circleEndAngle = CGFloat(270 * M_PI/180)
-        
-        let screenWidth = self.view.frame.size.width
-        let circleCenterX = CGFloat(165.0)
-        let circleCenterY = screenWidth/2.0
-        let circleRadius = CGFloat(150.0);
-        
-        let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
-//            let circleBounds = CGRectMake(45, 55, 285, 285)
-        
-        loopView.frame = circleBounds
-        //2. add to view
-        view.addSubview(loopView)
-        
-
-        
-        //create path for player dot
-        circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
-            radius: CGRectGetWidth(circleBounds)/2,
-            startAngle: circleStartAngle,
-            endAngle: circleEndAngle,
-            clockwise: true)
-        
-        //        LOOP_PERIOD = TIMER_INTERVAL * 16.0
-        //initialize view size and position
-        let  playerRadius = CGFloat (15.0)
-        let playerDiameter = playerRadius * 2.0
-        playerUIView.frame = CGRect(x: circleCenterX-playerRadius, y: circleCenterY-playerRadius, width: playerDiameter, height: playerDiameter)
-        playerUIView.alpha = 1
-        let playerBounds = CGRectMake (circleCenterX - playerRadius ,circleCenterY - playerRadius ,
-            CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
-        playerPath.addArcWithCenter(CGPointMake(CGRectGetMidX(playerBounds), CGRectGetMidY(playerBounds)),
-            radius: CGRectGetWidth(playerBounds)/2,
-            startAngle: circleStartAngle,
-            endAngle: circleEndAngle,
-            clockwise: true)
-        
+        //draw players
+        prepareUI()
         
         
         
@@ -152,6 +107,60 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        view.bringSubviewToFront(playButton)
 
 //          print("exit viewDidLoad")
+        
+    }
+    
+    
+    func prepareUI(){
+        
+        //initialize path bounds
+        let circleStartAngle = CGFloat(-90.0 * M_PI/180)
+        let circleEndAngle = CGFloat(270 * M_PI/180)
+        
+        let screenWidth = self.view.frame.size.width
+        let circleRadius = CGFloat(150.0)
+        let circleCenterX =  screenWidth/2.0
+        let circleCenterY = circleRadius + CGFloat(50.0) //offset from top
+        let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
+        //create path for player dot
+        circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
+            radius: CGRectGetWidth(circleBounds)/2,
+            startAngle: circleStartAngle,
+            endAngle: circleEndAngle,
+            clockwise: true)
+        
+        //draw the player dot
+        //initialize view size and position
+        let playerRadius = CGFloat (15.0)
+        let playerDiameter = playerRadius * 2.0
+        //initial location
+        playerUIView.frame = CGRect(x: circleCenterX - playerRadius , y: circleCenterY - playerRadius , width: playerDiameter, height: playerDiameter)
+        playerUIView.alpha = 1
+        
+        
+        
+        //draw the loop
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = circlePath.CGPath
+        //change the fill color
+        shapeLayer.fillColor = UIColor.clearColor().CGColor
+        //you can change the stroke color
+        shapeLayer.strokeColor = UIColor.grayColor().CGColor
+        //you can change the line width
+        shapeLayer.lineWidth = 2.0
+        view.layer.addSublayer(shapeLayer)
+        // debugging image
+        //        let loopImageName = "loopTest.png"
+        //        let loopImage = UIImage(named: loopImageName)
+        //        loopView = UIImageView(image: loopImage!)
+        
+        loopView = UIImageView()
+        loopView.frame = circleBounds
+        view.addSubview(loopView)
+        view.insertSubview(loopView, belowSubview: playerUIView)
+        
+ 
+
         
     }
 
@@ -302,7 +311,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
-                    
 
                     
                     }, completion: { (Bool) -> Void in
@@ -324,13 +332,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                     self.shapes.append(klass.init())
                 })
-                
-                
             }
-            
         }
-        
-        
     }
     
     
@@ -339,7 +342,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer)
         
     {
-        // Get the translation from the pan gesture recognizer
+//         Get the translation from the pan gesture recognizer
         let translation = panGestureRecognizerCanvas.translationInView(view)
         
         // The moment the gesture starts...
@@ -411,11 +414,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
             
             // bring the newlyCreatedShape imageview to the front
-            newlyCreatedShape.superview?.bringSubviewToFront(view)
+//            newlyCreatedShape.superview?.bringSubviewToFront(view)
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             
-            let previousTransform = newlyCreatedShape.transform
+//            let previousTransform = newlyCreatedShape.transform
             
             newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
             
@@ -436,7 +439,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 // print(" ")
             }
             
-            
             newlyCreatedShape.transform = CGAffineTransformMakeRotation(alpha * CGFloat(M_PI) / 8)
             
             
@@ -447,19 +449,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     //MOVE SHAPE ALREADY IN LOOP
     
-    func moveShape() {
-        
-    }
     
     func animatePlayer() {
     
         //animate dot player when a beat is there - this should be in an if statement
-        UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
-            self.playerUIView.transform = CGAffineTransformMakeScale(2, 2)
+        UIView.animateWithDuration(0.05, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
+            self.playerUIView.transform = CGAffineTransformMakeScale(1.2, 1.2)
             }, completion: { (Bool) -> Void in
         })
         
-        UIView.animateWithDuration(0.1) { () -> Void in
+        UIView.animateWithDuration(0.05) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
             
         }
