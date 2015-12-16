@@ -35,6 +35,7 @@ class Octagon : Shape{
         let imageName = "octagon.png"
         let image = UIImage(named: imageName)
         imageView = UIImageView(image: image!)
+
         imageView.tag = -1
         
                 

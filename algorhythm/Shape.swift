@@ -13,9 +13,10 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     //http://makeapppie.com/2014/08/04/the-swift-swift-tutorial-why-do-we-need-delegates
     
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
-    
+
     
     var imageView: UIView!
+//    var imageAlpha = 0.6
     var turnStep: Int!
     var fileName: String!
     var fileExtention: String!

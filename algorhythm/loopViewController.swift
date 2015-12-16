@@ -181,15 +181,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     }
 
     @IBAction func addOne(sender: AnyObject) {
-//        
-//        if ( self.shapes.count > 0){
-//         //   print( self.shapes.last!.filledSlots)
-//            self.shapes.last!.turn(1)
-//           // print( self.shapes.last!.filledSlots)
-//           // print(" ")
-//        }
-                self.view.bringSubviewToFront(self.playerUIView)
-
+        
     }
     
     func tick(){
@@ -292,10 +284,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //Janak: whats newlyCreatedShape vs newShapeImageView?
             let  newShapeImageView = sender.view as! UIImageView
             
+            
           //  print(sender.description)
-            
             newlyCreatedShape = UIImageView(image: newShapeImageView.image)
-            
+            newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)
             //bring player button to the top
             self.view.insertSubview(newlyCreatedShape, belowSubview: self.playerUIView)
@@ -305,7 +297,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             newlyCreatedShape.center = newShapeImageView.center
             
-            newShapeImageView.userInteractionEnabled = true
+//            newShapeImageView.userInteractionEnabled = true
             
             newlyCreatedShape.userInteractionEnabled = true
             
@@ -319,8 +311,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
                 
                 let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
-                self.newlyCreatedShape.addGestureRecognizer(panGestureRecognizerCanvas)
                 panGestureRecognizerCanvas.delegate = self
+                panGestureRecognizerCanvas.maximumNumberOfTouches = 1
+                panGestureRecognizerCanvas.minimumNumberOfTouches = 1
+                self.newlyCreatedShape.addGestureRecognizer(panGestureRecognizerCanvas)
                 
                 let rotationGestureRecognizerCanvas = UIRotationGestureRecognizer(target: self, action: "didRotateShapeCanvas:")
                 self.newlyCreatedShape.addGestureRecognizer(rotationGestureRecognizerCanvas)
@@ -438,18 +432,18 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
         
     {
+        
         let rotationRadians = rotationGestureRecognizerCanvas.rotation
         var alpha = CGFloat!()
         
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             
             newlyCreatedShape = rotationGestureRecognizerCanvas.view as! UIImageView
+//            newlyCreatedShape.multipleTouchEnabled = false ;
             
             // set the initial center point
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
             
-            // bring the newlyCreatedShape imageview to the front
-//            newlyCreatedShape.superview?.bringSubviewToFront(view)
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             
@@ -459,19 +453,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
             
-            
-            
-//            print("\(rotationRadians)")
-            
             alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
             alpha = round(alpha)
             print("turn \(Int(alpha))")
             
             if ( self.shapes.count > 0){
-                   print( self.shapes.last!.filledSlots)
+//                   print( self.shapes.last!.filledSlots)
                 self.shapes.last!.turn(Int(alpha))
-                 print( self.shapes.last!.filledSlots)
-                // print(" ")
+//                 print( self.shapes.last!.filledSlots)
+                
             }
             
             newlyCreatedShape.transform = CGAffineTransformMakeRotation(alpha * CGFloat(M_PI) / 8)
@@ -489,7 +479,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
         //animate dot player when a beat is there
         UIView.animateWithDuration(0, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
-            self.playerUIView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            self.playerUIView.transform = CGAffineTransformMakeScale(1.4, 1.4)
             }, completion: { (Bool) -> Void in
         })
         
