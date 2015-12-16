@@ -219,6 +219,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
     }
+    //TODO the circling of player dot stops if we exit and come back 
     
     //you cant stop the timer if it's already stopped because your app will crash.
     @IBAction func onClickPlayButton(sender: AnyObject) {
@@ -350,7 +351,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     let klass = self.icons[tag].dynamicType.self
                     
                     self.shapes.append(klass.init())
-                    
+        
                    
                     
                 })
@@ -360,7 +361,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //pan shape that is already on loop
-    
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer)
         
     {
