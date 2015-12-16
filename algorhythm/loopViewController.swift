@@ -34,8 +34,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
     var loopView : UIImageView!
     
+    var playImage : UIImageView?
     
-    let playImage = UIImageView(image: UIImage(named: "play.png")!)
+    
     let pauseImage = UIImageView(image: UIImage(named: "pause.png")!)
     
     
@@ -167,15 +168,25 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
         //player button
-  
-        let buttonDiameter = CGFloat (30)
-        let buttonRadius = buttonDiameter/2.0
-        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
-            buttonDiameter,  buttonDiameter)
-        self.view.bringSubviewToFront(self.playButtonView)
-        playButton.setImage(playImage.image, forState: UIControlState.Normal)
+         playImage = UIImageView(image: UIImage(named: "play.png")!)
+//        playImage!.frame = CGRectMake (0,0,60,60)
+//        self.view.addSubview(playImage!)
         
-
+        let buttonDiameter = CGFloat (60)
+//        let buttonDiameter = playImage.size.width
+//        print（ "size \(buttonDiameter)")
+        let buttonRadius = buttonDiameter/2.0
+//        playButtonView.frame = CGRectMake(0 , 0,
+//            buttonDiameter,  buttonDiameter)
+///        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
+//            buttonDiameter,  buttonDiameter)
+//        var image : UIImage = UIImage(named:"play.png")!
+//        
+        
+        playButton.frame = CGRect (x: circleCenterX - buttonRadius,y: circleCenterY - buttonRadius, width: 60,height: 60)
+        playButton.setImage(playImage!.image, forState: UIControlState.Normal)
+//        view.addSubview(playButton)
+        self.view.bringSubviewToFront(self.playButton)
         
         
     }
@@ -226,7 +237,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 timer.invalidate()
             //playButton.setTitle("PLAY", forState: UIControlState.Normal)
             print ("stop timer" )
-            playButton.setImage(playImage.image, forState: UIControlState.Normal)
+            playButton.setImage(playImage!.image, forState: UIControlState.Normal)
             
             
           
@@ -458,9 +469,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             print("turn \(Int(alpha))")
             
             if ( self.shapes.count > 0){
-//                   print( self.shapes.last!.filledSlots)
+                   print( self.shapes.last!.filledSlots)
                 self.shapes.last!.turn(Int(alpha))
-//                 print( self.shapes.last!.filledSlots)
+                 print( self.shapes.last!.filledSlots)
                 
             }
             
