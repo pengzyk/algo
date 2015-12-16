@@ -60,6 +60,8 @@ class Shape: NSObject, AVAudioPlayerDelegate{
         //check each of the slot in ticSlots and play the audio, if occupied, play the sound.
         if ( self.timeArray[index] != nil) {
             self.timeArray[index]?.play()
+           // print ("playing index \(index) fileName \(fileName) ")
+            
             return true
         }
         return false
@@ -70,6 +72,8 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
         let fileURL = NSURL.fileURLWithPath(path!)
+        
+       
         let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
         tempPlayer.delegate = self
         tempPlayer.prepareToPlay()
