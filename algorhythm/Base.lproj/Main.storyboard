@@ -13,22 +13,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="Wpd-Ph-rNT">
-                                <rect key="frame" x="19" y="432" width="330" height="1"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" id="0k5-EA-HFc">
                                 <rect key="frame" x="168" y="88" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="circle" id="HT6-CA-hMt">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <animations/>
-                                    </imageView>
-                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -47,18 +34,25 @@
                                     <action selector="addOne:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TJ5-gs-qST"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
-                                <rect key="frame" x="133" y="450" width="100" height="30"/>
+                            <view contentMode="scaleToFill" id="TMI-W7-mCQ" userLabel="playButtonView">
+                                <rect key="frame" x="133" y="368" width="100" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="PLAY">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
+                                        <rect key="frame" x="0.0" y="10" width="100" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="PLAY">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onClickPlayButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Go1-HR-K0D"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -67,7 +61,7 @@
                     <connections>
                         <outlet property="debugLabel" destination="pdZ-Bi-sCI" id="yF2-lc-Ula"/>
                         <outlet property="playButton" destination="RiP-Ko-cVM" id="zF7-Km-FAr"/>
-                        <outlet property="playerImage" destination="HT6-CA-hMt" id="qbi-aF-pYu"/>
+                        <outlet property="playButtonView" destination="TMI-W7-mCQ" id="yMd-vc-KxG"/>
                         <outlet property="playerUIView" destination="0k5-EA-HFc" id="K5f-V6-rVq"/>
                     </connections>
                 </viewController>
@@ -96,7 +90,4 @@
             <point key="canvasLocation" x="161.5" y="344.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="circle" width="77" height="77"/>
-    </resources>
 </document>

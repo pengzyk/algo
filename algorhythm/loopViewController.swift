@@ -15,27 +15,43 @@ import AVFoundation
 class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRecognizerDelegate {
     
     
-    // basic structure
+    //// basic structure
     var audioPlayer : AVAudioPlayer!
     var newPlayer : AVAudioPlayer! //has to be declared here..
     var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var ticCounter = 0
     var timer      = NSTimer()
-    
-    
-    // graphical UI
-    @IBOutlet weak var playButton: UIButton!
-
+    //shapes for  the music queue
     var shapes = [Shape]()
+    //icons array on the bottom
+    var icons = [Shape]()
+
+    
+    
+    //// graphical UI
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var playButtonView: UIView!
+
+    var loopView : UIImageView!
+    @IBOutlet weak var playerUIView : UIView!
+    
+    //the path for the dot and the loop
+    var  circlePath = UIBezierPath()
+
     
     //drag and drop
+    //JANAK this is always pointing to the same last created shape, hence 
+    // the bug of shapes always returning to the same postion
     var newlyCreatedShape: UIImageView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
     var newlyCreatedShapeMenuCenter: CGPoint!
-
     
-//slow for debugging
+    @IBOutlet weak var debugLabel: UILabel!
+    
+    
+    ////TIMING & ANIMATION
+//slow speed for debugging
 //    let TIMER_INTERVAL =  60.0/4.0/10.0
 //        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
 
@@ -44,38 +60,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     let TIMER_INTERVAL =  60.0/300.0 
     let LOOP_PERIOD = 60.0/300.0 * 16
     
-    //player loop
-    
-    var loopView : UIImageView!
-    @IBOutlet weak var playerUIView : UIView!
-    @IBOutlet weak var playerImage: UIImageView!
-    
 
-    //icons : these are the sound icons on the bottom and do not change.
-    @IBOutlet var imageView: UIView!
-    let panRec = UIPanGestureRecognizer()
-    
-
-    //the path for the dot and the loop
-    var  circlePath = UIBezierPath()
-//    var  playerPath = UIBezierPath()
-    
-    
-    
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
-    
-    //icons array on the bottom
-    var icons = [Shape]()
-    
-    @IBOutlet weak var debugLabel: UILabel!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //draw players
-        prepareUI()
-        
+        prepareUI()      
         
         
        // initialize the bottom icon array with shapes
@@ -129,24 +123,12 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             endAngle: circleEndAngle,
             clockwise: true)
         
-        //draw the player dot
-        //initialize view size and position
-        let playerRadius = CGFloat (15.0)
-        let playerDiameter = playerRadius * 2.0
-        //initial location
-        playerUIView.frame = CGRect(x: circleCenterX - playerRadius , y: circleCenterY - playerRadius , width: playerDiameter, height: playerDiameter)
-        playerUIView.alpha = 1
-        
-        
         
         //draw the loop
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
-        //change the fill color
         shapeLayer.fillColor = UIColor.clearColor().CGColor
-        //you can change the stroke color
         shapeLayer.strokeColor = UIColor.grayColor().CGColor
-        //you can change the line width
         shapeLayer.lineWidth = 2.0
         view.layer.addSublayer(shapeLayer)
         // debugging image
@@ -156,11 +138,33 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         loopView = UIImageView()
         loopView.frame = circleBounds
-        view.addSubview(loopView)
-        view.insertSubview(loopView, belowSubview: playerUIView)
         
- 
-
+        
+        //draw the player dot
+        //initialize view size and position
+        let playerRadius = CGFloat (15.0)
+        let playerDiameter = playerRadius * 2.0
+        //initial location
+        playerUIView.frame = CGRect(x: circleCenterX - playerRadius, y: circleCenterY - playerRadius - circleRadius  , width: playerDiameter, height: playerDiameter)
+        playerUIView.alpha = 1
+        
+        let playerPath = UIBezierPath ()
+        playerPath.addArcWithCenter( CGPointMake( playerRadius  , playerRadius ),
+            radius: CGFloat(15.0),
+            startAngle:0,
+            endAngle: CGFloat(M_PI*2.0),
+            clockwise: true     )
+        
+        let playerLayer = CAShapeLayer()
+        playerLayer.path = playerPath.CGPath
+        playerLayer.fillColor = UIColor.blackColor().CGColor
+        playerLayer.strokeColor = UIColor.clearColor().CGColor
+        playerLayer.lineWidth = 2.0
+        playerUIView.layer.addSublayer(playerLayer)
+        
+        // this put the player dot in the front of the circle!
+        view.bringSubviewToFront(playerUIView)
+        
         
     }
 
@@ -452,13 +456,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     func animatePlayer() {
     
-        //animate dot player when a beat is there - this should be in an if statement
-        UIView.animateWithDuration(0.05, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
+        //animate dot player when a beat is there
+        UIView.animateWithDuration(0, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1.2, 1.2)
             }, completion: { (Bool) -> Void in
         })
         
-        UIView.animateWithDuration(0.05) { () -> Void in
+        UIView.animateWithDuration(0.1) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
             
         }
