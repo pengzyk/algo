@@ -95,13 +95,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         }
         
-        ///TODO move play button to top
-//        let test = UIView()
-//        
-//        view.bringSubviewToFront(playButton)
-
-//          print("exit viewDidLoad")
-        
     }
     
     
@@ -198,11 +191,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         //loop through shapes
         var ifAnimate = false
-        
+
+        //if there is a shape in the loop
         if(shapes.count > 0 ){
             for shape in shapes {
+               // print ("index \(self.ticCounter) shape \(shape.fileName)")
                 //ifAnimate turns to true, if any one shape has a note in the tic
-                ifAnimate = ifAnimate || shape.play(self.ticCounter)
+//               ifAnimate = ifAnimate || shape.play(self.ticCounter) // this doesnt work 
+                
+                 ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
             }
             
         }
@@ -219,7 +216,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
     }
-    //TODO the circling of player dot stops if we exit and come back 
+    //TODO the circling of player dot stops if we exit and come back
     
     //you cant stop the timer if it's already stopped because your app will crash.
     @IBAction func onClickPlayButton(sender: AnyObject) {
@@ -228,7 +225,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if ( timer.valid){
                 timer.invalidate()
             playButton.setTitle("PLAY", forState: UIControlState.Normal)
-            print ("stop timer" )
+            print ("-stop timer-" )
           
             
             //PLAYER LOOP 
@@ -246,7 +243,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
               //create the timer & add the timer automatically to the NSRunLoop
            timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
             playButton.setTitle("PAUSE", forState: UIControlState.Normal)
-            print ("start timer" )
+            print ("-start timer-" )
             
             
             //PLAYER LOOP ----------------------------------------------------------------------------------------------------
