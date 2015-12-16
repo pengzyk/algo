@@ -35,11 +35,11 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="TMI-W7-mCQ" userLabel="playButtonView">
-                                <rect key="frame" x="133" y="368" width="100" height="48"/>
+                                <rect key="frame" x="162" y="228" width="42" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiP-Ko-cVM">
-                                        <rect key="frame" x="0.0" y="10" width="100" height="30"/>
+                                        <rect key="frame" x="-29" y="0.0" width="100" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.22352941179999999" green="0.34509803919999998" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>

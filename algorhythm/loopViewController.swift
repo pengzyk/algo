@@ -69,7 +69,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         super.viewDidLoad()
         
         //draw players
-        prepareUI()      
+        prepareUI()
         
         
        // initialize the bottom icon array with shapes
@@ -107,7 +107,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     func prepareUI(){
         
-        //initialize path bounds
+        ///initialize path bounds
         let circleStartAngle = CGFloat(-90.0 * M_PI/180)
         let circleEndAngle = CGFloat(270 * M_PI/180)
         
@@ -166,17 +166,27 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         view.bringSubviewToFront(playerUIView)
         
         
+        ////player button
+//        let buttonDiameter = CGFloat (30)
+//        let buttonRadius = buttonDiameter/2.0
+//        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
+//            buttonDiameter,  buttonDiameter)
+//        //bring player button to the top
+        self.view.bringSubviewToFront(self.playButtonView)
+
+        
+        
     }
 
     @IBAction func addOne(sender: AnyObject) {
-        
-        if ( self.shapes.count > 0){
-         //   print( self.shapes.last!.filledSlots)
-            self.shapes.last!.turn(1)
-           // print( self.shapes.last!.filledSlots)
-           // print(" ")
-        }
-        
+//        
+//        if ( self.shapes.count > 0){
+//         //   print( self.shapes.last!.filledSlots)
+//            self.shapes.last!.turn(1)
+//           // print( self.shapes.last!.filledSlots)
+//           // print(" ")
+//        }
+                self.view.bringSubviewToFront(self.playerUIView)
 
     }
     
@@ -260,25 +270,30 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
+//        var newShapeImageView  = UIImageView()
         
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
 //            print("began")
             
-            let newShape = sender.view as! UIImageView
+            //Janak: whats newlyCreatedShape vs newShapeImageView?
+            let  newShapeImageView = sender.view as! UIImageView
             
           //  print(sender.description)
             
-            newlyCreatedShape = UIImageView(image: newShape.image)
+            newlyCreatedShape = UIImageView(image: newShapeImageView.image)
             
-            view.addSubview(newlyCreatedShape)
+//            view.addSubview(newlyCreatedShape)
+            //bring player button to the top
+            self.view.insertSubview(newlyCreatedShape, belowSubview: self.playerUIView)
+            
             
             self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
             
-            newlyCreatedShape.center = newShape.center
+            newlyCreatedShape.center = newShapeImageView.center
             
-            newShape.userInteractionEnabled = true
+            newShapeImageView.userInteractionEnabled = true
             
             newlyCreatedShape.userInteractionEnabled = true
             
@@ -335,6 +350,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     let klass = self.icons[tag].dynamicType.self
                     
                     self.shapes.append(klass.init())
+                    
+                   
+                    
                 })
             }
         }
