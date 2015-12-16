@@ -13,7 +13,7 @@ class Triangle : Shape {
      required init(){
         super.init()
 
-        fileName = "just blaze exmple 38"
+        fileName = "just blaze hipsnare"
         fileExtention = "WAV"
         
         filledSlots = [0,5,11]

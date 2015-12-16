@@ -14,7 +14,7 @@ class Octagon : Shape{
     
     required init(){
         super.init()
-        fileName = "just blaze hisnare"
+        fileName = "just blaze tapsnare"
         fileExtention = "WAV"
         
     
