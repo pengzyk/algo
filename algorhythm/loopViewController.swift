@@ -114,7 +114,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         let screenWidth = self.view.frame.size.width
         let circleRadius = CGFloat(150.0)
         let circleCenterX =  screenWidth/2.0
-        let circleCenterY = circleRadius + CGFloat(50.0) //offset from top
+        let circleCenterY = circleRadius + CGFloat(80.0) //offset from top
         let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
@@ -167,10 +167,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
         ////player button
-//        let buttonDiameter = CGFloat (30)
-//        let buttonRadius = buttonDiameter/2.0
-//        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
-//            buttonDiameter,  buttonDiameter)
+        let buttonDiameter = CGFloat (30)
+        let buttonRadius = buttonDiameter/2.0
+        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
+            buttonDiameter,  buttonDiameter)
 //        //bring player button to the top
         self.view.bringSubviewToFront(self.playButtonView)
 
