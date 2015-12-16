@@ -283,6 +283,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         let location = sender.locationInView(view)
+//        print(location.y)
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
@@ -339,7 +340,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         else if sender.state == UIGestureRecognizerState.Ended {
             
             //move shape back to selection menu
-            if velocity.y >= 0 {
+            if velocity.y >  0    {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
@@ -354,6 +355,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 
             //move shape into loop
             else {
+//            else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     //translate to center of loopView
