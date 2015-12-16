@@ -197,9 +197,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             for shape in shapes {
                // print ("index \(self.ticCounter) shape \(shape.fileName)")
                 //ifAnimate turns to true, if any one shape has a note in the tic
-//               ifAnimate = ifAnimate || shape.play(self.ticCounter) // this doesnt work 
-                
+//               ifAnimate = ifAnimate || shape.play(self.ticCounter) // this doesnt work
                  ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
+
             }
             
         }
@@ -213,7 +213,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if(self.ticCounter >= self.ticSlots.count){
             self.ticCounter = 0
         }
-        
         
     }
     //TODO the circling of player dot stops if we exit and come back
