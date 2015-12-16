@@ -247,7 +247,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
-        
+        let velocity = sender.velocityInView(view)
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
@@ -271,6 +271,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
             newlyCreatedShapeMenuCenter = newlyCreatedShapeOriginalCenter
+            
+            
+            //CALL OTHER GESTURES
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                 self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
@@ -297,7 +300,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         else if sender.state == UIGestureRecognizerState.Ended {
             
             //move shape back to selection menu
-            if newlyCreatedShape.center.y >= view.center.y {
+            if velocity.y >= 0 {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
