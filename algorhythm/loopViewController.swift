@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-
+let TOTAL_TIME_SLOTS = 16
 
 
 class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRecognizerDelegate {
@@ -18,7 +18,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //// basic structure
     var audioPlayer : AVAudioPlayer!
     var newPlayer : AVAudioPlayer! //has to be declared here..
-    var ticSlots = [AVAudioPlayer?](count:16, repeatedValue: nil)
+    var ticSlots = [AVAudioPlayer?](count:TOTAL_TIME_SLOTS, repeatedValue: nil)
     var ticCounter = 0
     var timer      = NSTimer()
     //shapes for  the music queue
@@ -41,7 +41,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     //the path for the dot and the loop
     var  circlePath = UIBezierPath()
-
+    var circleRadius : CGFloat!
+    var circleCenterX : CGFloat!
+    var circleCenterY: CGFloat!
+    
     
     //drag and drop
     //JANAK this is always pointing to the same last created shape, hence 
@@ -113,9 +116,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         let circleEndAngle = CGFloat(270 * M_PI/180)
         
         let screenWidth = self.view.frame.size.width
-        let circleRadius = CGFloat(150.0)
-        let circleCenterX =  screenWidth/2.0
-        let circleCenterY = circleRadius + CGFloat(80.0) //offset from top
+         circleRadius = CGFloat(150.0)
+         circleCenterX =  screenWidth/2.0
+         circleCenterY = circleRadius + CGFloat(80.0) //offset from top
         let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
@@ -353,9 +356,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             else {
 //            else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+                    
+                    self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
+                    self.newlyCreatedShape.center = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+                    
+                    
+//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     //translate to center of loopView
-                    self.newlyCreatedShape.center = self.loopView.center
+//                    self.newlyCreatedShape.center = self.loopView.center
                     
                     let tag = sender.view!.tag
                     
@@ -370,7 +378,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
     }
     
-    
+    //MOVE SHAPE ALREADY IN LOOP
     //pan shape that is already on loop
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer){
         
@@ -474,9 +482,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
     }
     
-    //MOVE SHAPE ALREADY IN LOOP
-    
-    
+
     func animatePlayer() {
     
         //animate dot player when a beat is there
@@ -493,12 +499,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
     }
-    
-    // This function is necessary to have mutliple gesture recognizers work simultaneously.
-    func gestureRecognizer(_: UIGestureRecognizer,shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
     
     
     override func didReceiveMemoryWarning() {
