@@ -23,6 +23,7 @@ class Pentagon : Shape{
 //            }
 //        }
         filledSlots = [0,3,6,10,13]
+        initialFilledSlots = filledSlots ;
         
         fileName = "just blaze &ound10"
         fileExtention = "WAV"

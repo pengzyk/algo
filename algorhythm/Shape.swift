@@ -21,7 +21,7 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     var fileName: String!
     var fileExtention: String!
     var filledSlots  = [Int]()
-
+    var initialFilledSlots = [Int]()
     
     override required init (){
         super.init()
@@ -31,7 +31,7 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     func turn(step: Int)  {
         //shift the index by the number of steps
         for var index = 0 ; index < filledSlots.count ; ++index {
-            var temp = (filledSlots[index]+step) % timeArray.count
+            var temp = (initialFilledSlots[index]+step) % timeArray.count
             if (temp < 0 ){
                 temp += timeArray.count //in case of CCW turns, temp would be a negative number 
             }
@@ -44,6 +44,9 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     }
     
     func fillSlots () {
+       
+        
+        
         for var i=0 ; i < timeArray.count ; ++i {
             if filledSlots.contains( i ) {
                 timeArray[i] = prepareAVAudioPlayer( fileName, fileType: fileExtention )

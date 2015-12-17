@@ -19,7 +19,7 @@ class Hexagon : Shape{
         fileName = "just blaze &ound10"
         fileExtention = "WAV"
         filledSlots = [1,4,7,9,12,15]
-        
+        initialFilledSlots = filledSlots ;
         fillSlots()
 
         

@@ -17,6 +17,7 @@ class Triangle : Shape {
         fileExtention = "WAV"
         
         filledSlots = [0,5,11]
+        initialFilledSlots = filledSlots ;
         fillSlots()
         
 //        for var i=0 ; i < timeArray.count ; ++i {

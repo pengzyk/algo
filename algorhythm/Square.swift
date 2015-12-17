@@ -19,6 +19,7 @@ class Square : Shape{
         
        
         filledSlots = [0,4,8,12]
+        initialFilledSlots = filledSlots ;
         fillSlots()
 //        
 //        

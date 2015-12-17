@@ -19,7 +19,7 @@ class Octagon : Shape{
         
     
         filledSlots = [1,3,5,7,9,11,13,15]
-        
+        initialFilledSlots = filledSlots ;    
         fillSlots()
         
 //        for var i=0 ; i < timeArray.count ; ++i {

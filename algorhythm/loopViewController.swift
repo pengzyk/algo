@@ -35,11 +35,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var loopView : UIImageView!
     
     var playImage : UIImageView?
-    
-    
-    let pauseImage = UIImageView(image: UIImage(named: "pause.png")!)
-    
-    
+    var pauseImage : UIImageView?
     
     @IBOutlet weak var playerUIView : UIView!
     
@@ -55,7 +51,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var newlyCreatedShapeOriginalCenter: CGPoint!
     var newlyCreatedShapeMenuCenter: CGPoint!
     
-    @IBOutlet weak var debugLabel: UILabel!
+//    @IBOutlet weak var debugLabel: UILabel!
     
     
     ////TIMING & ANIMATION
@@ -72,6 +68,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,10 +96,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             panGRec.addTarget(self, action: "didPanShape:")
             //4. enable use interaction.
             icons[i].imageView.userInteractionEnabled = true
-
-            
         }
-        
     }
     
     
@@ -168,20 +162,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
         //player button
-         playImage = UIImageView(image: UIImage(named: "play.png")!)
-//        playImage!.frame = CGRectMake (0,0,60,60)
-//        self.view.addSubview(playImage!)
-        
-        let buttonDiameter = CGFloat (60)
-//        let buttonDiameter = playImage.size.width
-//        print（ "size \(buttonDiameter)")
+        playImage = UIImageView(image: UIImage(named: "play.png")!)
+        pauseImage = UIImageView(image: UIImage(named: "pause.png")!)
+        let buttonDiameter = CGFloat (60)  //have to match size of play.png!!!
         let buttonRadius = buttonDiameter/2.0
-//        playButtonView.frame = CGRectMake(0 , 0,
-//            buttonDiameter,  buttonDiameter)
-///        playButtonView.frame = CGRectMake(circleCenterX - buttonRadius, circleCenterY - buttonRadius,
-//            buttonDiameter,  buttonDiameter)
-//        var image : UIImage = UIImage(named:"play.png")!
-//        
+
         
         playButton.frame = CGRect (x: circleCenterX - buttonRadius,y: circleCenterY - buttonRadius, width: 60,height: 60)
         playButton.setImage(playImage!.image, forState: UIControlState.Normal)
@@ -199,7 +184,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
        // print( self.ticCounter)
         //for debugging
         
-        debugLabel.text = String(self.ticCounter)
+//        debugLabel.text = String(self.ticCounter)
         
         //loop through shapes
         var ifAnimate = false
@@ -259,7 +244,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //playButton.setTitle("PAUSE", forState: UIControlState.Normal)
             print ("start timer" )
             
-            playButton.setImage(pauseImage.image, forState: UIControlState.Normal)
+            playButton.setImage(pauseImage!.image, forState: UIControlState.Normal)
             
             
             //PLAYER LOOP ----------------------------------------------------------------------------------------------------
