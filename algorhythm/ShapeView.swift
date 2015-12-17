@@ -16,7 +16,7 @@ class ShapeView: UIView {
     
     
     var soundFile: String!
-    var numPoints: Int!
+    var numVertices: Int!
     
     var defaultVerticeIndex = [Int]()
     var vertices = [CGPoint]()
@@ -26,8 +26,10 @@ class ShapeView: UIView {
     
     var anchorViewArray = [UIView]() //to allow all vertices to be move-able
     
-    override init(frame: CGRect) {
+//    override init(frame: CGRect) {
+    init(frame: CGRect , numVertices : Int) {
         super.init(frame: frame)
+        self.numVertices = numVertices
         setup()
     }
 
@@ -43,7 +45,7 @@ class ShapeView: UIView {
         let rad = Double(newIndex) * M_PI * 2.0 / Double(TOTAL_TIME_SLOTS)
         let x = cos(rad)
         let y = sin(rad)
-        print("index \(index) .x \(x) .y \(y)")
+       // print("index \(index) .x \(x) .y \(y)")
     
         return CGPoint(x: x, y: y)
         
@@ -57,46 +59,56 @@ class ShapeView: UIView {
     }
     func setup() {
         soundFile = "just blaze bksnare2"
-        numPoints = 3
-        
-        defaultVerticeIndex = [1, 8, 12]
-        
+//        print(numVertices)
+        switch (numVertices){
+        case 3:
+            defaultVerticeIndex = [0, 5, 11]
+            break;
+        case 4:
+            defaultVerticeIndex = [0,4,8,12]
+            break;
+        case 5:
+            defaultVerticeIndex = [0,3,6,10,13]
+            break;
+        case 6:
+            defaultVerticeIndex = [1,4,7,9,12,15]
+            break;
+        case 8:
+            defaultVerticeIndex = [1,3,5,7,9,11,13,15]
+            break;
+        default:
+            print("error")
+            defaultVerticeIndex = [0]
+            break;
+            
+            
+        }
+
         
         //calculate each vertex and add to array
-        let origin = CGPoint(x: 32, y: 32)
+        let origin = CGPoint(x: 33, y: 33)
         for var i = 0; i < defaultVerticeIndex.count ; ++i {
             vertices.append (calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i]))
         }
 
+        //NOTE THAT THE VERTICE IS NOT SCALING IWHT THE IAMGES!!!
         for var i = 0; i < defaultVerticeIndex.count ; ++i {
             var anchorView: UIView!
             anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             anchorView.userInteractionEnabled = true
-            anchorView.backgroundColor = UIColor.purpleColor()
+//            anchorView.backgroundColor = UIColor.purpleColor()
+            anchorView.backgroundColor = UIColor.clearColor()
             anchorView.center = calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i])
             addSubview(anchorView)
             
-            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
+            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPressAnchor:")
             gestureRecognizer.minimumPressDuration = 0
             anchorView.addGestureRecognizer(gestureRecognizer)
-            
             anchorViewArray.append(anchorView)
-
         }
 
-        
-        
-//        anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-//        anchorView.userInteractionEnabled = true
-//        anchorView.backgroundColor = UIColor.purpleColor()
-//        anchorView.center = vertices[0] // CGPoint(x: , y: 0)
-//        addSubview(anchorView)
-//        
-//        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
-//        gestureRecognizer.minimumPressDuration = 0
-//        anchorView.addGestureRecognizer(gestureRecognizer)
-        
-        backgroundColor = UIColor.orangeColor()
+        backgroundColor = UIColor.clearColor()
+//          backgroundColor = UIColor.orangeColor()
     }
 
 
@@ -119,7 +131,7 @@ class ShapeView: UIView {
             path.stroke()
         }
 
-        
+        //// if we just need static image, use this !
         
 //        if (vertices.count > 1 ){
 //            let path = UIBezierPath()
@@ -137,7 +149,7 @@ class ShapeView: UIView {
 //        }
     }
     
-    func onLongPress(sender: UILongPressGestureRecognizer) {
+    func onLongPressAnchor(sender: UILongPressGestureRecognizer) {
         let v = sender.view!
         let location = sender.locationInView(self)
         

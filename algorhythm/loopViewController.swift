@@ -84,17 +84,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         // each shape has a init fun that loads imageView
         icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
 
-//         icons = [ Triangle(), Square(), Pentagon(), Hexagon()]
-        //loop through the array and
-        for var i = 0; i < icons.count; ++i {
+        //add icons to the buttom
+        for var i = 0; i < 5 ; ++i {
             icons[i].imageView.tag = i
-//            print(icons[i].imageView.tag)
-            //1. set location
-//            icons[i].imageView.frame = CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65)
-//            //2. add to view
-//            view.addSubview(icons[i].imageView)
-            
-            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65))
+
+            //add to view
+            var verticesCnt = i+3
+            if (i == 4) {verticesCnt = 8 }
+            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt)
             view.addSubview(shapeView)
             
             
@@ -289,8 +286,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             
           //  print(sender.description)
-            newlyCreatedShape = ShapeView(frame: sender.view!.frame)
-            newlyCreatedShape.numPoints = draggedShapeView.numPoints
+            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices: 3)
+            newlyCreatedShape.numVertices = draggedShapeView.numVertices
             newlyCreatedShape.soundFile = draggedShapeView.soundFile
             newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)

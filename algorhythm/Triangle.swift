@@ -24,7 +24,7 @@ class Triangle : Shape {
 //            if filledSlots.contains( i) {
 //                timeArray[i] = prepareAVAudioPlayer( "just blaze exmple 38", fileType: "WAV")
 //            }
-//            
+//      
 //        }
         
         
