@@ -225,8 +225,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             playButton.setImage(playImage!.image, forState: UIControlState.Normal)
             
             
-          
-            
             //PLAYER LOOP 
             playerUIView.layer.removeAllAnimations()
          //   playerUIView.alpha = 0
