@@ -352,13 +352,23 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 
             //move shape into loop
             else {
-//            else {
+
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    
+                    
+                    //TODO append the vertice long press movement
                     
                     self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
                     self.newlyCreatedShape.center = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+
+                    
+//                    TODO   regen the shape so it's not pixelated!
+//                    self.newlyCreatedShape.calAnchorPosition(self.newlyCreatedShape.center, radius: self.circleRadius + 20)
                     
                     
+                    
+                    //==--
 //                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     //translate to center of loopView
 //                    self.newlyCreatedShape.center = self.loopView.center
@@ -460,7 +470,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
-            
+          
+            //TODO fix turning snapping to zero
             alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
             alpha = round(alpha)
             print("turn \(Int(alpha))")

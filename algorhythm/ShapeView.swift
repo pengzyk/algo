@@ -24,21 +24,16 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     var anchorViewArray = [UIView]() //to allow all vertices to be move-able
     
     ///audio
-//    var soundFile: String!
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
-    //TODO change this to a index that links to a look up table 
-//    var soundDict = [Int: [String:String]]()
+
     var soundDict  = [0: ["name":"just blaze hipsnare","extention":"WAV", "color": UIColor.blueColor()],
         1: ["name":"just blaze bksnare2","extention":"WAV", "color": UIColor.orangeColor()],
         2: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.yellowColor()],
         3: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.purpleColor()],
-        4: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.cyanColor()]
-        
-        
+        4: ["name":"just blaze tapsnare","extention":"WAV", "color": UIColor.cyanColor()]
     ]
 
-   
     
     
 //    override init(frame: CGRect) {
@@ -99,7 +94,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         }
         
         //fill in the AVAudioPlayer
-        fillSlots()
+        fillTimeArrayWithAudio()
         
         //calculate each vertex and add to array
         let origin = CGPoint(x: 33, y: 33)
@@ -107,30 +102,41 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 //            vertices.append (calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i]))
 //        }
 
-        //NOTE THAT THE VERTICE IS NOT SCALING IWHT THE IAMGES!!!
+        calAnchorPosition(origin, radius: 30)
+        
+        backgroundColor = UIColor.clearColor()
+//          backgroundColor = UIColor.orangeColor()
+        
+    }
+    
+    func calAnchorPosition (origin: CGPoint , radius: CGFloat ) {
+        //TODO NOTE THAT THE VERTICE IS NOT SCALING IWHT THE IAMGES!!!
         for var i = 0; i < defaultVerticeIndex.count ; ++i {
             var anchorView: UIView!
-            anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            anchorView = UIView(frame: CGRect(x: origin.x - radius, y: origin.y - radius, width: radius * 2 , height: radius * 2 ))
+            
             anchorView.userInteractionEnabled = true
-
+            
             anchorView.backgroundColor = UIColor.clearColor()
-            anchorView.center = calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i])
+            anchorView.center = calCoordinateFromIndex(origin, r: radius , i: defaultVerticeIndex[i])
+            print("index \(i) .x \(anchorView.center.x) .y \(anchorView.center.y)")
             addSubview(anchorView)
             
             let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPressAnchor:")
             gestureRecognizer.minimumPressDuration = 0
             //TODO ADD THIS WHEN IN LOOP
-//            anchorView.addGestureRecognizer(gestureRecognizer)
+            //            anchorView.addGestureRecognizer(gestureRecognizer)
             anchorViewArray.append(anchorView)
-        }
+         //TODO append only works for the first time  !!!
+            //separate init and later updates!!
+            
 
-        backgroundColor = UIColor.clearColor()
-//          backgroundColor = UIColor.orangeColor()
-        
-        
-      
+        }
+        // Triggers drawRect
+        setNeedsDisplay()
         
     }
+
 
 
     // Only override drawRect: if you perform custom drawing.
@@ -142,7 +148,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             path.moveToPoint(anchorViewArray[0].center)
             for var i = 1 ; i < anchorViewArray.count ; ++i {
                 path.addLineToPoint(anchorViewArray[i].center)
-                //                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
+//                                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
             }
             path.closePath()
 //            UIColor.blueColor().setFill()
@@ -176,15 +182,19 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         let location = sender.locationInView(self)
         
         v.center = location
-        
+
         // Triggers drawRect
         setNeedsDisplay()
     }
     
     func turn(step: Int)  {
         //shift the index by the number of steps
+        
+          //TODO needs to fix turning in negative direction
+        
+        
         for var index = 0 ; index < anchorViewArray.count ; ++index {
-            var temp = (defaultVerticeIndex[index]+step) % timeArray.count
+            var temp = (defaultVerticeIndex[index]+step) % TOTAL_TIME_SLOTS
             if (temp < 0 ){
                 temp += timeArray.count //in case of CCW turns, temp would be a negative number
             }
@@ -193,12 +203,12 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         }
         
         //refresh the timeArray
-        fillSlots ()
+        fillTimeArrayWithAudio ()
     }
     
 
     
-    func fillSlots () {
+    func fillTimeArrayWithAudio () {
         for var i=0 ; i < timeArray.count ; ++i {
             if defaultVerticeIndex.contains( i ) {
               
