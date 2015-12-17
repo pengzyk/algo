@@ -434,6 +434,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             
+            //newlyCreatedShape.transform = previousTransform
+            
             newlyCreatedShape = rotationGestureRecognizerCanvas.view as! UIImageView
 //            newlyCreatedShape.multipleTouchEnabled = false ;
             
@@ -442,8 +444,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
+            print("rotation \(rotationRadians * 180/CGFloat(M_PI))")
             
-//            let previousTransform = newlyCreatedShape.transform
             
             newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
             
@@ -451,6 +453,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
             alpha = round(alpha)
+            
             print("turn \(Int(alpha))")
             
             if ( self.shapes.count > 0){
