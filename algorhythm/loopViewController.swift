@@ -64,8 +64,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
         //BPM 75 : 60.0/75.0/4.0
     //    var LOOP_PERIOD : Float!
-    let TIMER_INTERVAL =  60.0/300.0 
-    let LOOP_PERIOD = 60.0/300.0 * 16
+    let TIMER_INTERVAL =  60.0/200.0
+    let LOOP_PERIOD = 60.0/200.0 * 16
     
 
     //initialize animnation
