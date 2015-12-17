@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22A5E1D41C223D21006E7C52 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5E1D31C223D21006E7C52 /* ShapeView.swift */; };
 		8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */; };
 		8695E55A1C21EA0200043075 /* just blaze hipsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */; };
 		DC101F2C1C003ACD00A47C1A /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC101F2B1C003ACD00A47C1A /* Shape.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22A5E1D31C223D21006E7C52 /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze tapsnare.WAV"; sourceTree = "<group>"; };
 		8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze hipsnare.WAV"; sourceTree = "<group>"; };
 		DC101F2B1C003ACD00A47C1A /* Shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				DC2F9F7E1BF8541500237A99 /* Assets.xcassets */,
 				DC2F9F801BF8541500237A99 /* LaunchScreen.storyboard */,
 				DC2F9F831BF8541500237A99 /* Info.plist */,
+				22A5E1D31C223D21006E7C52 /* ShapeView.swift */,
 			);
 			path = algorhythm;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22A5E1D41C223D21006E7C52 /* ShapeView.swift in Sources */,
 				DC101F2C1C003ACD00A47C1A /* Shape.swift in Sources */,
 				DC51CDFD1BFEE3FA00BD3EA5 /* Square.swift in Sources */,
 				DCF10A7E1C1F53A200A30DE5 /* Hexagon.swift in Sources */,
