@@ -14,7 +14,7 @@ class Square : Shape{
     
     required init(){
         super.init()
-        fileName = "just blaze fullkick"
+        fileName = "just blaze bksnare2"
         fileExtention = "WAV"
         
        
