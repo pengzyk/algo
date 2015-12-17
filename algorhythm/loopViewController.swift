@@ -46,7 +46,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //drag and drop
     //JANAK this is always pointing to the same last created shape, hence 
     // the bug of shapes always returning to the same postion
-    var newlyCreatedShape: UIImageView!
+    var newlyCreatedShape: ShapeView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
     var newlyCreatedShapeMenuCenter: CGPoint!
@@ -87,15 +87,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             icons[i].imageView.tag = i
 //            print(icons[i].imageView.tag)
             //1. set location
-            icons[i].imageView.frame = CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65)
-            //2. add to view
-            view.addSubview(icons[i].imageView)
+//            icons[i].imageView.frame = CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65)
+//            //2. add to view
+//            view.addSubview(icons[i].imageView)
+            
+            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 65, height: 65))
+            view.addSubview(shapeView)
+            
+            
             //3. associate  target action
             let  panGRec = UIPanGestureRecognizer()
-            icons[i].imageView.addGestureRecognizer(panGRec)
+//            icons[i].imageView.addGestureRecognizer(panGRec)
+            shapeView.addGestureRecognizer(panGRec)
             panGRec.addTarget(self, action: "didPanShape:")
             //4. enable use interaction.
-            icons[i].imageView.userInteractionEnabled = true
+//            icons[i].imageView.userInteractionEnabled = true
         }
     }
     
@@ -278,20 +284,22 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            print("began")
             
             //Janak: whats newlyCreatedShape vs newShapeImageView?
-            let  newShapeImageView = sender.view as! UIImageView
+            let draggedShapeView = sender.view as! ShapeView
             
             
           //  print(sender.description)
-            newlyCreatedShape = UIImageView(image: newShapeImageView.image)
+            newlyCreatedShape = ShapeView(frame: sender.view!.frame)
+            newlyCreatedShape.numPoints = draggedShapeView.numPoints
+            newlyCreatedShape.soundFile = draggedShapeView.soundFile
             newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)
             //bring player button to the top
             self.view.insertSubview(newlyCreatedShape, belowSubview: self.playerUIView)
             
             
-            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
+//            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
             
-            newlyCreatedShape.center = newShapeImageView.center
+            newlyCreatedShape.center = draggedShapeView.center
             
 //            newShapeImageView.userInteractionEnabled = true
             
@@ -304,7 +312,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //CALL OTHER GESTURES
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
+//                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
                 
                 let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
                 panGestureRecognizerCanvas.delegate = self
@@ -374,7 +382,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             
             // reference the ImageView that recieved the gesture (the face you panned) and store it in newlyCreatedShape
-            newlyCreatedShape = panGestureRecognizerCanvas.view as! UIImageView
+            newlyCreatedShape = panGestureRecognizerCanvas.view as! ShapeView
             
             // set the initial center point
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
@@ -434,7 +442,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             
-            newlyCreatedShape = rotationGestureRecognizerCanvas.view as! UIImageView
+            newlyCreatedShape = rotationGestureRecognizerCanvas.view as! ShapeView
 //            newlyCreatedShape.multipleTouchEnabled = false ;
             
             // set the initial center point
