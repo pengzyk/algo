@@ -95,7 +95,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //add to icon list on the bottom
             var verticesCnt = i+3
             if (i == 4) {verticesCnt = 8 }
-            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt)
+            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
             view.addSubview(shapeView)
             
             
@@ -288,10 +288,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             
           //  print(sender.description)
-            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices )
+            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
 //            newlyCreatedShape.numVertices = draggedShapeView.numVertices
-            newlyCreatedShape.fileName = draggedShapeView.fileName
-            newlyCreatedShape.fileExtention = draggedShapeView.fileExtention
             newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)
             //bring player button to the top

@@ -26,14 +26,25 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///audio
 //    var soundFile: String!
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
-    var fileName: String!
-    var fileExtention: String!
+    var soundIndex: Int!
     //TODO change this to a index that links to a look up table 
+//    var soundDict = [Int: [String:String]]()
+    var soundDict  = [0: ["name":"just blaze hipsnare","extention":"WAV", "color": UIColor.blueColor()],
+        1: ["name":"just blaze bksnare2","extention":"WAV", "color": UIColor.orangeColor()],
+        2: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.yellowColor()],
+        3: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.purpleColor()],
+        4: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.cyanColor()]
+        
+        
+    ]
+
+   
     
     
 //    override init(frame: CGRect) {
-    init(frame: CGRect , numVertices : Int) {
+    init(frame: CGRect , numVertices : Int, sound: Int) {
         super.init(frame: frame)
+        self.soundIndex = sound
         self.numVertices = numVertices
         setup()
     }
@@ -63,9 +74,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
     func setup() {
-        fileName = "just blaze bksnare2"
-        fileExtention = "WAV"
-//        print(numVertices)
+
         switch (numVertices){
         case 3:
             defaultVerticeIndex = [0, 5, 11]
@@ -117,6 +126,10 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 
         backgroundColor = UIColor.clearColor()
 //          backgroundColor = UIColor.orangeColor()
+        
+        
+      
+        
     }
 
 
@@ -132,11 +145,12 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
                 //                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
             }
             path.closePath()
-            UIColor.blueColor().setFill()
+//            UIColor.blueColor().setFill()
+            (soundDict[soundIndex]!["color"]! as! UIColor).setFill()
             path.fill()
-            path.lineWidth = 2.0
-            UIColor.grayColor().setStroke()
-            path.stroke()
+//            path.lineWidth = 2.0
+//            UIColor.grayColor().setStroke()
+//            path.stroke()
         }
 
         //// if we just need static image, use this !
@@ -187,7 +201,9 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     func fillSlots () {
         for var i=0 ; i < timeArray.count ; ++i {
             if defaultVerticeIndex.contains( i ) {
-                timeArray[i] = prepareAVAudioPlayer( fileName, fileType: fileExtention )
+              
+//                
+                timeArray[i] = prepareAVAudioPlayer( soundDict[soundIndex]!["name"]! as! String, fileType: soundDict[soundIndex]!["extention"]! as! String )
             }
             else {
                 timeArray[i] = nil
