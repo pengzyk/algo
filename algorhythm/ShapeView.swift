@@ -60,22 +60,41 @@ class ShapeView: UIView {
         numPoints = 3
         
         defaultVerticeIndex = [1, 8, 12]
+        
+        
         //calculate each vertex and add to array
         let origin = CGPoint(x: 32, y: 32)
         for var i = 0; i < defaultVerticeIndex.count ; ++i {
             vertices.append (calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i]))
         }
+
+        for var i = 0; i < defaultVerticeIndex.count ; ++i {
+            var anchorView: UIView!
+            anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            anchorView.userInteractionEnabled = true
+            anchorView.backgroundColor = UIColor.purpleColor()
+            anchorView.center = calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i])
+            addSubview(anchorView)
+            
+            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
+            gestureRecognizer.minimumPressDuration = 0
+            anchorView.addGestureRecognizer(gestureRecognizer)
+            
+            anchorViewArray.append(anchorView)
+
+        }
+
         
         
-        anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        anchorView.userInteractionEnabled = true
-        anchorView.backgroundColor = UIColor.purpleColor()
-        anchorView.center = CGPoint(x: 0, y: 0)
-        addSubview(anchorView)
-        
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
-        gestureRecognizer.minimumPressDuration = 0
-        anchorView.addGestureRecognizer(gestureRecognizer)
+//        anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//        anchorView.userInteractionEnabled = true
+//        anchorView.backgroundColor = UIColor.purpleColor()
+//        anchorView.center = vertices[0] // CGPoint(x: , y: 0)
+//        addSubview(anchorView)
+//        
+//        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
+//        gestureRecognizer.minimumPressDuration = 0
+//        anchorView.addGestureRecognizer(gestureRecognizer)
         
         backgroundColor = UIColor.orangeColor()
     }
@@ -85,12 +104,12 @@ class ShapeView: UIView {
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
         // Draw this shape
-        if (vertices.count > 1 ){
+        if (anchorViewArray.count > 1 ){
             let path = UIBezierPath()
-            path.moveToPoint(vertices[0])
+            path.moveToPoint(anchorViewArray[0].center)
             for var i = 1 ; i < vertices.count ; ++i {
-                path.addLineToPoint(vertices[i])
-//                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
+                path.addLineToPoint(anchorViewArray[i].center)
+                //                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
             }
             path.closePath()
             UIColor.blueColor().setFill()
@@ -99,6 +118,23 @@ class ShapeView: UIView {
             UIColor.grayColor().setStroke()
             path.stroke()
         }
+
+        
+        
+//        if (vertices.count > 1 ){
+//            let path = UIBezierPath()
+//            path.moveToPoint(vertices[0])
+//            for var i = 1 ; i < vertices.count ; ++i {
+//                path.addLineToPoint(vertices[i])
+////                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
+//            }
+//            path.closePath()
+//            UIColor.blueColor().setFill()
+//            path.fill()
+//            path.lineWidth = 2.0
+//            UIColor.grayColor().setStroke()
+//            path.stroke()
+//        }
     }
     
     func onLongPress(sender: UILongPressGestureRecognizer) {
