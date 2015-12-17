@@ -44,9 +44,6 @@ class Shape: NSObject, AVAudioPlayerDelegate{
     }
     
     func fillSlots () {
-       
-        
-        
         for var i=0 ; i < timeArray.count ; ++i {
             if filledSlots.contains( i ) {
                 timeArray[i] = prepareAVAudioPlayer( fileName, fileType: fileExtention )

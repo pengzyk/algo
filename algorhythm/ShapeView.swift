@@ -12,19 +12,24 @@ import AVFoundation
 
 
 
-class ShapeView: UIView {
+class ShapeView: UIView, AVAudioPlayerDelegate {
+  
     
-    
-    var soundFile: String!
+    ///visual
     var numVertices: Int!
-    
     var defaultVerticeIndex = [Int]()
-    var vertices = [CGPoint]()
+//    var vertices = [CGPoint]()
     //var coordinateLookupTable = [CGPoint]() //where all time slots should be
-    
     var anchorView: UIView! //to allow all vertices to be move-able
-    
     var anchorViewArray = [UIView]() //to allow all vertices to be move-able
+    
+    ///audio
+//    var soundFile: String!
+    var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
+    var fileName: String!
+    var fileExtention: String!
+    //TODO change this to a index that links to a look up table 
+    
     
 //    override init(frame: CGRect) {
     init(frame: CGRect , numVertices : Int) {
@@ -58,7 +63,8 @@ class ShapeView: UIView {
         
     }
     func setup() {
-        soundFile = "just blaze bksnare2"
+        fileName = "just blaze bksnare2"
+        fileExtention = "WAV"
 //        print(numVertices)
         switch (numVertices){
         case 3:
@@ -81,29 +87,31 @@ class ShapeView: UIView {
             defaultVerticeIndex = [0]
             break;
             
-            
         }
-
+        
+        //fill in the AVAudioPlayer
+        fillSlots()
         
         //calculate each vertex and add to array
         let origin = CGPoint(x: 33, y: 33)
-        for var i = 0; i < defaultVerticeIndex.count ; ++i {
-            vertices.append (calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i]))
-        }
+//        for var i = 0; i < defaultVerticeIndex.count ; ++i {
+//            vertices.append (calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i]))
+//        }
 
         //NOTE THAT THE VERTICE IS NOT SCALING IWHT THE IAMGES!!!
         for var i = 0; i < defaultVerticeIndex.count ; ++i {
             var anchorView: UIView!
             anchorView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             anchorView.userInteractionEnabled = true
-//            anchorView.backgroundColor = UIColor.purpleColor()
+
             anchorView.backgroundColor = UIColor.clearColor()
             anchorView.center = calCoordinateFromIndex(origin, r: 30, i: defaultVerticeIndex[i])
             addSubview(anchorView)
             
             let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPressAnchor:")
             gestureRecognizer.minimumPressDuration = 0
-            anchorView.addGestureRecognizer(gestureRecognizer)
+            //TODO ADD THIS WHEN IN LOOP
+//            anchorView.addGestureRecognizer(gestureRecognizer)
             anchorViewArray.append(anchorView)
         }
 
@@ -119,7 +127,7 @@ class ShapeView: UIView {
         if (anchorViewArray.count > 1 ){
             let path = UIBezierPath()
             path.moveToPoint(anchorViewArray[0].center)
-            for var i = 1 ; i < vertices.count ; ++i {
+            for var i = 1 ; i < anchorViewArray.count ; ++i {
                 path.addLineToPoint(anchorViewArray[i].center)
                 //                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
             }
@@ -158,5 +166,60 @@ class ShapeView: UIView {
         // Triggers drawRect
         setNeedsDisplay()
     }
+    
+    func turn(step: Int)  {
+        //shift the index by the number of steps
+        for var index = 0 ; index < anchorViewArray.count ; ++index {
+            var temp = (defaultVerticeIndex[index]+step) % timeArray.count
+            if (temp < 0 ){
+                temp += timeArray.count //in case of CCW turns, temp would be a negative number
+            }
+            defaultVerticeIndex[index] = temp
+            
+        }
+        
+        //refresh the timeArray
+        fillSlots ()
+    }
+    
+
+    
+    func fillSlots () {
+        for var i=0 ; i < timeArray.count ; ++i {
+            if defaultVerticeIndex.contains( i ) {
+                timeArray[i] = prepareAVAudioPlayer( fileName, fileType: fileExtention )
+            }
+            else {
+                timeArray[i] = nil
+            }
+            
+        }
+        
+    }
+    
+    func play(index: Int) -> Bool {
+        //check each of the slot in ticSlots and play the audio, if occupied, play the sound.
+        if ( self.timeArray[index] != nil) {
+            self.timeArray[index]?.play()
+            // print ("playing index \(index) fileName \(fileName) ")
+            
+            return true
+        }
+        return false
+    }
+
+    
+    //load the audio files given the file names
+    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+        let fileURL = NSURL.fileURLWithPath(path!)
+        
+        
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        return tempPlayer
+    }
+
 
 }

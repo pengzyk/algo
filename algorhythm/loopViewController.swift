@@ -22,9 +22,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var ticCounter = 0
     var timer      = NSTimer()
     //shapes for  the music queue
-    var shapes = [Shape]()
+//    var shapes = [Shape]()
+    
+    var shapes = [ShapeView]()
+    
+    
     //icons array on the bottom
-    var icons = [Shape]()
+//    var icons = [Shape]()
 
     
     
@@ -82,13 +86,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
        // initialize the bottom icon array with shapes
         // each shape has a init fun that loads imageView
-        icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
+//        icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
 
         //add icons to the buttom
         for var i = 0; i < 5 ; ++i {
-            icons[i].imageView.tag = i
+//            icons[i].imageView.tag = i
 
-            //add to view
+            //add to icon list on the bottom
             var verticesCnt = i+3
             if (i == 4) {verticesCnt = 8 }
             let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt)
@@ -182,9 +186,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
     }
 
-    @IBAction func addOne(sender: AnyObject) {
-        
-    }
+
     
     func tick(){
        // print( self.ticCounter)
@@ -286,9 +288,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             
           //  print(sender.description)
-            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices: 3)
-            newlyCreatedShape.numVertices = draggedShapeView.numVertices
-            newlyCreatedShape.soundFile = draggedShapeView.soundFile
+            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices )
+//            newlyCreatedShape.numVertices = draggedShapeView.numVertices
+            newlyCreatedShape.fileName = draggedShapeView.fileName
+            newlyCreatedShape.fileExtention = draggedShapeView.fileExtention
             newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)
             //bring player button to the top
@@ -362,14 +365,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //translate to center of loopView
 //                    self.newlyCreatedShape.center = self.loopView.center
                     
-                    let tag = sender.view!.tag
+//                    let tag = sender.view!.tag
                     
-                    let klass = self.icons[tag].dynamicType.self
+//                    let klass = self.icons[tag].dynamicType.self
                     
-                    self.shapes.append(klass.init())
+//                    self.shapes.append(klass.init())
         
                    
-                    
+                    self.shapes.append(self.newlyCreatedShape)
                 })
             }
         }
@@ -465,9 +468,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             print("turn \(Int(alpha))")
             
             if ( self.shapes.count > 0){
-                   print( self.shapes.last!.filledSlots)
+                   print( self.shapes.last!.defaultVerticeIndex)
                 self.shapes.last!.turn(Int(alpha))
-                 print( self.shapes.last!.filledSlots)
+                 print( self.shapes.last!.defaultVerticeIndex)
                 
             }
             
