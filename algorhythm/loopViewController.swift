@@ -264,16 +264,21 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             rainbowView.backgroundColor = iconColor
             view.addSubview(rainbowView)
             self.rainbowView.center = CGPointMake(0, self.view.frame.size.height)//iconView.center
-
-            self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
+            let  anchorScaleX = iconView.center.x / self.view.frame.size.width
+            let  anchorScaleY = iconView.center.y / self.view.frame.size.height
+//            self.rainbowView.layer.anchorPoint =  CGPointMake(anchorScaleX , anchorScaleY)
+                        self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
             self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
+//                                    self.rainbowView.transform = CGAffineTransformMakeTranslation(200,100)
 
 //            print("rainbow start ")
             UIView.animateWithDuration(0.8,
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseIn,
                     animations: {
+
                         self.rainbowView.transform = CGAffineTransformMakeScale (1,1)
+
 
                     },
                     completion: { (Bool) -> Void in
@@ -290,13 +295,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
            
             
              newInd =  Int (floor ((loc.y)/100))
-//            print("x \(location.x) y \(location.y) deltaInd \(deltaInd)")
+
              newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
+            
+           
+            
              newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
-            //TODO if new index , play sound
             
             //note the range changes with anchor?!
-
             UIView.animateWithDuration(0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseInOut,
@@ -307,42 +313,42 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 },
                 completion: { (Bool) -> Void in
                   
-                    iconView.nextSoundIndex = newInd
+                        iconView.nextSoundIndex = newInd
             })
-
             
-        }else if sender.state == UIGestureRecognizerState.Ended {
+//             print("x \(loc.x) y \(loc.y) newInd \(newInd) oldInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
             
-            if (newInd != soundInd  ){
-                print("exit with \(iconView.nextSoundIndex )")
+            
+        }else if ( sender.state == UIGestureRecognizerState.Ended
+            || sender.state == UIGestureRecognizerState.Cancelled
+            || sender.state == UIGestureRecognizerState.Failed)
+        {
+//            print ("exiting  newInd \(newInd)  soundInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
+            //if a new color is chosen, update the shape
+            if (iconView.nextSoundIndex != soundInd  ){
+//                print("exit with \(iconView.nextSoundIndex )")
                 //load next one
-                
                 iconView.soundIndex = iconView.nextSoundIndex
                 iconView.updateAudio()
                 
-                
             }
             
-             self.rainbowView.removeFromSuperview()
-            
-            //HOW TO ANIMATE ENDING?
-            
 //            print("zoomout start ")
-//            UIView.animateWithDuration(1,
-//                delay: 0,
-//                options: UIViewAnimationOptions.CurveEaseOut,
-//                animations: {
-//                    
-//                    self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
-//                    
-//                },
-//                completion: { (Bool) -> Void in
+            UIView.animateWithDuration(0.3,
+                delay: 0,
+                options: UIViewAnimationOptions.CurveEaseIn,
+                animations: {
+                    //scaling to 0 would NOT WORK!
+                    self.rainbowView.transform = CGAffineTransformMakeScale (0.01,0.01)
+                    
+                },
+                completion: { (Bool) -> Void in
 //                   print("zoomout end")
-//                    self.rainbowView.removeFromSuperview()
-//                    
-//                    
-//                    
-//            })
+                    self.rainbowView.removeFromSuperview()
+                    
+                    
+                    
+            })
      
         }
  

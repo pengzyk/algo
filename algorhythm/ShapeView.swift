@@ -53,6 +53,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     init(frame: CGRect , numVertices : Int, sound: Int) {
         super.init(frame: frame)
         self.soundIndex = sound
+        self.nextSoundIndex = sound 
         self.numVertices = numVertices
         setup()
     }
