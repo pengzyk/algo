@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="whitecircle" id="b02-lz-Ua3">
-                                <rect key="frame" x="36" y="79" width="302" height="302"/>
+                                <rect key="frame" x="32" y="75" width="311" height="311"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="16logo-25" id="Acw-xS-yxo">
