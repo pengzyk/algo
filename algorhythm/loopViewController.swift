@@ -95,7 +95,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             let  panGRec = UIPanGestureRecognizer()
 //            icons[i].imageView.addGestureRecognizer(panGRec)
             shapeView.addGestureRecognizer(panGRec)
-            panGRec.addTarget(self, action: "didPanShape:")
+            panGRec.addTarget(self, action: "didPanIcon:")
             
             let longPressGRec = UILongPressGestureRecognizer(target: self, action: "onLongPressIcon:")
             longPressGRec.minimumPressDuration = 0.5
@@ -217,7 +217,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             for shape in shapes {
                // print ("index \(self.ticCounter) shape \(shape.fileName)")
                 //ifAnimate turns to true, if any one shape has a note in the tic
-//               ifAnimate = ifAnimate || shape.play(self.ticCounter) // this doesnt work
                  ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
 
             }
@@ -237,8 +236,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     }
     
     
-    //longpress on the icons
-    //cheng
+    //longpress on the icons. show different options of instruments.
     func onLongPressIcon(sender: UILongPressGestureRecognizer) {
         let iconView = sender.view as! ShapeView
         var iconColor : UIColor!
@@ -308,23 +306,40 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     
                 },
                 completion: { (Bool) -> Void in
+                  
                     iconView.nextSoundIndex = newInd
-                   
-                    
             })
 
-            
-            
             
         }else if sender.state == UIGestureRecognizerState.Ended {
             print("exit with \(iconView.nextSoundIndex )")
             //load next one
             iconView.soundIndex = iconView.nextSoundIndex
             iconView.updateAudio()
-            rainbowView.removeFromSuperview()
+            
+             self.rainbowView.removeFromSuperview()
+            
+            //HOW TO ANIMATE ENDING?
+            
+//            print("zoomout start ")
+//            UIView.animateWithDuration(1,
+//                delay: 0,
+//                options: UIViewAnimationOptions.CurveEaseOut,
+//                animations: {
+//                    
+//                    self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
+//                    
+//                },
+//                completion: { (Bool) -> Void in
+//                   print("zoomout end")
+//                    self.rainbowView.removeFromSuperview()
+//                    
+//                    
+//                    
+//            })
+     
         }
-        
-        
+ 
     }
     
     
@@ -378,19 +393,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
    
  
     //drag and drop
-    @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
+    @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
-//        let location = sender.locationInView(view)
-//        print(location.y)
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
-//            print("began")
-            
+
             let draggedShapeView = sender.view as! ShapeView
-            
             
           //  print(sender.description)
             newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
@@ -416,7 +427,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //CALL OTHER GESTURES
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-//                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
                 
                 let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
                 panGestureRecognizerCanvas.delegate = self
@@ -457,21 +468,31 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 
             ///add  new  shape into loop
             else {
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    
-//                    self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-                    
-                    }, completion: { (Bool) -> Void in
-//                        print("add new shape to shapes array")
-                        let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-                        self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
-                        self.newlyCreatedShape.center = newO
-                        //TODO add snapping & constraint
-                      //  self.newlyCreatedShape.enableAnchorLongPress()
-                        self.shapes.append(self.newlyCreatedShape)
-                        self.placeAudio.play()
-                })
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
+                self.newlyCreatedShape.center = newO
+                //TODO add snapping & constraint
+                //  self.newlyCreatedShape.enableAnchorLongPress()
+                self.shapes.append(self.newlyCreatedShape)
+                self.placeAudio.play()
+
+                
+//                UIView.animateWithDuration(0.2, animations: { () -> Void in
+//                    
+//                    self.newlyCreatedShape.center = CGPointMake(self.circleCenterX, self.circleCenterY)
+//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+//                    
+//                    }, completion: { (Bool) -> Void in
+////                        print("add new shape to shapes array")
+//                        let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+//                        self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
+//                        self.newlyCreatedShape.center = newO
+//                        //TODO add snapping & constraint
+//                      //  self.newlyCreatedShape.enableAnchorLongPress()
+//                        self.shapes.append(self.newlyCreatedShape)
+//                        self.placeAudio.play()
+//                })
                 
             }
         }
