@@ -18,11 +18,13 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///visual
     var numVertices: Int!
     var defaultVerticeIndex = [Int]()
+    var currentVerticeIndex = [Int]()
 //    var vertices = [CGPoint]()
     //var coordinateLookupTable = [CGPoint]() //where all time slots should be
     var anchorView: UIView! //to allow all vertices to be move-able
     var anchorViewArray = [UIView]() //to allow all vertices to be move-able
-    var origin : CGPoint!
+    var polarOrigin : CGPoint!
+    var polarRadius : CGFloat!
     
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
@@ -80,14 +82,14 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             print("error")
             defaultVerticeIndex = [0]
             break;
-            
         }
+        currentVerticeIndex = defaultVerticeIndex
         
         ///visual
         //calculate each vertex and add to array
 
-        origin = CGPoint(x: frame.width/2, y:frame.height/2)
-        appendAnchorPosition(origin, radius: 33) //inital size is small
+        polarOrigin = CGPoint(x: frame.width/2, y:frame.height/2)
+        appendAnchorPosition(polarOrigin, radius: 33) //inital size is small
         
         backgroundColor = UIColor.clearColor()
 //          backgroundColor = UIColor.magentaColor()
@@ -119,6 +121,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         return CGPoint(x: x, y: y)
         
     }
+
 
     
     
@@ -152,28 +155,28 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
 
-//    let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
+
+    func updateAnchorPosition(){
+        for var i = 0; i < anchorViewArray.count ; ++i{
+            //TODO frame need to be bigger
+            anchorViewArray[i].frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+            anchorViewArray[i].center = calCoordinateFromIndex(polarOrigin, r: polarRadius , i: currentVerticeIndex[i])
+//                        anchorViewArray[i].backgroundColor = UIColor.greenColor()
+            //            print("index \(i). point \(defaultVerticeIndex[i]). x \(anchorViewArray[i].center.x) .y \(anchorViewArray[i].center.y)")
+            //
+        }
+        setNeedsDisplay()
+    }
     
-    
-    func updateAnchorPosition (newO: CGPoint , newR: CGFloat ) {
+    func updatePosition (newO: CGPoint , newR: CGFloat ) {
         //loop through the vertices
-//        print("center \(newO)")
-        
         self.frame = CGRect(x: newO.x - newR ,y: newO.y - newR,
                             width: newR*2,height: newR*2)
         
-        let relativeO = CGPoint (x: (self.frame.width) * 0.5, y: (self.frame.height) / 2)
-        for var i = 0; i < anchorViewArray.count ; ++i{
-            //TODO frame need to be bigger
-            
-            anchorViewArray[i].frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-            anchorViewArray[i].center = calCoordinateFromIndex(relativeO, r: newR , i: defaultVerticeIndex[i])
-//            anchorViewArray[i].backgroundColor = UIColor.greenColor()
-          
-//            print("index \(i). point \(defaultVerticeIndex[i]). x \(anchorViewArray[i].center.x) .y \(anchorViewArray[i].center.y)")
-//            
-        }
-        setNeedsDisplay()
+        polarOrigin = CGPoint (x: (self.frame.width) * 0.5, y: (self.frame.height) / 2)
+        polarRadius = newR
+        updateAnchorPosition()
+//        setNeedsDisplay()
         
     }
 
@@ -198,59 +201,38 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 //            UIColor.grayColor().setStroke()
 //            path.stroke()
         }
-
-        //// if we just need static image, use this !
-        
-//        if (vertices.count > 1 ){
-//            let path = UIBezierPath()
-//            path.moveToPoint(vertices[0])
-//            for var i = 1 ; i < vertices.count ; ++i {
-//                path.addLineToPoint(vertices[i])
-////                print("index \(i) .x \(vertices[i].x) .y \(vertices[i].y)")
-//            }
-//            path.closePath()
-//            UIColor.blueColor().setFill()
-//            path.fill()
-//            path.lineWidth = 2.0
-//            UIColor.grayColor().setStroke()
-//            path.stroke()
-//        }
     }
     
     func onLongPressAnchor(sender: UILongPressGestureRecognizer) {
         let v = sender.view!
         let location = sender.locationInView(self)
-        
         v.center = location
-
         // Triggers drawRect
         setNeedsDisplay()
     }
     
     func turn(step: Int)  {
         //shift the index by the number of steps
-        
-          //TODO needs to fix turning in negative direction + snap to zero
-        
-        
         for var index = 0 ; index < anchorViewArray.count ; ++index {
-            var temp = (defaultVerticeIndex[index]+step) % TOTAL_TIME_SLOTS
+            var temp = (currentVerticeIndex[index]+step) % TOTAL_TIME_SLOTS
             if (temp < 0 ){
                 temp += timeArray.count //in case of CCW turns, temp would be a negative number
             }
-            defaultVerticeIndex[index] = temp
+            currentVerticeIndex[index] = temp
             
         }
         
         //refresh the timeArray
         fillTimeArrayWithAudio ()
+        //refresh the visual
+        updateAnchorPosition()
     }
     
 
     
     func fillTimeArrayWithAudio () {
         for var i=0 ; i < timeArray.count ; ++i {
-            if defaultVerticeIndex.contains( i ) {
+            if currentVerticeIndex.contains( i ) {
                 timeArray[i] = prepareAVAudioPlayer( soundDict[soundIndex]!["name"]! as! String, fileType: soundDict[soundIndex]!["extention"]! as! String )
             }
             else {

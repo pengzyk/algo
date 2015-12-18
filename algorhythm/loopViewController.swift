@@ -353,7 +353,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //                    width: circleRadius*2,height: circleRadius*2)
                 let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
 //                let newO = CGPoint(x: circleRadius, y: circleRadius)
-                self.newlyCreatedShape.updateAnchorPosition(newO, newR: self.circleRadius)
+                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
                 self.newlyCreatedShape.center = newO
 
                 self.shapes.append(self.newlyCreatedShape)
@@ -410,7 +410,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             // set the initial center point
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
             
-            
             // bring the newlyCreatedShape imageview to the front
             newlyCreatedShape.superview?.bringSubviewToFront(view)
             
@@ -455,60 +454,53 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //ROTATE SHAPE ALREADY IN LOOP
-    
+ 
     func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
         
     {
         
-        let rotationRadians = rotationGestureRecognizerCanvas.rotation
-        var alphaAngle = CGFloat!()
+//        let  currentShape =  self.shapes.last!
+        let  currentShape = rotationGestureRecognizerCanvas.view as! ShapeView
+        var rotationRadians = rotationGestureRecognizerCanvas.rotation //always start from zero
+
+
         
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
-            //rotationRadians = self.previousRotationState
-            newlyCreatedShape = rotationGestureRecognizerCanvas.view as! ShapeView
-
-            //newlyCreatedShape.multipleTouchEnabled = false ;
-            newlyCreatedShape.transform = CGAffineTransformMakeRotation(previousRotationState)
-            
-            // set the initial center point
-            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
-            
-            //get initial points from ShapeView
-            
-            
-        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
-            
-            print("rotation \(rotationRadians * 180/CGFloat(M_PI))")
-
-            newlyCreatedShape.transform = CGAffineTransformMakeRotation(rotationRadians)
-            self.previousRotationState = rotationRadians
-
-        } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
-            
-            //TODO fix turning snapping to zero
-            alphaAngle = rotationRadians / (2 * CGFloat(M_PI) / 16)
-            alphaAngle = round(alphaAngle)
-            
-            //send final position to ShapeView
-            
-        
-            
-            print("turn \(Int(alphaAngle))")
-            print("rotation state \(previousRotationState)")
-            
-            if ( self.shapes.count > 0){
-                   print( self.shapes.last!.defaultVerticeIndex)
-                self.shapes.last!.turn(Int(alphaAngle))
-                 print( self.shapes.last!.defaultVerticeIndex)
-                
-            }
-            
-            newlyCreatedShape.transform = CGAffineTransformMakeRotation(alphaAngle * CGFloat(M_PI) / 8)
             
             
         }
-        
-        
+        else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
+            
+//            print("rotation in degrees \(rotationRadians * 180/CGFloat(M_PI))")
+            currentShape.transform = CGAffineTransformMakeRotation(rotationRadians)
+//            self.previousRotationState = rotationRadians
+
+        }
+        else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
+            
+            
+            
+//            //TODO fix turning snapping to zero
+            var rotationTick = rotationRadians / (2 * CGFloat(M_PI) / 16)
+            rotationTick = round(rotationTick)
+            
+
+            
+//            //send final position to ShapeView
+            print("turned \(Int(rotationTick))")
+            
+            if ( self.shapes.count > 0){
+                   print( self.shapes.last!.currentVerticeIndex)
+                self.shapes.last!.turn(Int(rotationTick))
+                 print( self.shapes.last!.currentVerticeIndex)
+                
+            }
+//
+//          currentShape.transform = CGAffineTransformMakeRotation( rotationTick * CGFloat(M_PI) / 8)
+                      currentShape.transform = CGAffineTransformMakeRotation( 0)
+//
+//            
+        }
     }
     
 
