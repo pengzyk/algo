@@ -26,12 +26,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     var shapes = [ShapeView]()
     
-    
-    //icons array on the bottom
-//    var icons = [Shape]()
-
-    
-    
+   
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playButtonView: UIView!
@@ -193,7 +188,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //for debugging
         
 //        debugLabel.text = String(self.ticCounter)
-        
         //loop through shapes
         var ifAnimate = false
 
@@ -283,7 +277,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if sender.state == UIGestureRecognizerState.Began {
 //            print("began")
             
-            //Janak: whats newlyCreatedShape vs newShapeImageView?
             let draggedShapeView = sender.view as! ShapeView
             
             
@@ -347,23 +340,35 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
                 })
-                
             }
                 
-            //move shape into loop
+            //add  new  shape into loop
             else {
+                print("add new shape to shapes array")
 
-                UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+//                self.newlyCreatedShape.frame = CGRect(x: circleCenterX - circleRadius ,y: circleCenterY - circleRadius,
+//                    width: circleRadius*2,height: circleRadius*2)
+                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+//                let newO = CGPoint(x: circleRadius, y: circleRadius)
+                self.newlyCreatedShape.updateAnchorPosition(newO, newR: self.circleRadius)
+                self.newlyCreatedShape.center = newO
+
+                self.shapes.append(self.newlyCreatedShape)
+
+
+/*                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     
                     
                     //TODO append the vertice long press movement
+                    let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+
+                    self.newlyCreatedShape.updateAnchorPosition(newO, newR: self.circleRadius)
+//                    self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
                     
-                    self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
-                    self.newlyCreatedShape.center = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
 
                     
-//                    TODO   regen the shape so it's not pixelated!
+//                    TODO   regen the shape so it's not pixelated! //CHENG
 //                    self.newlyCreatedShape.calAnchorPosition(self.newlyCreatedShape.center, radius: self.circleRadius + 20)
                     
                     
@@ -382,6 +387,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                    
                     self.shapes.append(self.newlyCreatedShape)
                 })
+*/
             }
         }
     }
@@ -471,7 +477,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         } else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
           
-            //TODO fix turning snapping to zero
+            //TODO fix turning snapping to zero //JANAK
             alpha = rotationRadians / (2 * CGFloat(M_PI) / 16)
             alpha = round(alpha)
             print("turn \(Int(alpha))")
