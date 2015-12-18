@@ -143,6 +143,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
     
+    //this allows each vertex to be drag and dropped to ANY location...
     func enableAnchorLongPress(){
         for var i = 0; i < anchorViewArray.count ; ++i {
             anchorViewArray[i].userInteractionEnabled = true

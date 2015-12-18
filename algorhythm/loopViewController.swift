@@ -25,7 +25,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //    var shapes = [Shape]()
     
     var shapes = [ShapeView]()
-    
+    var icons = [ShapeView]()
    
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
@@ -46,8 +46,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //drag and drop
-    //JANAK this is always pointing to the same last created shape, hence 
-    // the bug of shapes always returning to the same postion
     var newlyCreatedShape: ShapeView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
@@ -80,29 +78,29 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //draw players
         prepareUI()
         
-        
-       // initialize the bottom icon array with shapes
-        // each shape has a init fun that loads imageView
-//        icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
-
-        //add icons to the buttom
+      /// initialize the bottom icon array with shapes
         for var i = 0; i < 5 ; ++i {
-//            icons[i].imageView.tag = i
-
             //add to icon list on the bottom
             var verticesCnt = i+3
             if (i == 4) {verticesCnt = 8 }
             let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
-            view.addSubview(shapeView)
-            
             
             //3. associate  target action
             let  panGRec = UIPanGestureRecognizer()
 //            icons[i].imageView.addGestureRecognizer(panGRec)
             shapeView.addGestureRecognizer(panGRec)
             panGRec.addTarget(self, action: "didPanShape:")
+            
+            let longPressGRec = UILongPressGestureRecognizer(target: self, action: "onLongPressIcon:")
+            longPressGRec.minimumPressDuration = 0.5
+            shapeView.addGestureRecognizer(longPressGRec)
+
+            
             //4. enable use interaction.
-//            icons[i].imageView.userInteractionEnabled = true
+            shapeView.userInteractionEnabled = true
+            
+            icons.append(shapeView)
+            view.addSubview(shapeView)
         }
     }
     
@@ -267,10 +265,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        print("timer" , timer.valid)
     }
     
-    
+    //longpress 
+    func onLongPressIcon(sender: UILongPressGestureRecognizer) {
+        let v = sender.view as! ShapeView
+         if sender.state == UIGestureRecognizerState.Began {
+            
+        print("long press \(v.soundIndex)")
+        }
+       // let location = sender.locationInView(self)
+       // v.center = location
+        // Triggers drawRect
+        
+    }
  
     //drag and drop
-    
     @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
@@ -341,59 +349,36 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
 
-                    
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
                 })
             }
                 
-            //add  new  shape into loop
+            ///add  new  shape into loop
             else {
-                print("add new shape to shapes array")
-
-//                self.newlyCreatedShape.frame = CGRect(x: circleCenterX - circleRadius ,y: circleCenterY - circleRadius,
-//                    width: circleRadius*2,height: circleRadius*2)
-                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-//                let newO = CGPoint(x: circleRadius, y: circleRadius)
-                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
-                self.newlyCreatedShape.center = newO
-//                self.newlyCreatedShape.enableAnchorLongPress() 
-
-                self.shapes.append(self.newlyCreatedShape)
-
-
-/*                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
+//                    self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     
-                    
-                    //TODO append the vertice long press movement
-                    let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-
-                    self.newlyCreatedShape.updateAnchorPosition(newO, newR: self.circleRadius)
-//                    self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
-                    
-
-                    
-//                    TODO   regen the shape so it's not pixelated! //CHENG
-//                    self.newlyCreatedShape.calAnchorPosition(self.newlyCreatedShape.center, radius: self.circleRadius + 20)
-                    
-                    
-                    
-                    //==--
-//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-                    //translate to center of loopView
-//                    self.newlyCreatedShape.center = self.loopView.center
-                    
-//                    let tag = sender.view!.tag
-                    
-//                    let klass = self.icons[tag].dynamicType.self
-                    
-//                    self.shapes.append(klass.init())
-        
-                   
-                    self.shapes.append(self.newlyCreatedShape)
+                    }, completion: { (Bool) -> Void in
+                        print("add new shape to shapes array")
+                        let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+                        self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
+                        self.newlyCreatedShape.center = newO
+                        //TODO add snapping & constraint
+                      //  self.newlyCreatedShape.enableAnchorLongPress()
+                        self.shapes.append(self.newlyCreatedShape)
                 })
-*/
+                
+                
+//                print("add new shape to shapes array")
+//                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+//                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
+//                self.newlyCreatedShape.center = newO
+//                //TODO add snapping
+////                self.newlyCreatedShape.enableAnchorLongPress()
+//                self.shapes.append(self.newlyCreatedShape)
             }
         }
     }
