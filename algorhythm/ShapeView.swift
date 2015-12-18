@@ -29,6 +29,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
+    var nextSoundIndex: Int!
     let swiftColor = UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
     
     //YELLOW UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
@@ -43,6 +44,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         3: ["name":"wipe","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
         4: ["name":"prism-1","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
         5: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)]
+        
     ]
 
     
@@ -143,6 +145,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
     
+    //this allows each vertex to be drag and dropped to ANY location...
     func enableAnchorLongPress(){
         for var i = 0; i < anchorViewArray.count ; ++i {
             anchorViewArray[i].userInteractionEnabled = true
@@ -227,7 +230,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         updateAnchorPosition()
     }
     
-
+    
     
     func fillTimeArrayWithAudio () {
         for var i=0 ; i < timeArray.count ; ++i {
@@ -239,6 +242,12 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             }
             
         }
+        
+    }
+    
+    func updateAudio(){
+        fillTimeArrayWithAudio()
+        setNeedsDisplay() //audio changes color, hence redraw 
         
     }
     

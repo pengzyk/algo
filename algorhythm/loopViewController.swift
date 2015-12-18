@@ -25,11 +25,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //    var shapes = [Shape]()
     
     var shapes = [ShapeView]()
-    
+    var icons = [ShapeView]()
    
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playButtonView: UIView!
+    
+    var rainbowView: UIView!
 
     var loopView : UIImageView!
     
@@ -46,8 +48,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //drag and drop
-    //JANAK this is always pointing to the same last created shape, hence 
-    // the bug of shapes always returning to the same postion
     var newlyCreatedShape: ShapeView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
@@ -57,6 +57,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
 //    @IBOutlet weak var debugLabel: UILabel!
     
+    /// audio effects
+    var placeAudio : AVAudioPlayer!
+    var removeAudio: AVAudioPlayer!
     
     ////TIMING & ANIMATION
 //slow speed for debugging
@@ -79,33 +82,49 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         //draw players
         prepareUI()
+        prepareAudio()
         
-        
-       // initialize the bottom icon array with shapes
-        // each shape has a init fun that loads imageView
-//        icons = [ Triangle(), Square(),Pentagon(),Hexagon(),Octagon()]
-
-        //add icons to the buttom
+      /// initialize the bottom icon array with shapes
         for var i = 0; i < 5 ; ++i {
-//            icons[i].imageView.tag = i
-
             //add to icon list on the bottom
             var verticesCnt = i+3
             if (i == 4) {verticesCnt = 8 }
             let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
-            view.addSubview(shapeView)
-            
             
             //3. associate  target action
             let  panGRec = UIPanGestureRecognizer()
 //            icons[i].imageView.addGestureRecognizer(panGRec)
             shapeView.addGestureRecognizer(panGRec)
-            panGRec.addTarget(self, action: "didPanShape:")
+            panGRec.addTarget(self, action: "didPanIcon:")
+            
+            let longPressGRec = UILongPressGestureRecognizer(target: self, action: "onLongPressIcon:")
+            longPressGRec.minimumPressDuration = 0.5
+            shapeView.addGestureRecognizer(longPressGRec)
+
+            
             //4. enable use interaction.
-//            icons[i].imageView.userInteractionEnabled = true
+            shapeView.userInteractionEnabled = true
+            
+            icons.append(shapeView)
+            view.addSubview(shapeView)
         }
     }
     
+    func prepareAudio(){
+        removeAudio = prepareAVAudioPlayer("suspension",fileType: "mp3")
+        placeAudio = prepareAVAudioPlayer("splits",fileType: "mp3")
+    }
+    
+    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+        let fileURL = NSURL.fileURLWithPath(path!)
+        
+        
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        return tempPlayer
+    }
     
     func prepareUI(){
         
@@ -132,8 +151,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
-        shapeLayer.fillColor = UIColor.clearColor().CGColor
-        shapeLayer.strokeColor = UIColor.grayColor().CGColor
+        shapeLayer.fillColor = UIColor.whiteColor().CGColor
+        shapeLayer.strokeColor = UIColor.lightGrayColor().CGColor
         shapeLayer.lineWidth = 2.0
         view.layer.addSublayer(shapeLayer)
         // debugging image
@@ -141,9 +160,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //        let loopImage = UIImage(named: loopImageName)
         //        loopView = UIImageView(image: loopImage!)
         
-       
-        
-
         
         //draw the player dot
         //initialize view size and position
@@ -201,7 +217,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             for shape in shapes {
                // print ("index \(self.ticCounter) shape \(shape.fileName)")
                 //ifAnimate turns to true, if any one shape has a note in the tic
-//               ifAnimate = ifAnimate || shape.play(self.ticCounter) // this doesnt work
                  ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
 
             }
@@ -219,6 +234,121 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
         
     }
+    
+    
+    //longpress on the icons. show different options of instruments.
+    func onLongPressIcon(sender: UILongPressGestureRecognizer) {
+        let iconView = sender.view as! ShapeView
+        var iconColor : UIColor!
+        var soundInd : Int!
+        var newColor : UIColor!
+
+//        var startingY: CGFloat!
+        
+        soundInd = iconView.soundIndex
+        iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
+        var newInd = soundInd
+         let loc = sender.locationInView(rainbowView)
+        
+        if sender.state == UIGestureRecognizerState.Began {
+            //a full screen view
+            rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            rainbowView.alpha = 0.95
+//            soundInd = iconView.soundIndex
+//            iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
+//           
+//            startingY = sender.locationInView(rainbowView).y
+            
+          
+            
+            rainbowView.backgroundColor = iconColor
+            view.addSubview(rainbowView)
+            self.rainbowView.center = CGPointMake(0, self.view.frame.size.height)//iconView.center
+
+            self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
+            self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
+
+//            print("rainbow start ")
+            UIView.animateWithDuration(0.8,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseIn,
+                    animations: {
+                        self.rainbowView.transform = CGAffineTransformMakeScale (1,1)
+
+                    },
+                    completion: { (Bool) -> Void in
+//                        print("rainbow shown")
+                    
+                })
+            
+            
+//            print("long press \(v.soundIndex)")
+            
+        }else if sender.state == UIGestureRecognizerState.Changed {
+            
+//            print(sender.locationInView(rainbowView).y)
+           
+            
+             newInd =  Int (floor ((loc.y)/100))
+//            print("x \(location.x) y \(location.y) deltaInd \(deltaInd)")
+             newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
+             newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
+            //TODO if new index , play sound
+            
+            //note the range changes with anchor?!
+
+            UIView.animateWithDuration(0.5,
+                delay: 0,
+                options: UIViewAnimationOptions.CurveEaseInOut,
+                animations: {
+
+                    self.rainbowView.backgroundColor = newColor
+                    
+                },
+                completion: { (Bool) -> Void in
+                  
+                    iconView.nextSoundIndex = newInd
+            })
+
+            
+        }else if sender.state == UIGestureRecognizerState.Ended {
+            
+            if (newInd != soundInd  ){
+                print("exit with \(iconView.nextSoundIndex )")
+                //load next one
+                
+                iconView.soundIndex = iconView.nextSoundIndex
+                iconView.updateAudio()
+                
+                
+            }
+            
+             self.rainbowView.removeFromSuperview()
+            
+            //HOW TO ANIMATE ENDING?
+            
+//            print("zoomout start ")
+//            UIView.animateWithDuration(1,
+//                delay: 0,
+//                options: UIViewAnimationOptions.CurveEaseOut,
+//                animations: {
+//                    
+//                    self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
+//                    
+//                },
+//                completion: { (Bool) -> Void in
+//                   print("zoomout end")
+//                    self.rainbowView.removeFromSuperview()
+//                    
+//                    
+//                    
+//            })
+     
+        }
+ 
+    }
+    
+    
     //TODO the circling of player dot stops if we exit and come back
     
     //you cant stop the timer if it's already stopped because your app will crash.
@@ -266,24 +396,18 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
 //        print("timer" , timer.valid)
     }
-    
-    
+   
  
     //drag and drop
-    
-    @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
+    @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
-//        let location = sender.locationInView(view)
-//        print(location.y)
         
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
-//            print("began")
-            
+
             let draggedShapeView = sender.view as! ShapeView
-            
             
           //  print(sender.description)
             newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
@@ -309,7 +433,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //CALL OTHER GESTURES
             
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-//                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
                 
                 let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
                 panGestureRecognizerCanvas.delegate = self
@@ -334,66 +458,31 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         else if sender.state == UIGestureRecognizerState.Ended {
             
-            //move shape back to selection menu
-            if velocity.y >  0    {
+            
+            ///move shape back to selection menu
+            if velocity.y >=  -0.1    {
+
+                
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
 
-                    
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
                 })
             }
                 
-            //add  new  shape into loop
+            ///add  new  shape into loop
             else {
-                print("add new shape to shapes array")
-
-//                self.newlyCreatedShape.frame = CGRect(x: circleCenterX - circleRadius ,y: circleCenterY - circleRadius,
-//                    width: circleRadius*2,height: circleRadius*2)
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                 let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-//                let newO = CGPoint(x: circleRadius, y: circleRadius)
                 self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
                 self.newlyCreatedShape.center = newO
-//                self.newlyCreatedShape.enableAnchorLongPress() 
-
+                //TODO add snapping & constraint
+                //  self.newlyCreatedShape.enableAnchorLongPress()
                 self.shapes.append(self.newlyCreatedShape)
-
-
-/*                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                    
-                    
-                    
-                    //TODO append the vertice long press movement
-                    let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-
-                    self.newlyCreatedShape.updateAnchorPosition(newO, newR: self.circleRadius)
-//                    self.newlyCreatedShape.frame.size = CGSize(width: self.circleRadius * 2, height: self.circleRadius * 2)
-                    
-
-                    
-//                    TODO   regen the shape so it's not pixelated! //CHENG
-//                    self.newlyCreatedShape.calAnchorPosition(self.newlyCreatedShape.center, radius: self.circleRadius + 20)
-                    
-                    
-                    
-                    //==--
-//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-                    //translate to center of loopView
-//                    self.newlyCreatedShape.center = self.loopView.center
-                    
-//                    let tag = sender.view!.tag
-                    
-//                    let klass = self.icons[tag].dynamicType.self
-                    
-//                    self.shapes.append(klass.init())
-        
-                   
-                    self.shapes.append(self.newlyCreatedShape)
-                })
-*/
+                self.placeAudio.play()
             }
         }
     }
@@ -401,6 +490,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //MOVE SHAPE ALREADY IN LOOP
     //pan shape that is already on loop
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer){
+        
+        let pannedShape = panGestureRecognizerCanvas.view as! ShapeView
         
         let location = panGestureRecognizerCanvas.locationInView(view)
         
@@ -428,6 +519,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
             if newlyCreatedShape.center.y >= view.center.y {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
+                   
+                    //TODO FIND THE MATCHING SHAPE AND RETURN THERE
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeMenuCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
@@ -437,6 +530,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //delete the last one in shapes list 
                         //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
+                        self.removeAudio.play()
+
+
                 })
                 
             }
@@ -505,13 +601,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //animate dot player when a beat is there
         UIView.animateWithDuration(0, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1.4, 1.4)
-            self.loopView.transform = CGAffineTransformMakeScale(0.9, 0.9)
+//            self.loopView.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (Bool) -> Void in
         })
         
         UIView.animateWithDuration(0.1) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
-            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
+//            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
         }
     }
     
