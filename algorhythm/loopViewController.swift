@@ -357,6 +357,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //                let newO = CGPoint(x: circleRadius, y: circleRadius)
                 self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
                 self.newlyCreatedShape.center = newO
+//                self.newlyCreatedShape.enableAnchorLongPress() 
 
                 self.shapes.append(self.newlyCreatedShape)
 

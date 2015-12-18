@@ -122,8 +122,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
 
-
-    
+  
     
     //called once to initialize 
     func appendAnchorPosition (origin: CGPoint , radius: CGFloat ) {
@@ -133,35 +132,35 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             //todo this may be wrong ?
             anchorView = UIView(frame: CGRect(x: origin.x - radius, y: origin.y - radius, width: radius * 2 , height: radius * 2 ))
             
-            anchorView.userInteractionEnabled = true
-            
             anchorView.backgroundColor = UIColor.clearColor()
             anchorView.center = calCoordinateFromIndex(origin, r: radius , i: defaultVerticeIndex[i])
 //            print("index \(i) .x \(anchorView.center.x) .y \(anchorView.center.y)")
             addSubview(anchorView)
-            
-//            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPressAnchor:")
-//            gestureRecognizer.minimumPressDuration = 0
-            //TODO ADD THIS WHEN IN LOOP
-            //            anchorView.addGestureRecognizer(gestureRecognizer)
             anchorViewArray.append(anchorView)
-         //TODO append only works for the first time  !!!
-            //separate init and later updates!!
-            
-
         }
         // Triggers drawRect
         setNeedsDisplay()
         
     }
-
+    
+    func enableAnchorLongPress(){
+        for var i = 0; i < anchorViewArray.count ; ++i {
+            anchorViewArray[i].userInteractionEnabled = true
+            let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "onLongPressAnchor:")
+            gestureRecognizer.minimumPressDuration = 0
+            anchorViewArray[i].addGestureRecognizer(gestureRecognizer)
+            anchorViewArray[i].backgroundColor = UIColor.greenColor()
+            
+        }
+    }
+    
 
     func updateAnchorPosition(){
         for var i = 0; i < anchorViewArray.count ; ++i{
             //TODO frame need to be bigger
             anchorViewArray[i].frame = CGRect(x: 0, y: 0, width: 40, height: 40)
             anchorViewArray[i].center = calCoordinateFromIndex(polarOrigin, r: polarRadius , i: currentVerticeIndex[i])
-//                        anchorViewArray[i].backgroundColor = UIColor.greenColor()
+
             //            print("index \(i). point \(defaultVerticeIndex[i]). x \(anchorViewArray[i].center.x) .y \(anchorViewArray[i].center.y)")
             //
         }
