@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		22A5E1D41C223D21006E7C52 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5E1D31C223D21006E7C52 /* ShapeView.swift */; };
+		862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 862FC69B1C23A8920018DCBC /* confetti.mp3 */; };
+		8650D0D21C23A2CB00D33AC0 /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */; };
+		8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */; };
+		8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D51C23A4EE00D33AC0 /* strike.mp3 */; };
+		8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D71C23A50700D33AC0 /* wipe.mp3 */; };
+		8650D0DC1C23A67400D33AC0 /* corona.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0DB1C23A67400D33AC0 /* corona.mp3 */; };
 		8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */; };
 		8695E55A1C21EA0200043075 /* just blaze hipsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */; };
 		DC2F9F781BF8541500237A99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F771BF8541500237A99 /* AppDelegate.swift */; };
@@ -47,6 +53,12 @@
 
 /* Begin PBXFileReference section */
 		22A5E1D31C223D21006E7C52 /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
+		862FC69B1C23A8920018DCBC /* confetti.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = confetti.mp3; sourceTree = "<group>"; };
+		8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
+		8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "prism-1.mp3"; sourceTree = "<group>"; };
+		8650D0D51C23A4EE00D33AC0 /* strike.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = strike.mp3; sourceTree = "<group>"; };
+		8650D0D71C23A50700D33AC0 /* wipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wipe.mp3; sourceTree = "<group>"; };
+		8650D0DB1C23A67400D33AC0 /* corona.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = corona.mp3; sourceTree = "<group>"; };
 		8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze tapsnare.WAV"; sourceTree = "<group>"; };
 		8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze hipsnare.WAV"; sourceTree = "<group>"; };
 		DC2F9F741BF8541500237A99 /* algorhythm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = algorhythm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +173,12 @@
 				DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */,
 				8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */,
 				8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */,
+				8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */,
+				8650D0D51C23A4EE00D33AC0 /* strike.mp3 */,
+				862FC69B1C23A8920018DCBC /* confetti.mp3 */,
+				8650D0DB1C23A67400D33AC0 /* corona.mp3 */,
+				8650D0D71C23A50700D33AC0 /* wipe.mp3 */,
+				8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */,
 				DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */,
 				DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */,
 				DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */,
@@ -278,13 +296,19 @@
 			files = (
 				DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */,
 				8695E55A1C21EA0200043075 /* just blaze hipsnare.WAV in Resources */,
+				8650D0D21C23A2CB00D33AC0 /* bubbles.mp3 in Resources */,
+				8650D0DC1C23A67400D33AC0 /* corona.mp3 in Resources */,
 				DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */,
 				DCF10A841C1F575D00A30DE5 /* just blaze fullkick.WAV in Resources */,
+				8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
+				862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */,
 				8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
 				DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */,
+				8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */,
+				8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,
 				DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */,
@@ -461,7 +485,7 @@
 				INFOPLIST_FILE = algorhythm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sans.serif.algorhythm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.janak.algorhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -476,7 +500,7 @@
 				INFOPLIST_FILE = algorhythm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sans.serif.algorhythm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.janak.algorhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
