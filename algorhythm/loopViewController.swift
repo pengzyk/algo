@@ -30,6 +30,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playButtonView: UIView!
+    
+    var rainbowView: UIView!
 
     var loopView : UIImageView!
     
@@ -139,9 +141,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //        let loopImage = UIImage(named: loopImageName)
         //        loopView = UIImageView(image: loopImage!)
         
-       
-        
-
         
         //draw the player dot
         //initialize view size and position
@@ -217,6 +216,41 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
         
     }
+    
+    
+    //longpress on the icons
+
+    func onLongPressIcon(sender: UILongPressGestureRecognizer) {
+        let iconView = sender.view as! ShapeView
+        var iconColor : UIColor!
+        
+        
+        if sender.state == UIGestureRecognizerState.Began {
+            //a full screen view
+            rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+
+            iconColor = iconView.soundDict[iconView.soundIndex]!["color"]! as! UIColor
+            
+            rainbowView.backgroundColor = iconColor
+            view.addSubview(rainbowView)
+            
+//            print("long press \(v.soundIndex)")
+            
+        }else if sender.state == UIGestureRecognizerState.Changed {
+            let location = sender.locationInView(rainbowView)
+            
+            print("x \(location.x) y \(location.y)")
+
+            
+        }else if sender.state == UIGestureRecognizerState.Ended {
+            
+            rainbowView.removeFromSuperview()
+        }
+        
+        
+    }
+    
+    
     //TODO the circling of player dot stops if we exit and come back
     
     //you cant stop the timer if it's already stopped because your app will crash.
@@ -264,19 +298,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
 //        print("timer" , timer.valid)
     }
-    
-    //longpress 
-    func onLongPressIcon(sender: UILongPressGestureRecognizer) {
-        let v = sender.view as! ShapeView
-         if sender.state == UIGestureRecognizerState.Began {
-            
-        print("long press \(v.soundIndex)")
-        }
-       // let location = sender.locationInView(self)
-       // v.center = location
-        // Triggers drawRect
-        
-    }
+   
  
     //drag and drop
     @IBAction func didPanShape(sender: UIPanGestureRecognizer) {
