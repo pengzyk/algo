@@ -452,6 +452,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         else if sender.state == UIGestureRecognizerState.Ended {
             
+            
             ///move shape back to selection menu
             if velocity.y >=  -0.1    {
 
@@ -476,24 +477,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 //  self.newlyCreatedShape.enableAnchorLongPress()
                 self.shapes.append(self.newlyCreatedShape)
                 self.placeAudio.play()
-
-                
-//                UIView.animateWithDuration(0.2, animations: { () -> Void in
-//                    
-//                    self.newlyCreatedShape.center = CGPointMake(self.circleCenterX, self.circleCenterY)
-//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-//                    
-//                    }, completion: { (Bool) -> Void in
-////                        print("add new shape to shapes array")
-//                        let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-//                        self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
-//                        self.newlyCreatedShape.center = newO
-//                        //TODO add snapping & constraint
-//                      //  self.newlyCreatedShape.enableAnchorLongPress()
-//                        self.shapes.append(self.newlyCreatedShape)
-//                        self.placeAudio.play()
-//                })
-                
             }
         }
     }
@@ -501,6 +484,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //MOVE SHAPE ALREADY IN LOOP
     //pan shape that is already on loop
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer){
+        
+        let pannedShape = panGestureRecognizerCanvas.view as! ShapeView
         
         let location = panGestureRecognizerCanvas.locationInView(view)
         
@@ -528,6 +513,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
             if newlyCreatedShape.center.y >= view.center.y {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
+                   
+                    //TODO FIND THE MATCHING SHAPE AND RETURN THERE
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeMenuCenter
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
