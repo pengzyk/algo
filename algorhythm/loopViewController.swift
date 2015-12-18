@@ -151,8 +151,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
-        shapeLayer.fillColor = UIColor.clearColor().CGColor
-        shapeLayer.strokeColor = UIColor.grayColor().CGColor
+        shapeLayer.fillColor = UIColor.whiteColor().CGColor
+        shapeLayer.strokeColor = UIColor.lightGrayColor().CGColor
         shapeLayer.lineWidth = 2.0
         view.layer.addSublayer(shapeLayer)
         // debugging image
@@ -247,12 +247,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         soundInd = iconView.soundIndex
         iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
-        
-        
+        var newInd = soundInd
+         let loc = sender.locationInView(rainbowView)
         
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            rainbowView.alpha = 0.95
 //            soundInd = iconView.soundIndex
 //            iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
 //           
@@ -286,12 +287,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }else if sender.state == UIGestureRecognizerState.Changed {
             
 //            print(sender.locationInView(rainbowView).y)
-            let loc = sender.locationInView(rainbowView)
+           
             
-             var newInd =  Int (floor ((loc.y)/100))
+             newInd =  Int (floor ((loc.y)/100))
 //            print("x \(location.x) y \(location.y) deltaInd \(deltaInd)")
              newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
-            
              newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
             //TODO if new index , play sound
             
@@ -312,10 +312,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
             
         }else if sender.state == UIGestureRecognizerState.Ended {
-            print("exit with \(iconView.nextSoundIndex )")
-            //load next one
-            iconView.soundIndex = iconView.nextSoundIndex
-            iconView.updateAudio()
+            
+            if (newInd != soundInd  ){
+                print("exit with \(iconView.nextSoundIndex )")
+                //load next one
+                
+                iconView.soundIndex = iconView.nextSoundIndex
+                iconView.updateAudio()
+                
+                
+            }
             
              self.rainbowView.removeFromSuperview()
             
