@@ -46,6 +46,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var circleCenterX : CGFloat!
     var circleCenterY: CGFloat!
     
+    var ticksView: UIView!
     
     //drag and drop
     var newlyCreatedShape: ShapeView!
@@ -159,6 +160,41 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //        let loopImageName = "loopTest.png"
         //        let loopImage = UIImage(named: loopImageName)
         //        loopView = UIImageView(image: loopImage!)
+        
+        
+        //prepare ticks
+        ticksView = UIView(frame: circleBounds)
+//        ticksView.backgroundColor = UIColor.yellowColor()
+        view.addSubview(ticksView)
+        ticksView.alpha = 0
+        
+        //draw ticks
+        for var i = 0; i < TOTAL_TIME_SLOTS; ++i {
+
+            let tickCenter : CGPoint!
+            tickCenter = calCoordinateFromIndex(CGPointMake(circleRadius, circleRadius), r: circleRadius, i: i)
+            //print("index \(i) .x \(tickPosition.x) .y \(tickPosition.y)")
+          
+            var singleTick: UIView!
+            singleTick = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
+//            singleTick.backgroundColor = UIColor.greenColor()
+            singleTick.center = tickCenter
+            ticksView.addSubview(singleTick)
+            
+            let tickPath = UIBezierPath ()
+            tickPath.addArcWithCenter((tickCenter),
+                radius: CGFloat(3.0),
+                startAngle:0,
+                endAngle: CGFloat(M_PI*2.0),
+                clockwise: true     )
+            
+            let tickLayer = CAShapeLayer()
+            tickLayer.path = tickPath.CGPath
+            tickLayer.fillColor = UIColor.grayColor().CGColor
+            ticksView.layer.addSublayer(tickLayer)
+            
+            
+        }
         
         
         //draw the player dot
@@ -568,6 +604,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
        
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             currentShape.alpha = 0.95
+            showTicks()
         }
         else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             
@@ -576,6 +613,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
         //when released, record the change in the shapeView class
         else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
+            
             
             var rotationTick = rotationRadians / (2 * CGFloat(M_PI) / 16)
             rotationTick = round(rotationTick)
@@ -599,9 +637,23 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             //now that new shape is in position, we dont need this transform any more
             currentShape.transform = CGAffineTransformMakeRotation( 0) //no long need the transform on the old shape. new geometry is at right place!
             currentShape.alpha = 0.7
+            
+            hideTicks()
+
         }
     }
     
+    func showTicks() {
+        ticksView.alpha = 1
+
+        
+    }
+    
+    func hideTicks() {
+        ticksView.alpha = 0
+
+        
+    }
 
     func animatePlayer() {
         //animate dot player when a beat is there
@@ -617,7 +669,26 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
     }
     
+    func calCoordinateFromIndex( index: Int) -> CGPoint {
+        //index is offset by a quarter
+        //hence the treatment
+        let newIndex =  index - TOTAL_TIME_SLOTS/4
+        let rad = Double(newIndex) * M_PI * 2.0 / Double(TOTAL_TIME_SLOTS)
+        let x = cos(rad)
+        let y = sin(rad)
+        // print("index \(index) .x \(x) .y \(y)")
+        
+        return CGPoint(x: x, y: y)
+        
+    }
     
+    func calCoordinateFromIndex( o: CGPoint, r: CGFloat, i: Int) -> CGPoint{
+        let x = calCoordinateFromIndex(i).x * r + o.x
+        let y = calCoordinateFromIndex(i).y * r + o.y
+        return CGPoint(x: x, y: y)
+        
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

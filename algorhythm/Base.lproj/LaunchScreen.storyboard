@@ -14,10 +14,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="whitecircle" id="b02-lz-Ua3">
-                                <rect key="frame" x="36" y="79" width="302" height="302"/>
+                                <rect key="frame" x="32" y="75" width="311" height="311"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="16logo-25" id="Acw-xS-yxo">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="16logo-26" id="Acw-xS-yxo">
                                 <rect key="frame" x="152" y="144" width="70" height="171"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
@@ -32,7 +32,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="16logo-25" width="197" height="478"/>
+        <image name="16logo-26" width="197" height="478"/>
         <image name="whitecircle" width="788" height="789"/>
     </resources>
 </document>
