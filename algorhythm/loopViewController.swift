@@ -462,6 +462,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let rotationRadians = rotationGestureRecognizerCanvas.rotation
         var alphaAngle = CGFloat!()
+        var currentShape: ShapeView!
         
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             //rotationRadians = self.previousRotationState
@@ -497,9 +498,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             print("rotation state \(previousRotationState)")
             
             if ( self.shapes.count > 0){
-                   print( self.shapes.last!.defaultVerticeIndex)
+                   print( self.shapes.last!.currentVerticeIndex)
                 self.shapes.last!.turn(Int(alphaAngle))
-                 print( self.shapes.last!.defaultVerticeIndex)
+                 print( self.shapes.last!.currentVerticeIndex)
                 
             }
             
