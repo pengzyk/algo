@@ -127,6 +127,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
         //draw the loop
+        loopView = UIImageView()
+        loopView.frame = circleBounds
+        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
         shapeLayer.fillColor = UIColor.clearColor().CGColor
@@ -138,8 +141,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //        let loopImage = UIImage(named: loopImageName)
         //        loopView = UIImageView(image: loopImage!)
         
-        loopView = UIImageView()
-        loopView.frame = circleBounds
+       
         
 
         
@@ -160,7 +162,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let playerLayer = CAShapeLayer()
         playerLayer.path = playerPath.CGPath
-        playerLayer.fillColor = UIColor.blackColor().CGColor
+        playerLayer.fillColor = UIColor.grayColor().CGColor
         playerLayer.strokeColor = UIColor.clearColor().CGColor
         playerLayer.lineWidth = 2.0
         playerUIView.layer.addSublayer(playerLayer)
@@ -273,7 +275,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
-        let location = sender.locationInView(view)
+//        let location = sender.locationInView(view)
 //        print(location.y)
         
         //if user starts dragging shape
@@ -454,71 +456,62 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //ROTATE SHAPE ALREADY IN LOOP
- 
     func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
         
     {
-        
-//        let  currentShape =  self.shapes.last!
         let  currentShape = rotationGestureRecognizerCanvas.view as! ShapeView
-        var rotationRadians = rotationGestureRecognizerCanvas.rotation //always start from zero
+        let rotationRadians = rotationGestureRecognizerCanvas.rotation //always start from zero
 
-
-        
+       
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
-            
-            
+            currentShape.alpha = 0.95
         }
         else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             
-//            print("rotation in degrees \(rotationRadians * 180/CGFloat(M_PI))")
             currentShape.transform = CGAffineTransformMakeRotation(rotationRadians)
-//            self.previousRotationState = rotationRadians
 
         }
+        //when released, record the change in the shapeView class
         else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
             
-            
-            
-//            //TODO fix turning snapping to zero
             var rotationTick = rotationRadians / (2 * CGFloat(M_PI) / 16)
             rotationTick = round(rotationTick)
             
+            //snap to the nearest
+            UIImageView.animateWithDuration(0.1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                currentShape.transform = CGAffineTransformMakeRotation( (rotationTick) * CGFloat( M_PI) / 8 )
+            }, completion: nil )
+            
+            //record final position to ShapeView
+//            print("turned \(Int(rotationTick))")
 
-            
-//            //send final position to ShapeView
-            print("turned \(Int(rotationTick))")
-            
+
             if ( self.shapes.count > 0){
-                   print( self.shapes.last!.currentVerticeIndex)
+//                   print( self.shapes.last!.currentVerticeIndex)
                 self.shapes.last!.turn(Int(rotationTick))
-                 print( self.shapes.last!.currentVerticeIndex)
-                
+//                 print( self.shapes.last!.currentVerticeIndex)
             }
-//
-//          currentShape.transform = CGAffineTransformMakeRotation( rotationTick * CGFloat(M_PI) / 8)
-                      currentShape.transform = CGAffineTransformMakeRotation( 0)
-//
-//            
+            
+            
+            //now that new shape is in position, we dont need this transform any more
+            currentShape.transform = CGAffineTransformMakeRotation( 0) //no long need the transform on the old shape. new geometry is at right place!
+            currentShape.alpha = 0.7
         }
     }
     
 
     func animatePlayer() {
-    
         //animate dot player when a beat is there
         UIView.animateWithDuration(0, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            self.loopView.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (Bool) -> Void in
         })
         
         UIView.animateWithDuration(0.1) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
-            
+            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
         }
-
-        
-        
     }
     
     
