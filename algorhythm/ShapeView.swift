@@ -18,6 +18,8 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///visual
     var numVertices: Int!
     var defaultVerticeIndex = [Int]()
+    var currentVerticeIndex = [Int]()
+    
 //    var vertices = [CGPoint]()
     //var coordinateLookupTable = [CGPoint]() //where all time slots should be
     var anchorView: UIView! //to allow all vertices to be move-able
@@ -73,8 +75,8 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             print("error")
             defaultVerticeIndex = [0]
             break;
-            
         }
+        currentVerticeIndex = defaultVerticeIndex
         
         ///visual
         //calculate each vertex and add to array
@@ -160,7 +162,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             //TODO frame need to be bigger
             
             anchorViewArray[i].frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-            anchorViewArray[i].center = calCoordinateFromIndex(relativeO, r: newR , i: defaultVerticeIndex[i])
+            anchorViewArray[i].center = calCoordinateFromIndex(relativeO, r: newR , i: currentVerticeIndex[i])
 //            anchorViewArray[i].backgroundColor = UIColor.greenColor()
           
 //            print("index \(i). point \(defaultVerticeIndex[i]). x \(anchorViewArray[i].center.x) .y \(anchorViewArray[i].center.y)")
@@ -224,14 +226,12 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         //shift the index by the number of steps
         
           //TODO needs to fix turning in negative direction
-        
-        
         for var index = 0 ; index < anchorViewArray.count ; ++index {
-            var temp = (defaultVerticeIndex[index]+step) % TOTAL_TIME_SLOTS
+            var temp = (currentVerticeIndex[index]+step) % TOTAL_TIME_SLOTS
             if (temp < 0 ){
                 temp += timeArray.count //in case of CCW turns, temp would be a negative number
             }
-            defaultVerticeIndex[index] = temp
+            currentVerticeIndex[index] = temp
             
         }
         
