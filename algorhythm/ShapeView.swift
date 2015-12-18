@@ -26,12 +26,17 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
-
-    var soundDict  = [0: ["name":"just blaze hipsnare","extention":"WAV", "color": UIColor.blueColor()],
-        1: ["name":"just blaze bksnare2","extention":"WAV", "color": UIColor.orangeColor()],
-        2: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.yellowColor()],
-        3: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor.purpleColor()],
-        4: ["name":"just blaze tapsnare","extention":"WAV", "color": UIColor.cyanColor()]
+    let swiftColor = UIColor(red: 234/255, green: 198/255, blue: 96/255, alpha: 1)
+    //ORANGE UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)
+    //RED UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)
+    //BLUE UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)
+    //GREEN UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)
+    
+    var soundDict  = [0: ["name":"just blaze hipsnare","extention":"WAV", "color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],
+        1: ["name":"just blaze bksnare2","extention":"WAV", "color": UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)],
+        2: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
+        3: ["name":"just blaze &ound10","extention":"WAV", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
+        4: ["name":"just blaze tapsnare","extention":"WAV", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 01)]
     ]
 
     
@@ -190,7 +195,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     func turn(step: Int)  {
         //shift the index by the number of steps
         
-          //TODO needs to fix turning in negative direction
+          //TODO needs to fix turning in negative direction + snap to zero
         
         
         for var index = 0 ; index < anchorViewArray.count ; ++index {
