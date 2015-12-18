@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		22A5E1D41C223D21006E7C52 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5E1D31C223D21006E7C52 /* ShapeView.swift */; };
 		862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 862FC69B1C23A8920018DCBC /* confetti.mp3 */; };
+		862FC69E1C2495370018DCBC /* crackle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 862FC69D1C2495370018DCBC /* crackle.mp3 */; };
 		8650D0D21C23A2CB00D33AC0 /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */; };
 		8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */; };
 		8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D51C23A4EE00D33AC0 /* strike.mp3 */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		22A5E1D31C223D21006E7C52 /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		862FC69B1C23A8920018DCBC /* confetti.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = confetti.mp3; sourceTree = "<group>"; };
+		862FC69D1C2495370018DCBC /* crackle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crackle.mp3; sourceTree = "<group>"; };
 		8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
 		8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "prism-1.mp3"; sourceTree = "<group>"; };
 		8650D0D51C23A4EE00D33AC0 /* strike.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = strike.mp3; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */,
 				8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */,
 				8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */,
+				862FC69D1C2495370018DCBC /* crackle.mp3 */,
 				8650D0D51C23A4EE00D33AC0 /* strike.mp3 */,
 				862FC69B1C23A8920018DCBC /* confetti.mp3 */,
 				8650D0DB1C23A67400D33AC0 /* corona.mp3 */,
@@ -316,6 +319,7 @@
 				DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */,
 				8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */,
 				8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */,
+				862FC69E1C2495370018DCBC /* crackle.mp3 in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,
 				DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */,
