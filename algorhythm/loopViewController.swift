@@ -59,6 +59,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     /// audio effects
     var placeAudio : AVAudioPlayer!
+    var removeAudio: AVAudioPlayer!
     
     ////TIMING & ANIMATION
 //slow speed for debugging
@@ -110,7 +111,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     }
     
     func prepareAudio(){
-        placeAudio = prepareAVAudioPlayer("suspension",fileType: "mp3")
+        removeAudio = prepareAVAudioPlayer("suspension",fileType: "mp3")
+        placeAudio = prepareAVAudioPlayer("splits",fileType: "mp3")
     }
     
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
@@ -240,21 +242,34 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     func onLongPressIcon(sender: UILongPressGestureRecognizer) {
         let iconView = sender.view as! ShapeView
         var iconColor : UIColor!
+        var soundInd : Int!
+        var newColor : UIColor!
+
+//        var startingY: CGFloat!
+        
+        soundInd = iconView.soundIndex
+        iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
+        
         
         
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+//            soundInd = iconView.soundIndex
+//            iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
+//           
+//            startingY = sender.locationInView(rainbowView).y
             
-            iconColor = iconView.soundDict[iconView.soundIndex]!["color"]! as! UIColor
+          
             
             rainbowView.backgroundColor = iconColor
             view.addSubview(rainbowView)
-          
-            
+            self.rainbowView.center = CGPointMake(0, self.view.frame.size.height)//iconView.center
+
+            self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
             self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
-//            self.rainbowView.layer.anchorPoint =  CGPointMake(100, 100)//iconView.center
-            print("start anime")
+
+//            print("rainbow start ")
             UIView.animateWithDuration(0.8,
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseIn,
@@ -263,7 +278,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
                     },
                     completion: { (Bool) -> Void in
-                        print("end anime")
+//                        print("rainbow shown")
                     
                 })
             
@@ -271,13 +286,41 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            print("long press \(v.soundIndex)")
             
         }else if sender.state == UIGestureRecognizerState.Changed {
-            let location = sender.locationInView(rainbowView)
             
-            print("x \(location.x) y \(location.y)")
+//            print(sender.locationInView(rainbowView).y)
+            let loc = sender.locationInView(rainbowView)
+            
+             var newInd =  Int (floor ((loc.y)/100))
+//            print("x \(location.x) y \(location.y) deltaInd \(deltaInd)")
+             newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
+            
+             newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
+            //TODO if new index , play sound
+            
+            //note the range changes with anchor?!
+
+            UIView.animateWithDuration(0.5,
+                delay: 0,
+                options: UIViewAnimationOptions.CurveEaseInOut,
+                animations: {
+
+                    self.rainbowView.backgroundColor = newColor
+                    
+                },
+                completion: { (Bool) -> Void in
+                    iconView.nextSoundIndex = newInd
+                   
+                    
+            })
 
             
-        }else if sender.state == UIGestureRecognizerState.Ended {
             
+            
+        }else if sender.state == UIGestureRecognizerState.Ended {
+            print("exit with \(iconView.nextSoundIndex )")
+            //load next one
+            iconView.soundIndex = iconView.nextSoundIndex
+            iconView.updateAudio()
             rainbowView.removeFromSuperview()
         }
         
@@ -398,8 +441,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         else if sender.state == UIGestureRecognizerState.Ended {
             
-            //move shape back to selection menu
+            ///move shape back to selection menu
             if velocity.y >=  -0.1    {
+
+                
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
@@ -418,7 +463,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
                     
                     }, completion: { (Bool) -> Void in
-                        print("add new shape to shapes array")
+//                        print("add new shape to shapes array")
                         let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
                         self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
                         self.newlyCreatedShape.center = newO
@@ -471,6 +516,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //delete the last one in shapes list 
                         //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
+                        self.removeAudio.play()
+
+
                 })
                 
             }

@@ -29,6 +29,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
+    var nextSoundIndex: Int!
     let swiftColor = UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
     
     //YELLOW UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
@@ -229,7 +230,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         updateAnchorPosition()
     }
     
-
+    
     
     func fillTimeArrayWithAudio () {
         for var i=0 ; i < timeArray.count ; ++i {
@@ -241,6 +242,12 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             }
             
         }
+        
+    }
+    
+    func updateAudio(){
+        fillTimeArrayWithAudio()
+        setNeedsDisplay() //audio changes color, hence redraw 
         
     }
     

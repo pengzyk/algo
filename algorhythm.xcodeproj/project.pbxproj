@@ -28,6 +28,7 @@
 		DC2F9FB61BF8869600237A99 /* String.wav in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9FB51BF8869600237A99 /* String.wav */; };
 		DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */; };
 		DC6B60C11C23F45700773111 /* suspension.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC6B60C01C23F45700773111 /* suspension.mp3 */; };
+		DC6B60C31C23F5D200773111 /* splits.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC6B60C21C23F5D200773111 /* splits.mp3 */; };
 		DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */; };
 		DCF10A801C1F540800A30DE5 /* just blaze bksnare2.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */; };
 		DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */; };
@@ -80,6 +81,7 @@
 		DC2F9FB51BF8869600237A99 /* String.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = String.wav; path = algorhythm/String.wav; sourceTree = "<group>"; };
 		DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = WoodBonk.wav; path = algorhythm/WoodBonk.wav; sourceTree = "<group>"; };
 		DC6B60C01C23F45700773111 /* suspension.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = suspension.mp3; sourceTree = "<group>"; };
+		DC6B60C21C23F5D200773111 /* splits.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = splits.mp3; sourceTree = "<group>"; };
 		DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze &ound10.WAV"; sourceTree = "<group>"; };
 		DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze bksnare2.WAV"; sourceTree = "<group>"; };
 		DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze exmple 38.WAV"; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 		DC2F9FB01BF87D9B00237A99 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				DC6B60C21C23F5D200773111 /* splits.mp3 */,
 				DC6B60C01C23F45700773111 /* suspension.mp3 */,
 				DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */,
 				DC2F9FB51BF8869600237A99 /* String.wav */,
@@ -306,6 +309,7 @@
 				8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
+				DC6B60C31C23F5D200773111 /* splits.mp3 in Resources */,
 				862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */,
 				8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
