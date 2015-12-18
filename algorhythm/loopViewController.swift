@@ -219,7 +219,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     //longpress on the icons
-
+    //cheng
     func onLongPressIcon(sender: UILongPressGestureRecognizer) {
         let iconView = sender.view as! ShapeView
         var iconColor : UIColor!
@@ -228,11 +228,28 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
-
+            
             iconColor = iconView.soundDict[iconView.soundIndex]!["color"]! as! UIColor
             
             rainbowView.backgroundColor = iconColor
             view.addSubview(rainbowView)
+          
+            
+            self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
+//            self.rainbowView.layer.anchorPoint =  CGPointMake(100, 100)//iconView.center
+            print("start anime")
+            UIView.animateWithDuration(0.8,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseIn,
+                    animations: {
+                        self.rainbowView.transform = CGAffineTransformMakeScale (1,1)
+
+                    },
+                    completion: { (Bool) -> Void in
+                        print("end anime")
+                    
+                })
+            
             
 //            print("long press \(v.soundIndex)")
             
@@ -365,7 +382,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         else if sender.state == UIGestureRecognizerState.Ended {
             
             //move shape back to selection menu
-            if velocity.y >  0    {
+            if velocity.y >=  -0.1    {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                     
                     self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
@@ -393,14 +410,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         self.shapes.append(self.newlyCreatedShape)
                 })
                 
-                
-//                print("add new shape to shapes array")
-//                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-//                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
-//                self.newlyCreatedShape.center = newO
-//                //TODO add snapping
-////                self.newlyCreatedShape.enableAnchorLongPress()
-//                self.shapes.append(self.newlyCreatedShape)
             }
         }
     }
@@ -512,13 +521,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //animate dot player when a beat is there
         UIView.animateWithDuration(0, delay: 0 , usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options:[] , animations: { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1.4, 1.4)
-            self.loopView.transform = CGAffineTransformMakeScale(0.9, 0.9)
+//            self.loopView.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (Bool) -> Void in
         })
         
         UIView.animateWithDuration(0.1) { () -> Void in
             self.playerUIView.transform = CGAffineTransformMakeScale(1, 1)
-            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
+//            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
         }
     }
     
