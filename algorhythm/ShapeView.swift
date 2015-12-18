@@ -43,6 +43,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         3: ["name":"wipe","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
         4: ["name":"prism-1","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
         5: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)]
+        
     ]
 
     

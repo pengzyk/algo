@@ -57,6 +57,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
 //    @IBOutlet weak var debugLabel: UILabel!
     
+    /// audio effects
+    var placeAudio : AVAudioPlayer!
     
     ////TIMING & ANIMATION
 //slow speed for debugging
@@ -79,6 +81,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         //draw players
         prepareUI()
+        prepareAudio()
         
       /// initialize the bottom icon array with shapes
         for var i = 0; i < 5 ; ++i {
@@ -106,6 +109,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
     }
     
+    func prepareAudio(){
+        placeAudio = prepareAVAudioPlayer("suspension",fileType: "mp3")
+    }
+    
+    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+        let fileURL = NSURL.fileURLWithPath(path!)
+        
+        
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        return tempPlayer
+    }
     
     func prepareUI(){
         
@@ -408,6 +425,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //TODO add snapping & constraint
                       //  self.newlyCreatedShape.enableAnchorLongPress()
                         self.shapes.append(self.newlyCreatedShape)
+                        self.placeAudio.play()
                 })
                 
             }
