@@ -282,8 +282,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         soundInd = iconView.soundIndex
         iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
         var newInd = soundInd
-         let loc = sender.locationInView(rainbowView)
-//        let loc =   sender.locationInView(iconView)
+
         
         //BUG this is changing color during long press , without moving finger 
         if sender.state == UIGestureRecognizerState.Began {
@@ -319,11 +318,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
         }else if sender.state == UIGestureRecognizerState.Changed {
 
-            
-             newInd =  Int (floor ((loc.y - iconView.center.y)/100))
+            let loc = sender.locationInView(rainbowView)
+             newInd =  Int (floor ((loc.y - iconView.iconFrame.minY)/100))
              newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
             if (newInd < 0 ) { newInd = newInd + 5}
-           // print("loc.y \(loc.y) newInd \(newInd)")
+            print("dy \((loc.y - iconView.iconFrame.minY)) newInd \(newInd)")
             newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
             UIView.animateWithDuration(0.5,
                 delay: 0,
