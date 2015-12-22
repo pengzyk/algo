@@ -24,6 +24,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //shapes for  the music queue
     var shapes = [ShapeView]()
     var icons = [ShapeView]()
+
    
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
@@ -57,6 +58,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //    @IBOutlet weak var debugLabel: UILabel!
     
     /// audio effects
+    var SFXDict  = [String: AVAudioPlayer]()
     var placeAudio : AVAudioPlayer!
     var removeAudio: AVAudioPlayer!
     
@@ -112,15 +114,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     }
     
     func prepareAudio(){
-        removeAudio = prepareAVAudioPlayer("suspension",fileType: "mp3")
-        placeAudio = prepareAVAudioPlayer("splits",fileType: "mp3")
+        SFXDict["place"] = prepareAVAudioPlayer("splits",fileType: "mp3")
+        SFXDict["remove"] = prepareAVAudioPlayer("suspension",fileType: "mp3")
+        
+        
     }
     
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
         let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
         let fileURL = NSURL.fileURLWithPath(path!)
-        
-        
         let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
         tempPlayer.delegate = self
         tempPlayer.prepareToPlay()
@@ -242,18 +244,19 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     func tick(){
        // print( self.ticCounter)
-        //for debugging
-        
-//        debugLabel.text = String(self.ticCounter)
         //loop through shapes
         var ifAnimate = false
 
         //if there is a shape in the loop
         if(shapes.count > 0 ){
-            for shape in shapes {
+//            for shape in shapes {
+            for var i = 0; i < shapes.count; ++i {
+                if (i > shapes.count - 20 ){ //This is a hack - if too many shapes at the same positon, then only play the last 20 //TODO double check if this assumption is still valid
                // print ("index \(self.ticCounter) shape \(shape.fileName)")
                 //ifAnimate turns to true, if any one shape has a note in the tic
-                 ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
+//                 ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
+                 ifAnimate = ( shapes[i].play(self.ticCounter)) || ifAnimate
+                }
 
             }
             
@@ -281,17 +284,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         soundInd = iconView.soundIndex
         iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
-        var newInd = soundInd
 
-        
-        //BUG this is changing color during long press , without moving finger 
         if sender.state == UIGestureRecognizerState.Began {
-            //a full screen view
            
-                  // bring the  imageview to the front
-//            iconView.superview?.bringSubviewToFront(view)
-//              view.bringSubviewToFront(iconView)
-//            view.sendSubviewToBack(iconView)
+       // bring the  imageview to the front
             view.insertSubview(iconView, aboveSubview: loopView)
 
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
@@ -299,19 +295,18 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             self.rainbowView.backgroundColor = iconColor
             self.view.addSubview(self.rainbowView)
             self.rainbowView.alpha = 0
-            
 
-            
 //            print("rainbow start ")
-            UIView.animateWithDuration(0.5,
+            UIView.animateWithDuration(0.6,
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseIn,
                     animations: {
                         iconView.transform = CGAffineTransformMakeScale (35,35)
-                        self.rainbowView.alpha = 1
+                        self.rainbowView.alpha = 0.95
+                        iconView.alpha = 0
                     },
                     completion: { (Bool) -> Void in
-
+                        
 
                 })
 //            print("long press \(v.soundIndex)")
@@ -319,21 +314,42 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }else if sender.state == UIGestureRecognizerState.Changed {
 
             let loc = sender.locationInView(rainbowView)
-             newInd =  Int (floor ((loc.y - iconView.iconFrame.minY)/100))
-             newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
-            if (newInd < 0 ) { newInd = newInd + 5}
-            print("dy \((loc.y - iconView.iconFrame.minY)) newInd \(newInd)")
-            newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
-            UIView.animateWithDuration(0.5,
-                delay: 0,
-                options: UIViewAnimationOptions.CurveEaseInOut,
-                animations: {
-                    self.rainbowView.backgroundColor = newColor
+            var currentInd = Int (floor ((loc.y - iconView.iconFrame.minY)/100))
+            currentInd = (soundInd + currentInd) % 5
+            if (currentInd < 0 ) { currentInd = currentInd + 5}  //TODO this matches totol variations of tunes
 
-                },
-                completion: { (Bool) -> Void in
-                iconView.nextSoundIndex = newInd
-            })
+            print("stored index \(iconView.nextSoundIndex ) new index \(currentInd)")
+            
+            
+            if (iconView.nextSoundIndex != currentInd) {
+           
+            
+                
+                newColor = iconView.soundDict[currentInd]!["color"]! as! UIColor
+                UIView.animateWithDuration(0.5,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseInOut,
+                    animations: {
+                        self.rainbowView.backgroundColor = newColor
+                        
+                    },
+                    completion: { (Bool) -> Void in
+                       iconView.nextSoundIndex = currentInd
+                       print ("change")
+                       //play sound 
+                        
+                        
+                        
+                       
+                })
+
+                
+                
+            }
+                
+//                newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
+//            if (newInd < 0 ) { newInd = newInd + 5}
+//            print("dy \((loc.y - iconView.iconFrame.minY)) newInd \(newInd)")
             
 //             print("x \(loc.x) y \(loc.y) newInd \(newInd) oldInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
             
@@ -358,6 +374,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 animations: {
                     //scaling to 0 would NOT WORK!
 //                    self.rainbowView.transform = CGAffineTransformMakeScale (0.01,0.01)
+                    iconView.alpha = 0.95
                     iconView.transform = CGAffineTransformMakeScale (1,1)
                     self.rainbowView.alpha = 0
                     
@@ -433,10 +450,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             let draggedShapeView = sender.view as! ShapeView
             newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
             newlyCreatedShape.alpha = 0.7
-//            view.addSubview(newlyCreatedShape)
+
             //bring player button to the top
             self.view.insertSubview(newlyCreatedShape, belowSubview: self.playerUIView)
-            
             
 //            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
             
@@ -499,7 +515,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 //TODO add snapping & constraint
                 //  self.newlyCreatedShape.enableAnchorLongPress()
                 self.shapes.append(self.newlyCreatedShape)
-                self.placeAudio.play()
+
+                SFXDict["place"]!.play()
+                
             }
         }
     }
@@ -547,8 +565,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //delete the last one in shapes list 
                         //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
-                        self.removeAudio.play()
-
+                        self.SFXDict["remove"]!.play()
 
                 })
                 
