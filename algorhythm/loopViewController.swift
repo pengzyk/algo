@@ -78,9 +78,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     override func viewDidLoad() {
-        
-        
-        
+    
         super.viewDidLoad()
 
         //draw players
@@ -89,7 +87,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
       /// initialize the bottom icon array with shapes
         for var i = 0; i < 5 ; ++i {
-            //add to icon list on the bottom
+            //build icon list on the bottom
             var verticesCnt = i+3
             if (i == 4) {verticesCnt = 8 }
             let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
@@ -260,9 +258,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //                 ifAnimate = ( shape.play(self.ticCounter)) || ifAnimate
                  ifAnimate = ( shapes[i].play(self.ticCounter)) || ifAnimate
                 }
-
             }
-            
         }
         
         if(ifAnimate){
@@ -274,7 +270,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if(self.ticCounter >= self.ticSlots.count){
             self.ticCounter = 0
         }
-        
     }
     
     
