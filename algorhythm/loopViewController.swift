@@ -117,7 +117,10 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         SFXDict["place"] = prepareAVAudioPlayer("splits",fileType: "mp3")
         SFXDict["remove"] = prepareAVAudioPlayer("suspension",fileType: "mp3")
         
-        
+        let tempShapeView = ShapeView(frame: CGRectMake(0, 0, 0, 0), numVertices: 0, sound: 0)
+        for var i = 0 ; i < tempShapeView.soundDict.count; ++i {
+            SFXDict[String(i)] = prepareAVAudioPlayer( tempShapeView.soundDict[i]!["name"]! as! String, fileType: tempShapeView.soundDict[i]!["extention"]! as! String )
+        }
     }
     
     func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
@@ -284,7 +287,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         soundInd = iconView.soundIndex
         iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
-
+    
         if sender.state == UIGestureRecognizerState.Began {
            
        // bring the  imageview to the front
@@ -314,17 +317,17 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }else if sender.state == UIGestureRecognizerState.Changed {
             
             let loc = sender.locationInView(rainbowView)
+//            let spd = sender.velocityInView(rainbowView)//todo implement speeD?
             let soundDictSize = iconView.soundDict.count
+            //currentIndex in choice
             var currentInd = Int (floor ((loc.y - iconView.iconFrame.minY)/100))
             currentInd = (soundInd + currentInd) % soundDictSize
-            if (currentInd < 0 ) { currentInd = currentInd + soundDictSize }  //TODO this matches totol variations of tunes
-
-            print("stored index \(iconView.nextSoundIndex ) new index \(currentInd)")
             
+            if (currentInd < 0 ) { currentInd = currentInd + soundDictSize }
+//            print("stored index \(iconView.nextSoundIndex ) new index \(currentInd)")
             
-            if (iconView.nextSoundIndex != currentInd) {
-           
-            
+            //if the finger touched area has changed
+            if (iconView.nextSoundIndex != currentInd ) {
                 
                 newColor = iconView.soundDict[currentInd]!["color"]! as! UIColor
                 UIView.animateWithDuration(0.5,
@@ -336,24 +339,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     },
                     completion: { (Bool) -> Void in
                        iconView.nextSoundIndex = currentInd
-                       print ("change")
-                       //play sound 
-                        
-                        
-                        
-                       
+//                       print ("changed and playing \(currentInd)")
+                       //play sound
+                       self.SFXDict[String(currentInd)]!.play()
                 })
-
-                
-                
             }
-                
-//                newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
-//            if (newInd < 0 ) { newInd = newInd + 5}
-//            print("dy \((loc.y - iconView.iconFrame.minY)) newInd \(newInd)")
-            
-//             print("x \(loc.x) y \(loc.y) newInd \(newInd) oldInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
-            
             
         }else if ( sender.state == UIGestureRecognizerState.Ended
             || sender.state == UIGestureRecognizerState.Cancelled
@@ -367,8 +357,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             }
             
 //            print("zoomout start ")
-
-            
             UIView.animateWithDuration(0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseIn,
