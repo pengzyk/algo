@@ -105,26 +105,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         
     }
     
-    func calCoordinateFromIndex( index: Int) -> CGPoint {
-        //index is offset by a quarter
-        //hence the treatment
-        let newIndex =  index - TOTAL_TIME_SLOTS/4
-        let rad = Double(newIndex) * M_PI * 2.0 / Double(TOTAL_TIME_SLOTS)
-        let x = cos(rad)
-        let y = sin(rad)
-        // print("index \(index) .x \(x) .y \(y)")
-        
-        return CGPoint(x: x, y: y)
-        
-    }
-    
-    func calCoordinateFromIndex( o: CGPoint, r: CGFloat, i: Int) -> CGPoint{
-        let x = calCoordinateFromIndex(i).x * r + o.x
-        let y = calCoordinateFromIndex(i).y * r + o.y
-        return CGPoint(x: x, y: y)
-        
-    }
-
+  
   
     
     //called once to initialize 
@@ -136,7 +117,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             anchorView = UIView(frame: CGRect(x: origin.x - radius, y: origin.y - radius, width: radius * 2 , height: radius * 2 ))
             
             anchorView.backgroundColor = UIColor.clearColor()
-            anchorView.center = calCoordinateFromIndex(origin, r: radius , i: defaultVerticeIndex[i])
+            anchorView.center = Common.calCoordinateFromIndex(origin, r: radius , i: defaultVerticeIndex[i])
 //            print("index \(i) .x \(anchorView.center.x) .y \(anchorView.center.y)")
             addSubview(anchorView)
             anchorViewArray.append(anchorView)
@@ -163,7 +144,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         for var i = 0; i < anchorViewArray.count ; ++i{
             //TODO frame need to be bigger
             anchorViewArray[i].frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-            anchorViewArray[i].center = calCoordinateFromIndex(polarOrigin, r: polarRadius , i: currentVerticeIndex[i])
+            anchorViewArray[i].center = Common.calCoordinateFromIndex(polarOrigin, r: polarRadius , i: currentVerticeIndex[i])
 
             //            print("index \(i). point \(defaultVerticeIndex[i]). x \(anchorViewArray[i].center.x) .y \(anchorViewArray[i].center.y)")
             //

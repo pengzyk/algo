@@ -79,7 +79,16 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     
     override func viewDidLoad() {
+        
+        
+        
         super.viewDidLoad()
+        //testing ---
+        
+//            print(Trigonometry.myMethod())
+        // ---
+        
+        
         
         //draw players
         prepareUI()
@@ -172,7 +181,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         for var i = 0; i < TOTAL_TIME_SLOTS; ++i {
 
             let tickCenter : CGPoint!
-            tickCenter = calCoordinateFromIndex(CGPointMake(circleRadius, circleRadius), r: circleRadius, i: i)
+            tickCenter = Common.calCoordinateFromIndex(CGPointMake(circleRadius, circleRadius), r: circleRadius, i: i)
             //print("index \(i) .x \(tickPosition.x) .y \(tickPosition.y)")
           
             var singleTick: UIView!
@@ -286,6 +295,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         var newInd = soundInd
          let loc = sender.locationInView(rainbowView)
         
+        //BUG this is changing color during long press , without moving finger 
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
@@ -299,11 +309,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             rainbowView.backgroundColor = iconColor
             view.addSubview(rainbowView)
-            self.rainbowView.center = CGPointMake(0, self.view.frame.size.height)//iconView.center
-            let  anchorScaleX = iconView.center.x / self.view.frame.size.width
-            let  anchorScaleY = iconView.center.y / self.view.frame.size.height
+            self.rainbowView.center = iconView.center
+//            let  anchorScaleX = iconView.center.x / self.view.frame.size.width
+//            let  anchorScaleY = iconView.center.y / self.view.frame.size.height
 //            self.rainbowView.layer.anchorPoint =  CGPointMake(anchorScaleX , anchorScaleY)
-                        self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
+//                        self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
             self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
 //                                    self.rainbowView.transform = CGAffineTransformMakeTranslation(200,100)
 
@@ -313,7 +323,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     options: UIViewAnimationOptions.CurveEaseIn,
                     animations: {
 
-                        self.rainbowView.transform = CGAffineTransformMakeScale (1,1)
+                        self.rainbowView.transform = CGAffineTransformMakeScale (10,10)
 
 
                     },
@@ -668,27 +678,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            self.loopView.transform = CGAffineTransformMakeScale(1, 1)
         }
     }
-    
-    func calCoordinateFromIndex( index: Int) -> CGPoint {
-        //index is offset by a quarter
-        //hence the treatment
-        let newIndex =  index - TOTAL_TIME_SLOTS/4
-        let rad = Double(newIndex) * M_PI * 2.0 / Double(TOTAL_TIME_SLOTS)
-        let x = cos(rad)
-        let y = sin(rad)
-        // print("index \(index) .x \(x) .y \(y)")
-        
-        return CGPoint(x: x, y: y)
-        
-    }
-    
-    func calCoordinateFromIndex( o: CGPoint, r: CGFloat, i: Int) -> CGPoint{
-        let x = calCoordinateFromIndex(i).x * r + o.x
-        let y = calCoordinateFromIndex(i).y * r + o.y
-        return CGPoint(x: x, y: y)
-        
-    }
-
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
