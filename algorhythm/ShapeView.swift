@@ -106,7 +106,6 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     }
     
   
-  
     
     //called once to initialize 
     func appendAnchorPosition (origin: CGPoint , radius: CGFloat ) {

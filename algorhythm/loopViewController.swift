@@ -22,8 +22,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var ticCounter = 0
     var timer      = NSTimer()
     //shapes for  the music queue
-//    var shapes = [Shape]()
-    
     var shapes = [ShapeView]()
     var icons = [ShapeView]()
    
@@ -75,7 +73,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
     //initialize animnation
     let anim = CAKeyframeAnimation(keyPath: "position")
-
     
     
     override func viewDidLoad() {
@@ -287,79 +284,56 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         var iconColor : UIColor!
         var soundInd : Int!
         var newColor : UIColor!
-
-//        var startingY: CGFloat!
         
         soundInd = iconView.soundIndex
         iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
         var newInd = soundInd
          let loc = sender.locationInView(rainbowView)
+//        let loc =   sender.locationInView(iconView)
         
         //BUG this is changing color during long press , without moving finger 
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
             rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
-            rainbowView.alpha = 0.95
-//            soundInd = iconView.soundIndex
-//            iconColor = iconView.soundDict[soundInd]!["color"]! as! UIColor
-//           
-//            startingY = sender.locationInView(rainbowView).y
+           
+            self.rainbowView.backgroundColor = iconColor
+            self.view.addSubview(self.rainbowView)
+            self.rainbowView.alpha = 0
+         
+            // bring the  imageview to the front
+            iconView.superview?.bringSubviewToFront(view)
             
-          
-            
-            rainbowView.backgroundColor = iconColor
-            view.addSubview(rainbowView)
-            self.rainbowView.center = iconView.center
-//            let  anchorScaleX = iconView.center.x / self.view.frame.size.width
-//            let  anchorScaleY = iconView.center.y / self.view.frame.size.height
-//            self.rainbowView.layer.anchorPoint =  CGPointMake(anchorScaleX , anchorScaleY)
-//                        self.rainbowView.layer.anchorPoint =  CGPointMake(0,1)
-            self.rainbowView.transform = CGAffineTransformMakeScale (0,0)
-//                                    self.rainbowView.transform = CGAffineTransformMakeTranslation(200,100)
-
 //            print("rainbow start ")
-            UIView.animateWithDuration(0.8,
+            UIView.animateWithDuration(0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseIn,
                     animations: {
-
-                        self.rainbowView.transform = CGAffineTransformMakeScale (10,10)
-
-
+                        iconView.transform = CGAffineTransformMakeScale (35,35)
+                        self.rainbowView.alpha = 1
                     },
                     completion: { (Bool) -> Void in
-//                        print("rainbow shown")
-                    
+
+
                 })
-            
-            
 //            print("long press \(v.soundIndex)")
             
         }else if sender.state == UIGestureRecognizerState.Changed {
-            
-//            print(sender.locationInView(rainbowView).y)
-           
-            
-             newInd =  Int (floor ((loc.y)/100))
 
+            
+             newInd =  Int (floor ((loc.y - iconView.center.y)/100))
              newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
-            
-           
-            
-             newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
-            
-            //note the range changes with anchor?!
+            if (newInd < 0 ) { newInd = newInd + 5}
+            print("loc.y \(loc.y) newInd \(newInd)")
+            newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
             UIView.animateWithDuration(0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseInOut,
                 animations: {
-
                     self.rainbowView.backgroundColor = newColor
-                    
+
                 },
                 completion: { (Bool) -> Void in
-                  
-                        iconView.nextSoundIndex = newInd
+                iconView.nextSoundIndex = newInd
             })
             
 //             print("x \(loc.x) y \(loc.y) newInd \(newInd) oldInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
@@ -372,28 +346,26 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            print ("exiting  newInd \(newInd)  soundInd \(soundInd) iconView next \(iconView.nextSoundIndex )")
             //if a new color is chosen, update the shape
             if (iconView.nextSoundIndex != soundInd  ){
-//                print("exit with \(iconView.nextSoundIndex )")
-                //load next one
                 iconView.soundIndex = iconView.nextSoundIndex
                 iconView.updateAudio()
-                
             }
             
 //            print("zoomout start ")
-            UIView.animateWithDuration(0.3,
+
+            
+            UIView.animateWithDuration(0.5,
                 delay: 0,
                 options: UIViewAnimationOptions.CurveEaseIn,
                 animations: {
                     //scaling to 0 would NOT WORK!
-                    self.rainbowView.transform = CGAffineTransformMakeScale (0.01,0.01)
+//                    self.rainbowView.transform = CGAffineTransformMakeScale (0.01,0.01)
+                    iconView.transform = CGAffineTransformMakeScale (1,1)
+                    self.rainbowView.alpha = 0
                     
                 },
                 completion: { (Bool) -> Void in
 //                   print("zoomout end")
                     self.rainbowView.removeFromSuperview()
-                    
-                    
-                    
             })
      
         }
