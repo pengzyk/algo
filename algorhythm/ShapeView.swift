@@ -32,8 +32,8 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
     var nextSoundIndex: Int!
-    let swiftColor = UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
-    
+    //let swiftColor = UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
+    //color
     //YELLOW UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
     //ORANGE UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)
     //RED UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)
@@ -42,14 +42,16 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 
     var soundDict  = [0: ["name":"crackle","extention":"mp3", "color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],
         1: ["name":"confetti","extention":"mp3", "color": UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)],
-        2: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
-        3: ["name":"wipe","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
+        2: ["name":"wipe","extention":"mp3", "color": UIColor(red: 155/255, green: 89/255, blue: 182/255, alpha: 1)],
+        3: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
         4: ["name":"prism-1","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
-        5: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)]
+        5: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
+        6: ["name":"flash-2","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)]
         
+
     ]
 
-       
+    
    
     
 //    override init(frame: CGRect) {

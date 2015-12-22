@@ -15,9 +15,8 @@
 		8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D51C23A4EE00D33AC0 /* strike.mp3 */; };
 		8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0D71C23A50700D33AC0 /* wipe.mp3 */; };
 		8650D0DC1C23A67400D33AC0 /* corona.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8650D0DB1C23A67400D33AC0 /* corona.mp3 */; };
-		8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */; };
-		8695E55A1C21EA0200043075 /* just blaze hipsnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = 8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */; };
 		DC26C8931C28E6D7002E24E4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26C8921C28E6D7002E24E4 /* Common.swift */; };
+		DC26C8971C29DDF7002E24E4 /* flash-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC26C8961C29DDF7002E24E4 /* flash-2.mp3 */; };
 		DC2F9F781BF8541500237A99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F9F771BF8541500237A99 /* AppDelegate.swift */; };
 		DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9F7B1BF8541500237A99 /* Main.storyboard */; };
 		DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2F9F7E1BF8541500237A99 /* Assets.xcassets */; };
@@ -31,10 +30,6 @@
 		DC6B60C11C23F45700773111 /* suspension.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC6B60C01C23F45700773111 /* suspension.mp3 */; };
 		DC6B60C31C23F5D200773111 /* splits.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC6B60C21C23F5D200773111 /* splits.mp3 */; };
 		DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */; };
-		DCF10A801C1F540800A30DE5 /* just blaze bksnare2.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */; };
-		DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */; };
-		DCF10A841C1F575D00A30DE5 /* just blaze fullkick.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */; };
-		DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,9 +58,8 @@
 		8650D0D51C23A4EE00D33AC0 /* strike.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = strike.mp3; sourceTree = "<group>"; };
 		8650D0D71C23A50700D33AC0 /* wipe.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wipe.mp3; sourceTree = "<group>"; };
 		8650D0DB1C23A67400D33AC0 /* corona.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = corona.mp3; sourceTree = "<group>"; };
-		8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze tapsnare.WAV"; sourceTree = "<group>"; };
-		8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze hipsnare.WAV"; sourceTree = "<group>"; };
 		DC26C8921C28E6D7002E24E4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		DC26C8961C29DDF7002E24E4 /* flash-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "flash-2.mp3"; sourceTree = "<group>"; };
 		DC2F9F741BF8541500237A99 /* algorhythm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = algorhythm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2F9F771BF8541500237A99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC2F9F7C1BF8541500237A99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -85,10 +79,6 @@
 		DC6B60C01C23F45700773111 /* suspension.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = suspension.mp3; sourceTree = "<group>"; };
 		DC6B60C21C23F5D200773111 /* splits.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = splits.mp3; sourceTree = "<group>"; };
 		DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze &ound10.WAV"; sourceTree = "<group>"; };
-		DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze bksnare2.WAV"; sourceTree = "<group>"; };
-		DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze exmple 38.WAV"; sourceTree = "<group>"; };
-		DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze fullkick.WAV"; sourceTree = "<group>"; };
-		DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "just blaze hisnare.WAV"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,14 +163,12 @@
 		DC2F9FB01BF87D9B00237A99 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				DC26C8961C29DDF7002E24E4 /* flash-2.mp3 */,
 				DC6B60C21C23F5D200773111 /* splits.mp3 */,
 				DC6B60C01C23F45700773111 /* suspension.mp3 */,
 				DCF10A7B1C1F4B8A00A30DE5 /* just blaze &ound10.WAV */,
 				DC2F9FB51BF8869600237A99 /* String.wav */,
 				DC2F9FB71BF8EFE500237A99 /* WoodBonk.wav */,
-				DCF10A831C1F575D00A30DE5 /* just blaze fullkick.WAV */,
-				8695E5591C21EA0200043075 /* just blaze hipsnare.WAV */,
-				8695E5571C21E8E000043075 /* just blaze tapsnare.WAV */,
 				8650D0D11C23A2CB00D33AC0 /* bubbles.mp3 */,
 				862FC69D1C2495370018DCBC /* crackle.mp3 */,
 				8650D0D51C23A4EE00D33AC0 /* strike.mp3 */,
@@ -188,9 +176,6 @@
 				8650D0DB1C23A67400D33AC0 /* corona.mp3 */,
 				8650D0D71C23A50700D33AC0 /* wipe.mp3 */,
 				8650D0D31C23A3FE00D33AC0 /* prism-1.mp3 */,
-				DCF10A7F1C1F540800A30DE5 /* just blaze bksnare2.WAV */,
-				DCF10A811C1F556300A30DE5 /* just blaze exmple 38.WAV */,
-				DCF10A871C1F58FC00A30DE5 /* just blaze hisnare.WAV */,
 				DC2F9FAC1BF87C4500237A99 /* Pong.wav */,
 			);
 			name = sound;
@@ -304,26 +289,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCF10A7C1C1F4B8A00A30DE5 /* just blaze &ound10.WAV in Resources */,
-				8695E55A1C21EA0200043075 /* just blaze hipsnare.WAV in Resources */,
 				8650D0D21C23A2CB00D33AC0 /* bubbles.mp3 in Resources */,
 				8650D0DC1C23A67400D33AC0 /* corona.mp3 in Resources */,
-				DCF10A821C1F556300A30DE5 /* just blaze exmple 38.WAV in Resources */,
-				DCF10A841C1F575D00A30DE5 /* just blaze fullkick.WAV in Resources */,
 				8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
+				DC26C8971C29DDF7002E24E4 /* flash-2.mp3 in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
 				DC6B60C31C23F5D200773111 /* splits.mp3 in Resources */,
 				862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */,
-				8695E5581C21E8E000043075 /* just blaze tapsnare.WAV in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
-				DCF10A881C1F58FC00A30DE5 /* just blaze hisnare.WAV in Resources */,
 				8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */,
 				8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */,
 				862FC69E1C2495370018DCBC /* crackle.mp3 in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,
 				DC2F9F7D1BF8541500237A99 /* Main.storyboard in Resources */,
-				DCF10A801C1F540800A30DE5 /* just blaze bksnare2.WAV in Resources */,
 				DC6B60C11C23F45700773111 /* suspension.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -312,11 +312,12 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            print("long press \(v.soundIndex)")
             
         }else if sender.state == UIGestureRecognizerState.Changed {
-
+            
             let loc = sender.locationInView(rainbowView)
+            let soundDictSize = iconView.soundDict.count
             var currentInd = Int (floor ((loc.y - iconView.iconFrame.minY)/100))
-            currentInd = (soundInd + currentInd) % 5
-            if (currentInd < 0 ) { currentInd = currentInd + 5}  //TODO this matches totol variations of tunes
+            currentInd = (soundInd + currentInd) % soundDictSize
+            if (currentInd < 0 ) { currentInd = currentInd + soundDictSize }  //TODO this matches totol variations of tunes
 
             print("stored index \(iconView.nextSoundIndex ) new index \(currentInd)")
             
