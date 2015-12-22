@@ -294,14 +294,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //BUG this is changing color during long press , without moving finger 
         if sender.state == UIGestureRecognizerState.Began {
             //a full screen view
-            rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
            
+                  // bring the  imageview to the front
+//            iconView.superview?.bringSubviewToFront(view)
+//              view.bringSubviewToFront(iconView)
+//            view.sendSubviewToBack(iconView)
+            view.insertSubview(iconView, aboveSubview: loopView)
+
+            rainbowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            
             self.rainbowView.backgroundColor = iconColor
             self.view.addSubview(self.rainbowView)
             self.rainbowView.alpha = 0
-         
-            // bring the  imageview to the front
-            iconView.superview?.bringSubviewToFront(view)
+            
+
             
 //            print("rainbow start ")
             UIView.animateWithDuration(0.5,
@@ -323,7 +329,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
              newInd =  Int (floor ((loc.y - iconView.center.y)/100))
              newInd = (soundInd + newInd) % 5 //TODO this matches totol variations of tunes
             if (newInd < 0 ) { newInd = newInd + 5}
-            print("loc.y \(loc.y) newInd \(newInd)")
+           // print("loc.y \(loc.y) newInd \(newInd)")
             newColor = iconView.soundDict[newInd]!["color"]! as! UIColor
             UIView.animateWithDuration(0.5,
                 delay: 0,
