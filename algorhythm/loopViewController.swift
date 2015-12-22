@@ -80,13 +80,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         
         super.viewDidLoad()
-        //testing ---
-        
-//            print(Trigonometry.myMethod())
-        // ---
-        
-        
-        
+
         //draw players
         prepareUI()
         prepareAudio()
@@ -428,7 +422,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     }
    
  
-    //drag and drop
+    //drag from icon tray up &  drop into loopview
     @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
@@ -438,10 +432,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if sender.state == UIGestureRecognizerState.Began {
 
             let draggedShapeView = sender.view as! ShapeView
-            
-          //  print(sender.description)
             newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
-//            newlyCreatedShape.numVertices = draggedShapeView.numVertices
             newlyCreatedShape.alpha = 0.7
 //            view.addSubview(newlyCreatedShape)
             //bring player button to the top
@@ -451,9 +442,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
             
             newlyCreatedShape.center = draggedShapeView.center
-            
-//            newShapeImageView.userInteractionEnabled = true
-            
             newlyCreatedShape.userInteractionEnabled = true
             
             newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
@@ -552,8 +540,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                    
                     //TODO FIND THE MATCHING SHAPE AND RETURN THERE
                     
-                    self.newlyCreatedShape.center = self.newlyCreatedShapeMenuCenter
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
+                    self.newlyCreatedShape.frame = pannedShape.iconFrame
+//                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
                     
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
@@ -566,9 +554,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 })
                 
             }
-                
                 //move shape into loop
-                
             else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                     self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)

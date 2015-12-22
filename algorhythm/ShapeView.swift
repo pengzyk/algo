@@ -26,6 +26,8 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     var polarOrigin : CGPoint!
     var polarRadius : CGFloat!
     
+    var iconFrame : CGRect!  //location when the shape is an icon on the bottom
+
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
     var soundIndex: Int!
@@ -52,6 +54,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 //    override init(frame: CGRect) {
     init(frame: CGRect , numVertices : Int, sound: Int) {
         super.init(frame: frame)
+        self.iconFrame = frame
         self.soundIndex = sound
         self.nextSoundIndex = sound 
         self.numVertices = numVertices
