@@ -27,6 +27,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     var polarRadius : CGFloat!
     
     var iconFrame : CGRect!  //location when the shape is an icon on the bottom
+    var iconCenter : CGPoint!
 
     ///audio
     var timeArray = [AVAudioPlayer?](count:16, repeatedValue: nil)
@@ -102,6 +103,8 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
 
         polarOrigin = CGPoint(x: frame.width/2, y:frame.height/2)
         appendAnchorPosition(polarOrigin, radius: 33) //inital size is small
+        
+        iconCenter = CGPointMake(iconFrame.origin.x + iconFrame.width/2, iconFrame.origin.y + iconFrame.height/2)
         
         backgroundColor = UIColor.clearColor()
 //          backgroundColor = UIColor.magentaColor()

@@ -28,7 +28,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
    
     //// graphical UI
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var playButtonView: UIView!
+//    @IBOutlet weak var playButtonView: UIView!
     
     var rainbowView: UIView!
 
@@ -49,18 +49,20 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     //drag and drop
     var newlyCreatedShape: ShapeView!
+//    var draggedIconView: ShapeView!
     var shapeInitialCenter: CGPoint!
     var newlyCreatedShapeOriginalCenter: CGPoint!
     var newlyCreatedShapeMenuCenter: CGPoint!
     var rotationRadians = CGFloat!()
     var previousRotationState = CGFloat(0)
 
+
 //    @IBOutlet weak var debugLabel: UILabel!
     
     /// audio effects
     var SFXDict  = [String: AVAudioPlayer]()
-    var placeAudio : AVAudioPlayer!
-    var removeAudio: AVAudioPlayer!
+//    var placeAudio : AVAudioPlayer!
+//    var removeAudio: AVAudioPlayer!
     
     ////TIMING & ANIMATION
 //slow speed for debugging
@@ -81,7 +83,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
         super.viewDidLoad()
 
-        //draw players
         prepareUI()
         prepareAudio()
         
@@ -224,7 +225,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         // this put the player dot in the front of the circle!
         view.bringSubviewToFront(playerUIView)
-        
         
         //player button
         playImage = UIImageView(image: UIImage(named: "play.png")!)
@@ -421,6 +421,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        print("timer" , timer.valid)
     }
    
+    ////CHENG
  
     //drag from icon tray up &  drop into loopview
     @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
@@ -431,26 +432,64 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //if user starts dragging shape
         if sender.state == UIGestureRecognizerState.Began {
 
-            let draggedShapeView = sender.view as! ShapeView
-            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices:draggedShapeView.numVertices, sound: draggedShapeView.soundIndex )
+            let draggedIconView = sender.view as! ShapeView
+            //copy the icon
+            newlyCreatedShape = ShapeView(frame: sender.view!.frame, numVertices: draggedIconView.numVertices, sound: draggedIconView.soundIndex )
+//            newlyCreatedShape.center = draggedIconView.center
             newlyCreatedShape.alpha = 0.7
 
             //bring player button to the top
             self.view.insertSubview(newlyCreatedShape, belowSubview: self.playerUIView)
             
-//            self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.3, 0.3)
-            
-            newlyCreatedShape.center = draggedShapeView.center
             newlyCreatedShape.userInteractionEnabled = true
             
-            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
-            newlyCreatedShapeMenuCenter = newlyCreatedShapeOriginalCenter
+//            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
+//            newlyCreatedShapeMenuCenter = newlyCreatedShapeOriginalCenter
             
-            
-            //CALL OTHER GESTURES
-            
+            //enlarge the image to react to the press down
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
                 self.newlyCreatedShape.transform = CGAffineTransformMakeScale(2, 2)
+                
+                }, completion: { (Bool) -> Void in
+
+            })
+            
+        }
+        
+        else if sender.state == UIGestureRecognizerState.Changed {
+
+            //translate shape as newly created shape is dragged
+            newlyCreatedShape.center = CGPoint(x: newlyCreatedShape.iconCenter.x + translation.x , y: newlyCreatedShape.iconCenter.y + translation.y)
+            
+        }
+            
+        else if sender.state == UIGestureRecognizerState.Ended {
+            
+            
+            ///CANCEL : move shape back to selection menu
+            if velocity.y >=  -0.1    {
+
+                
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.newlyCreatedShape.center = self.newlyCreatedShape.iconCenter
+                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
+
+                    }, completion: { (Bool) -> Void in
+                        self.newlyCreatedShape.removeFromSuperview()
+                })
+            }
+                
+            ///add  new  shape into loop
+            else {
+                
+                
+                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
+                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
+                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
+                self.newlyCreatedShape.center = newO
+                //TODO add snapping & constraint
+                //  self.newlyCreatedShape.enableAnchorLongPress()
                 
                 let panGestureRecognizerCanvas = UIPanGestureRecognizer(target: self, action: "didPanShapeCanvas:")
                 panGestureRecognizerCanvas.delegate = self
@@ -461,44 +500,11 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 let rotationGestureRecognizerCanvas = UIRotationGestureRecognizer(target: self, action: "didRotateShapeCanvas:")
                 self.newlyCreatedShape.addGestureRecognizer(rotationGestureRecognizerCanvas)
                 rotationGestureRecognizerCanvas.delegate = self
-                
-            })
-            
-        }
-        
-        else if sender.state == UIGestureRecognizerState.Changed {
-
-            //translate shape as newly created shape is dragged
-            newlyCreatedShape.center = CGPoint(x: newlyCreatedShapeOriginalCenter.x + translation.x, y: newlyCreatedShapeOriginalCenter.y + translation.y)
-            
-        }
-            
-        else if sender.state == UIGestureRecognizerState.Ended {
-            
-            
-            ///move shape back to selection menu
-            if velocity.y >=  -0.1    {
 
                 
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    
-                    self.newlyCreatedShape.center = self.newlyCreatedShapeOriginalCenter
-                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
-
-                    }, completion: { (Bool) -> Void in
-                        self.newlyCreatedShape.removeFromSuperview()
-                })
-            }
                 
-            ///add  new  shape into loop
-            else {
-                self.newlyCreatedShape.transform = CGAffineTransformMakeScale(1, 1)
-                let newO = CGPoint (x: self.circleCenterX, y: self.circleCenterY)
-                self.newlyCreatedShape.updatePosition(newO, newR: self.circleRadius)
-                self.newlyCreatedShape.center = newO
-                //TODO add snapping & constraint
-                //  self.newlyCreatedShape.enableAnchorLongPress()
                 self.shapes.append(self.newlyCreatedShape)
+                print("list size \(self.shapes.count) added one more ")
 
                 SFXDict["place"]!.play()
                 
@@ -542,14 +548,18 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //TODO FIND THE MATCHING SHAPE AND RETURN THERE
                     
                     self.newlyCreatedShape.frame = pannedShape.iconFrame
+                    
+                    //delete the last one in shapes list
+                    //this is a hack. since we dont know the index of the shape being activated : /
+
+                    self.shapes.removeLast()
+                    self.SFXDict["remove"]!.play()
+                    print("list size \(self.shapes.count) removed last ")
+                    
 //                    self.newlyCreatedShape.transform = CGAffineTransformMakeScale(0.2, 0.2)
                     
                     }, completion: { (Bool) -> Void in
                         self.newlyCreatedShape.removeFromSuperview()
-                        //delete the last one in shapes list 
-                        //this is a hack. since we dont know the index of the shape being activated : /
-                        self.shapes.removeLast()
-                        self.SFXDict["remove"]!.play()
 
                 })
                 
