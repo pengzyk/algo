@@ -32,7 +32,9 @@ class Common {
         
     }
     
-    
+    static func dist (a: CGPoint, b: CGPoint) -> CGFloat {
+        return sqrt((a.x - b.x )*(a.x - b.x ) + (a.y - b.y )*(a.y - b.y ) )
+    }
 
     
 }

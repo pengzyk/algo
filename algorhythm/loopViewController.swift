@@ -417,8 +417,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        print("timer" , timer.valid)
     }
    
-    ////CHENG
- 
+   
     //drag from icon tray up &  drop into loopview
     @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
         
@@ -497,7 +496,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 
                 
                 self.shapes.append(self.newlyCreatedShape)
-                print("list size \(self.shapes.count) added one more ")
+//                print("list size \(self.shapes.count) added one more ")
 
 
                 SFXDict["place"]!.play()
@@ -517,16 +516,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         // The moment the gesture starts...
         if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             
-            // reference the ImageView that recieved the gesture (the face you panned) and store it in newlyCreatedShape
-//            newlyCreatedShape = panGestureRecognizerCanvas.view as! ShapeView
-            
-            // set the initial center point
-//            newlyCreatedShapeOriginalCenter = newlyCreatedShape.center
-            
-            // bring the newlyCreatedShape imageview to the front
-//            newlyCreatedShape.superview?.bringSubviewToFront(view)
-
-//            pannedShape.center = location
             pannedShape.superview?.bringSubviewToFront(view)
             
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
@@ -538,8 +527,15 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             pannedShape.center = location
             
             // When the user has stopped panning
+///            cheng
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
-            if pannedShape.center.y >= view.center.y {
+
+            var isOutOfCircle = false
+            if ( Common.dist (CGPoint(x: self.circleCenterX, y: self.circleCenterY), b: location ) > self.circleRadius ){
+                isOutOfCircle = true
+            }
+            
+            if ((pannedShape.center.y >= view.center.y ) || isOutOfCircle ) {
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
                    
                     //return to the location of the original icon
@@ -558,6 +554,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 })
                 
             }
+            
                 //return shape into loop
             else {
                 UIImageView.animateWithDuration(0.2, animations: { () -> Void in
