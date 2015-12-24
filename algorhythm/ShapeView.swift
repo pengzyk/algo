@@ -102,7 +102,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
         //calculate each vertex and add to array
 
         polarOrigin = CGPoint(x: frame.width/2, y:frame.height/2)
-        appendAnchorPosition(polarOrigin, radius: 33) //inital size is small
+        appendAnchorPosition(polarOrigin, radius: frame.width/2) //inital icon size is small
         
         iconCenter = CGPointMake(iconFrame.origin.x + iconFrame.width/2, iconFrame.origin.y + iconFrame.height/2)
         

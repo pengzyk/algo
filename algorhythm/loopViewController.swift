@@ -57,8 +57,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     
     /// audio effects
     var SFXDict  = [String: AVAudioPlayer]()
-//    var placeAudio : AVAudioPlayer!
-//    var removeAudio: AVAudioPlayer!
+
     
     ////TIMING & ANIMATION
 //slow speed for debugging
@@ -82,62 +81,29 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         prepareUI()
         prepareAudio()
         
-      /// initialize the bottom icon array with shapes
-        for var i = 0; i < 5 ; ++i {
-            //build icon list on the bottom
-            var verticesCnt = i+3
-            if (i == 4) {verticesCnt = 8 }
-            let shapeView = ShapeView(frame: CGRect(x: 11 + 70*i, y: 570, width: 66, height: 66) , numVertices: verticesCnt, sound: i )
-            
-            //3. associate  target action
-            let  panGRec = UIPanGestureRecognizer()
-//            icons[i].imageView.addGestureRecognizer(panGRec)
-            shapeView.addGestureRecognizer(panGRec)
-            panGRec.addTarget(self, action: "didPanIcon:")
-            
-            let longPressGRec = UILongPressGestureRecognizer(target: self, action: "onLongPressIcon:")
-            longPressGRec.minimumPressDuration = 0.5
-            shapeView.addGestureRecognizer(longPressGRec)
-
-            
-            //4. enable use interaction.
-            shapeView.userInteractionEnabled = true
-            
-            icons.append(shapeView)
-            view.addSubview(shapeView)
-        }
     }
     
-    func prepareAudio(){
-        SFXDict["place"] = prepareAVAudioPlayer("splits",fileType: "mp3")
-        SFXDict["remove"] = prepareAVAudioPlayer("suspension",fileType: "mp3")
-        
-        let tempShapeView = ShapeView(frame: CGRectMake(0, 0, 0, 0), numVertices: 0, sound: 0)
-        for var i = 0 ; i < tempShapeView.soundDict.count; ++i {
-            SFXDict[String(i)] = prepareAVAudioPlayer( tempShapeView.soundDict[i]!["name"]! as! String, fileType: tempShapeView.soundDict[i]!["extention"]! as! String )
-        }
-    }
-    
-    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
-        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
-        let fileURL = NSURL.fileURLWithPath(path!)
-        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
-        tempPlayer.delegate = self
-        tempPlayer.prepareToPlay()
-        return tempPlayer
-    }
     
     func prepareUI(){
         
-        ///initialize path bounds
-        let circleStartAngle = CGFloat(-90.0 * M_PI/180)
-        let circleEndAngle = CGFloat(270 * M_PI/180)
-        
         let screenWidth = self.view.frame.size.width
+        let screenHeight = self.view.frame.size.height
+        
          circleRadius = CGFloat(150.0)
          circleCenterX =  screenWidth/2.0
          circleCenterY = circleRadius + CGFloat(80.0) //offset from top
         let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
+
+        let iconTrayLeading = CGFloat (12)
+        let iconTrayTailing = iconTrayLeading
+        let iconGap = CGFloat (4)
+        let iconWidth = (screenWidth - iconTrayLeading-iconTrayTailing )/5 - iconGap //this is only for the 5 icon scenario
+        
+        let iconTrayY = screenHeight - iconWidth * 1.5  // CGFloat (570)
+        
+        //initialize path bounds
+        let circleStartAngle = CGFloat(-90.0 * M_PI/180)
+        let circleEndAngle = CGFloat(270 * M_PI/180)
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
             radius: CGRectGetWidth(circleBounds)/2,
@@ -234,9 +200,33 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //        view.addSubview(playButton)
         self.view.bringSubviewToFront(self.playButton)
         
+        /// initialize the bottom icon array with shapes
+        for var i = 0; i < 5 ; ++i {
+            //build icon list on the bottom
+            var verticesCnt = i+3
+            if (i == 4) {verticesCnt = 8 }
+            let iconView = ShapeView(frame: CGRect(x: iconTrayLeading + (iconWidth + iconGap)*CGFloat(i), y: iconTrayY, width: iconWidth, height: iconWidth) , numVertices: verticesCnt, sound: i )
+            
+            //3. associate  target action
+            let  panGRec = UIPanGestureRecognizer()
+            //            icons[i].imageView.addGestureRecognizer(panGRec)
+            iconView.addGestureRecognizer(panGRec)
+            panGRec.addTarget(self, action: "didPanIcon:")
+            
+            let longPressGRec = UILongPressGestureRecognizer(target: self, action: "onLongPressIcon:")
+            longPressGRec.minimumPressDuration = 0.5
+            iconView.addGestureRecognizer(longPressGRec)
+            
+            
+            //4. enable use interaction.
+            iconView.userInteractionEnabled = true
+            
+            icons.append(iconView)
+            view.addSubview(iconView)
+        }
+
         
     }
-
 
     
     func tick(){
@@ -547,7 +537,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
                         self.SFXDict["remove"]!.play()
-                        print("list size \(self.shapes.count) removed last ")
+                     //   print("list size \(self.shapes.count) removed last ")
                     
                         
                         pannedShape.removeFromSuperview()
@@ -645,11 +635,32 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         }
     }
  
+    
+    func prepareAudio(){
+        SFXDict["place"] = prepareAVAudioPlayer("splits",fileType: "mp3")
+        SFXDict["remove"] = prepareAVAudioPlayer("suspension",fileType: "mp3")
+        
+        let tempShapeView = ShapeView(frame: CGRectMake(0, 0, 0, 0), numVertices: 0, sound: 0)
+        for var i = 0 ; i < tempShapeView.soundDict.count; ++i {
+            SFXDict[String(i)] = prepareAVAudioPlayer( tempShapeView.soundDict[i]!["name"]! as! String, fileType: tempShapeView.soundDict[i]!["extention"]! as! String )
+        }
+    }
+    
+    func prepareAVAudioPlayer(fileName: String, fileType: String) -> AVAudioPlayer {
+        let path = NSBundle.mainBundle().pathForResource(fileName, ofType: fileType)
+        let fileURL = NSURL.fileURLWithPath(path!)
+        let tempPlayer = try! AVAudioPlayer(contentsOfURL: fileURL)
+        tempPlayer.delegate = self
+        tempPlayer.prepareToPlay()
+        return tempPlayer
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+   
 }
 
 
