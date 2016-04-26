@@ -13,7 +13,7 @@ import AVFoundation
 
 
 class ShapeView: UIView, AVAudioPlayerDelegate {
-  
+    
     
     ///visual
     var numVertices: Int!
@@ -43,7 +43,7 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     //ORANGE UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)
     //YELLOW UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
 
-
+    
 
     var soundDict  = [0: ["name":"crackle","extention":"mp3",
         "color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],

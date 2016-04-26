@@ -53,7 +53,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var tickAngle: CGFloat!
     
     //drag and drop
-    var newlyCreatedShape: ShapeView!
+    var newlyCreatedShape: ShapeView! //for panning an icon
     var rotationRadians = CGFloat!()
     var previousRotationState = CGFloat(0)
 
@@ -419,25 +419,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
           //  print ("start timer" )
             
             playButton.setImage(pauseImage!.image, forState: UIControlState.Normal)
-            
-            
-            //PLAYER LOOP ----------------------------------------------------------------------------------------------------
-//       //     playerUIView.alpha = 1
-//            //choose animation path
-//            anim.path = circlePath.CGPath
-//            //set some more parameters for the animation
-//            anim.repeatCount = Float.infinity
-//            anim.duration = LOOP_PERIOD
-//            
-//            //add animation to square layer
-//            playerUIView.layer.addAnimation(anim, forKey: "animate position along path")
-        }
+         }
         
 //        print("timer" , timer.valid)
     }
    
    
-    //drag from icon tray up &  drop into loopview
+    ///drag from icon tray up &  drop into loopview
     @IBAction func didPanIcon(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
@@ -490,7 +478,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 })
             }
                 
-            ///add  new  shape into loop
+            ///ADD  new  shape into loop
             else {
         
                 
@@ -515,9 +503,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                 
                 
                 self.shapes.append(self.newlyCreatedShape)
-//                print("list size \(self.shapes.count) added one more ")
+                print("list size \(self.shapes.count). Added one shape.")
 
-
+                //play sound effect
                 SFXDict["place"]!.play()
                 
             }
@@ -527,7 +515,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     //MOVE SHAPE ALREADY IN LOOP
     //pan shape that is already on loop
     func didPanShapeCanvas(panGestureRecognizerCanvas: UIPanGestureRecognizer){
-        
+        let pannedView = panGestureRecognizerCanvas.view
         let pannedShape = panGestureRecognizerCanvas.view as! ShapeView
         
         let location = panGestureRecognizerCanvas.locationInView(view)
@@ -537,16 +525,24 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             
             pannedShape.superview?.bringSubviewToFront(view)
             
+            
+            //display shaddow
+            pannedView!.layer.shadowOffset = CGSize(width: 2, height: 2)
+            pannedView!.layer.shadowOpacity = 0.3
+            pannedView!.layer.shadowRadius = 8
+            
+            
+            
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             UIImageView.animateWithDuration(0.2, animations: { () -> Void in
-                pannedShape.transform = CGAffineTransformMakeScale(0.8, 0.8)
+                pannedShape.transform = CGAffineTransformMakeScale(0.9, 0.9)
                 pannedShape.alpha = 1
             })
             
             pannedShape.center = location
             
             // When the user has stopped panning
-///            cheng
+///            cx
         } else if panGestureRecognizerCanvas.state == UIGestureRecognizerState.Ended {
 
             var isOutOfCircle = false
@@ -565,11 +561,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                         //delete the last one in shapes list
                         //this is a hack. since we dont know the index of the shape being activated : /
                         self.shapes.removeLast()
+//                        self.shapes.removeAtIndex()
+                        pannedShape.removeFromSuperview()
                         self.SFXDict["remove"]!.play()
-                     //   print("list size \(self.shapes.count) removed last ")
+                        
+                        print("list size \(self.shapes.count). Deleted one shape.")
                     
                         
-                        pannedShape.removeFromSuperview()
+                      
                 })
                 
             }
@@ -582,6 +581,8 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
                     //translate to center of loopView
                     pannedShape.center = self.loopView.center
                     pannedShape.alpha = 0.7
+                    
+                    pannedView!.layer.shadowOpacity = 0
                 })
             }
         }
@@ -593,6 +594,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     func didRotateShapeCanvas(rotationGestureRecognizerCanvas: UIRotationGestureRecognizer)
         
     {
+        let pannedView = rotationGestureRecognizerCanvas.view
         let  currentShape = rotationGestureRecognizerCanvas.view as! ShapeView
         let rotationRadians = rotationGestureRecognizerCanvas.rotation //always start from zero
 
@@ -600,6 +602,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Began {
             currentShape.alpha = 0.95
             showTicks()
+            //display shaddow
+            pannedView!.layer.shadowOffset = CGSize(width: 2, height: 2)
+            pannedView!.layer.shadowOpacity = 0.3
+            pannedView!.layer.shadowRadius = 8
+            
+
+            
         }
         else if rotationGestureRecognizerCanvas.state == UIGestureRecognizerState.Changed {
             
@@ -628,7 +637,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 //                 print( self.shapes.last!.currentVerticeIndex)
             }
             
-            
+            pannedView?.layer.shadowOpacity = 0
             //now that new shape is in position, we dont need this transform any more
             currentShape.transform = CGAffineTransformMakeRotation( 0) //no long need the transform on the old shape. new geometry is at right place!
             currentShape.alpha = 0.7
