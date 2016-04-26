@@ -44,8 +44,13 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     var circleRadius : CGFloat!
     var circleCenterX : CGFloat!
     var circleCenterY: CGFloat!
+    var circleBounds: CGRect!
+    var circleStartAngle: CGFloat!
+    var circleEndAngle: CGFloat!
     
     var ticksView: UIView!
+
+    var tickAngle: CGFloat!
     
     //drag and drop
     var newlyCreatedShape: ShapeView!
@@ -60,9 +65,9 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
 
     
     ////TIMING & ANIMATION
-//slow speed for debugging
+    //slow speed for debugging
 //    let TIMER_INTERVAL =  60.0/4.0/10.0
-//        let LOOP_PERIOD = 60.0/4.0/10.0 * 16
+//    let LOOP_PERIOD = 60.0/4.0/10.0 * 16
 
         //BPM 75 : 60.0/75.0/4.0
     //    var LOOP_PERIOD : Float!
@@ -70,8 +75,6 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
     let LOOP_PERIOD = 60.0/200.0 * 16
     
 
-    //initialize animnation
-    let anim = CAKeyframeAnimation(keyPath: "position")
     
     
     override func viewDidLoad() {
@@ -88,22 +91,23 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         
         let screenWidth = self.view.frame.size.width
         let screenHeight = self.view.frame.size.height
+        print( "screenWidth", screenWidth, "screenHeight" , screenHeight  )
         
-         circleRadius = CGFloat(150.0)
-         circleCenterX =  screenWidth/2.0
-         circleCenterY = circleRadius + CGFloat(80.0) //offset from top
-        let circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
+        circleRadius = CGFloat(150.0)
+        circleCenterX =  screenWidth/2.0
+        circleCenterY = circleRadius + CGFloat(80.0) //offset from top
+        circleBounds = CGRectMake (circleCenterX - circleRadius ,circleCenterY - circleRadius, CGFloat(circleRadius*2), CGFloat(circleRadius*2)  )
 
         let iconTrayLeading = CGFloat (12)
         let iconTrayTailing = iconTrayLeading
         let iconGap = CGFloat (4)
         let iconWidth = (screenWidth - iconTrayLeading-iconTrayTailing )/5 - iconGap //this is only for the 5 icon scenario
-        
         let iconTrayY = screenHeight - iconWidth * 1.5  // CGFloat (570)
         
         //initialize path bounds
-        let circleStartAngle = CGFloat(-90.0 * M_PI/180)
-        let circleEndAngle = CGFloat(270 * M_PI/180)
+         circleStartAngle = CGFloat(-90.0 * M_PI/180)
+         circleEndAngle = CGFloat(270 * M_PI/180)
+        
         //create path for player dot
         circlePath.addArcWithCenter(CGPointMake(CGRectGetMidX(circleBounds), CGRectGetMidY(circleBounds)),
             radius: CGRectGetWidth(circleBounds)/2,
@@ -128,11 +132,14 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         //        loopView = UIImageView(image: loopImage!)
         
         
+        tickAngle = CGFloat(2.0 * M_PI / Double(TOTAL_TIME_SLOTS ))
+        
+        
         //prepare ticks
         ticksView = UIView(frame: circleBounds)
 //        ticksView.backgroundColor = UIColor.yellowColor()
         view.addSubview(ticksView)
-        ticksView.alpha = 0
+        ticksView.alpha = 1 //0 // temperarily set to 1 for debugging
         
         //draw ticks
         for var i = 0; i < TOTAL_TIME_SLOTS; ++i {
@@ -251,11 +258,33 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             animatePlayer()
         }
         
+        //move player dot towards the next tic position
+        
+        //prep path of animation
+        let arcPath = UIBezierPath()
+        arcPath.addArcWithCenter(CGPointMake(circleCenterX, circleCenterY),
+            radius: CGRectGetWidth(self.circleBounds)/2,
+            startAngle: self.circleStartAngle + tickAngle * CGFloat(self.ticCounter),
+            endAngle: self.circleStartAngle + tickAngle * CGFloat(self.ticCounter+1),
+            clockwise: true)
+        
+        //prep animation
+        let anim = CAKeyframeAnimation(keyPath: "position")
+        anim.path = arcPath.CGPath
+        anim.duration = TIMER_INTERVAL //- 20
+        anim.fillMode = kCAFillModeForwards        //to avoid going back to start position
+        anim.removedOnCompletion = false         //to avoid going back to start position
+        
+        playerUIView.layer.addAnimation(anim, forKey: nil )
+        
+        
         //ticCounter loops through 0-15
         self.ticCounter++
         if(self.ticCounter >= self.ticSlots.count){
             self.ticCounter = 0
         }
+        
+        
     }
     
     
@@ -368,7 +397,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         if ( timer.valid){
                 timer.invalidate()
             //playButton.setTitle("PLAY", forState: UIControlState.Normal)
-            print ("stop timer" )
+           // print ("stop timer" )
             playButton.setImage(playImage!.image, forState: UIControlState.Normal)
             
             
@@ -384,24 +413,24 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
             self.ticCounter = 0 ;  //reset to the start
             self.tick(); // the timer would schedule one to happen in some time,but we want one right now! 
             
-              //create the timer & add the timer automatically to the NSRunLoop
-           timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
+            //create the timer & add the timer automatically to the NSRunLoop
+            timer = NSTimer.scheduledTimerWithTimeInterval(TIMER_INTERVAL, target: self, selector: "tick", userInfo: ticSlots as? AnyObject, repeats: true)
             //playButton.setTitle("PAUSE", forState: UIControlState.Normal)
-            print ("start timer" )
+          //  print ("start timer" )
             
             playButton.setImage(pauseImage!.image, forState: UIControlState.Normal)
             
             
             //PLAYER LOOP ----------------------------------------------------------------------------------------------------
-       //     playerUIView.alpha = 1
-            //choose animation path
-            anim.path = circlePath.CGPath
-            //set some more parameters for the animation
-            anim.repeatCount = Float.infinity
-            anim.duration = LOOP_PERIOD
-            
-            //add animation to square layer
-            playerUIView.layer.addAnimation(anim, forKey: "animate position along path")
+//       //     playerUIView.alpha = 1
+//            //choose animation path
+//            anim.path = circlePath.CGPath
+//            //set some more parameters for the animation
+//            anim.repeatCount = Float.infinity
+//            anim.duration = LOOP_PERIOD
+//            
+//            //add animation to square layer
+//            playerUIView.layer.addAnimation(anim, forKey: "animate position along path")
         }
         
 //        print("timer" , timer.valid)
