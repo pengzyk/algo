@@ -139,7 +139,7 @@ class loopViewController: UIViewController , AVAudioPlayerDelegate, UIGestureRec
         ticksView = UIView(frame: circleBounds)
 //        ticksView.backgroundColor = UIColor.yellowColor()
         view.addSubview(ticksView)
-        ticksView.alpha = 1 //0 // temperarily set to 1 for debugging
+        ticksView.alpha = 0 
         
         //draw ticks
         for var i = 0; i < TOTAL_TIME_SLOTS; ++i {
