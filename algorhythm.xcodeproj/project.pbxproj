@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E324EE31CDF38D600320A1B /* hihat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E324EE11CDF38D600320A1B /* hihat.wav */; };
+		0E324EE41CDF38D600320A1B /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E324EE21CDF38D600320A1B /* kick.wav */; };
+		0E324EE71CDF398700320A1B /* clap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E324EE51CDF398700320A1B /* clap.wav */; };
+		0E324EE81CDF398700320A1B /* open_hihat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E324EE61CDF398700320A1B /* open_hihat.wav */; };
 		22A5E1D41C223D21006E7C52 /* ShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A5E1D31C223D21006E7C52 /* ShapeView.swift */; };
 		862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 862FC69B1C23A8920018DCBC /* confetti.mp3 */; };
 		862FC69E1C2495370018DCBC /* crackle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 862FC69D1C2495370018DCBC /* crackle.mp3 */; };
@@ -49,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E324EE11CDF38D600320A1B /* hihat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hihat.wav; sourceTree = "<group>"; };
+		0E324EE21CDF38D600320A1B /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kick.wav; sourceTree = "<group>"; };
+		0E324EE51CDF398700320A1B /* clap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clap.wav; sourceTree = "<group>"; };
+		0E324EE61CDF398700320A1B /* open_hihat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_hihat.wav; sourceTree = "<group>"; };
 		22A5E1D31C223D21006E7C52 /* ShapeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeView.swift; sourceTree = "<group>"; };
 		862FC69B1C23A8920018DCBC /* confetti.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = confetti.mp3; sourceTree = "<group>"; };
 		862FC69D1C2495370018DCBC /* crackle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crackle.mp3; sourceTree = "<group>"; };
@@ -161,6 +169,10 @@
 		DC2F9FB01BF87D9B00237A99 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				0E324EE51CDF398700320A1B /* clap.wav */,
+				0E324EE61CDF398700320A1B /* open_hihat.wav */,
+				0E324EE11CDF38D600320A1B /* hihat.wav */,
+				0E324EE21CDF38D600320A1B /* kick.wav */,
 				DC26C8961C29DDF7002E24E4 /* flash-2.mp3 */,
 				DC6B60C21C23F5D200773111 /* splits.mp3 */,
 				DC6B60C01C23F45700773111 /* suspension.mp3 */,
@@ -290,12 +302,16 @@
 				8650D0D81C23A50700D33AC0 /* wipe.mp3 in Resources */,
 				DC2F9FB81BF8EFE500237A99 /* WoodBonk.wav in Resources */,
 				DC26C8971C29DDF7002E24E4 /* flash-2.mp3 in Resources */,
+				0E324EE81CDF398700320A1B /* open_hihat.wav in Resources */,
 				DC2F9FB61BF8869600237A99 /* String.wav in Resources */,
+				0E324EE41CDF38D600320A1B /* kick.wav in Resources */,
 				DC6B60C31C23F5D200773111 /* splits.mp3 in Resources */,
 				862FC69C1C23A8920018DCBC /* confetti.mp3 in Resources */,
 				DC2F9FAD1BF87C4500237A99 /* Pong.wav in Resources */,
+				0E324EE71CDF398700320A1B /* clap.wav in Resources */,
 				8650D0D61C23A4EE00D33AC0 /* strike.mp3 in Resources */,
 				8650D0D41C23A3FE00D33AC0 /* prism-1.mp3 in Resources */,
+				0E324EE31CDF38D600320A1B /* hihat.wav in Resources */,
 				862FC69E1C2495370018DCBC /* crackle.mp3 in Resources */,
 				DC2F9F821BF8541500237A99 /* LaunchScreen.storyboard in Resources */,
 				DC2F9F7F1BF8541500237A99 /* Assets.xcassets in Resources */,

@@ -44,17 +44,29 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     //YELLOW UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)
 
     
-
-    var soundDict  = [0: ["name":"crackle","extention":"mp3",
-        "color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],
-        1: ["name":"confetti","extention":"mp3", "color": UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)],
-        2: ["name":"wipe","extention":"mp3", "color": UIColor(red: 155/255, green: 89/255, blue: 182/255, alpha: 1)],
-        3: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
-        4: ["name":"prism-1","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
+    
+    var soundDict  = [
+        0: ["name":"hihat","extention":"wav","color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],
+        1: ["name":"hihat","extention":"wav", "color": UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)],
+        2: ["name":"kick","extention":"wav", "color": UIColor(red: 155/255, green: 89/255, blue: 182/255, alpha: 1)],
+        3: ["name":"clap","extention":"wav", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
+        4: ["name":"open_hihat","extention":"wav", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
         5: ["name":"flash-2","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
         
-
+        
     ]
+
+// original sounds
+//    var soundDict  = [0: ["name":"crackle","extention":"mp3",
+//        "color": UIColor(red: 98/255, green: 163/255, blue: 126/255, alpha: 1)],
+//        1: ["name":"confetti","extention":"mp3", "color": UIColor(red: 120/255, green: 209/255, blue: 236/255, alpha: 1)],
+//        2: ["name":"wipe","extention":"mp3", "color": UIColor(red: 155/255, green: 89/255, blue: 182/255, alpha: 1)],
+//        3: ["name":"bubbles","extention":"mp3", "color": UIColor(red: 233/255, green: 117/255, blue: 126/255, alpha: 1)],
+//        4: ["name":"prism-1","extention":"mp3", "color": UIColor(red: 252/255, green: 171/255, blue: 117/255, alpha: 1)],
+//        5: ["name":"flash-2","extention":"mp3", "color": UIColor(red: 255/255, green: 246/255, blue: 128/255, alpha: 1)],
+//        
+//
+//    ]
 
     
     
@@ -74,19 +86,18 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
     }
     
     func setup() {
-
         switch (numVertices){
         case 3:
-            defaultVerticeIndex = [0, 5, 11]
+            defaultVerticeIndex = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
             break;
         case 4:
-            defaultVerticeIndex = [0,4,8,12]
+            defaultVerticeIndex = [0,2,4,6,8,10,12,14]
             break;
         case 5:
-            defaultVerticeIndex = [0,3,6,10,13]
+            defaultVerticeIndex = [0,7,8]
             break;
         case 6:
-            defaultVerticeIndex = [1,4,7,9,12,15]
+            defaultVerticeIndex = [2,4,10]
             break;
         case 8:
             defaultVerticeIndex = [1,3,5,7,9,11,13,15]
@@ -96,6 +107,29 @@ class ShapeView: UIView, AVAudioPlayerDelegate {
             defaultVerticeIndex = [0]
             break;
         }
+
+//        switch (numVertices){
+//        case 3:
+//            defaultVerticeIndex = [0, 5, 11]
+//            break;
+//        case 4:
+//            defaultVerticeIndex = [0,4,8,12]
+//            break;
+//        case 5:
+//            defaultVerticeIndex = [0,3,6,10,13]
+//            break;
+//        case 6:
+//            defaultVerticeIndex = [1,4,7,9,12,15]
+//            break;
+//        case 8:
+//            defaultVerticeIndex = [1,3,5,7,9,11,13,15]
+//            break;
+//        default:
+//            print("error")
+//            defaultVerticeIndex = [0]
+//            break;
+//        }
+        
         currentVerticeIndex = defaultVerticeIndex
         
         ///visual
